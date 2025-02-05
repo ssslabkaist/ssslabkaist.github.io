@@ -1,0 +1,282 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A","Y");
+//접속 권한, 네비게이션 위치 END
+
+
+if($mode=="asc") {
+	$sql = mysql_query("SELECT listorder FROM technologyList WHERE uid='".$uid."'",$dbconn);
+	$row = mysql_fetch_row($sql);
+
+	$listorder=$row[0]-1;
+
+	$li_sql = mysql_query("SELECT * FROM technologyList WHERE listorder<='".$listorder."' ORDER BY listorder DESC LIMIT 1",$dbconn);
+	$li_row = mysql_fetch_array($li_sql);
+
+	if($li_row[uid]) {
+
+		$upd = "UPDATE technologyList SET listorder='".$row[0]."' WHERE listorder='".$li_row["listorder"]."'";
+		$upd_result = mysql_query($upd,$dbconn);
+
+
+		$upd_2 = "UPDATE technologyList SET listorder='".$li_row["listorder"]."' WHERE uid='".$uid."'";
+		$upd_2_result = mysql_query($upd_2,$dbconn);
+	}
+
+	//echo "SELECT listorder FROM $tn WHERE uid='$uid' <br>";
+	//echo $upd."<br>";
+	//echo $upd_2."<br>";
+	//exit;
+	windowReload();
+	GO_REFRESH("".$_SERVER["SCRIPT_NAME"]."?".$subquery."&cpage=".$cpage."&spage=".$spage."");
+	exit;
+}
+
+if($mode=="desc") {
+	
+	$sql = mysql_query("SELECT listorder FROM technologyList WHERE uid='".$uid."'",$dbconn);
+	$row = mysql_fetch_row($sql);
+
+	$listorder=$row[0]+1;
+
+
+	$li_sql = mysql_query("SELECT * FROM technologyList WHERE listorder>='".$listorder."' ORDER BY listorder ASC LIMIT 1",$dbconn);
+	$li_row = mysql_fetch_array($li_sql);
+
+	if($li_row[uid]) {
+		$upd = "UPDATE technologyList SET listorder='".$row[0]."' WHERE listorder='".$li_row["listorder"]."'";
+		$upd_result = mysql_query($upd,$dbconn);
+
+
+		$upd_2 = "UPDATE technologyList SET listorder='".$li_row["listorder"]."' WHERE uid='".$uid."'";
+		$upd_2_result = mysql_query($upd_2,$dbconn);
+	}
+
+	//echo "SELECT listorder FROM $tn WHERE uid='$uid' <br>";
+	//echo $upd."<br>";
+	//echo $upd_2."<br>";
+	//exit;
+	windowReload();
+	GO_REFRESH("".$_SERVER["SCRIPT_NAME"]."?".$subquery."&cpage=".$cpage."&spage=".$spage."");
+	exit;
+}
+
+
+if($mode=="orderBySel") {
+	//$mSearch = " AND staff_course='".$CheckCode."'";	//공통 쿼리
+
+	$uidValue = "";
+	for($i=0; $i<sizeof($UID); $i++) {
+		if($uidValue) {
+			$uidValue.=",";
+		}
+		$uidValue.=$UID[$i];
+	}
+
+	//echo $uidValue;
+
+	$listorder_num_add = $listorder_num+sizeof($UID);
+	
+	$sql = mysql_query("SELECT COUNT(uid) FROM technologyList WHERE 1 ".$mSearch." AND uid NOT IN (".$uidValue.") AND '".$listorder_num."' < listorder ORDER BY listorder ASC, uid DESC",$dbconn);
+	$row = mysql_fetch_array($sql);
+	//위 쿼리처럼 넘어온 listorder_num 보다 큰 listorder 값은 +1(선택된 목록의 갯수만큰) 더 해주고 그 자리에 listorder_num 을 기준으로 하니씩 번호를 업데이트 해준다.
+	//위 처럼 하면 될거 같은데 검수 해보고 적용을 해야 함
+
+	//echo "SELECT * FROM patentList WHERE '".$listorder_num."' < listorder";
+
+	
+	if(0<$row[0]) {
+		mysql_query("SELECT @listorderNumber:=".$listorder_num_add."",$dbconn);			//mysql 변수 설정
+		$updQuery = "UPDATE technologyList SET listorder=@listorderNumber:=@listorderNumber+1 WHERE 1 ".$mSearch." AND uid NOT IN (".$uidValue.") AND '".$listorder_num."' < listorder ORDER BY listorder ASC, uid DESC";
+		$updSql = mysql_query($updQuery,$dbconn);
+	}
+
+
+	$listorder_num++;
+	for($i=0; $i<sizeof($UID); $i++) {
+		mysql_query("UPDATE technologyList SET listorder='".$listorder_num."' WHERE 1 ".$mSearch." AND uid='".$UID[$i]."'",$dbconn);
+
+		$listorder_num++;
+	}
+
+	/////////=================정렬순번 세팅 START=====================//
+	//listorderSort(테이블명,where,정렬순서);
+	listorderSort("technologyList","", "listorder ASC, uid DESC");
+	/////////=================정렬순번 세팅 END=====================//
+
+	windowReload();
+	GO_REFRESH("".$_SERVER["SCRIPT_NAME"]."?".$subquery."&cpage=".$cpage."&spage=".$spage."");
+	exit;
+}
+
+
+$sql = mysql_query("SELECT COUNT(*) FROM technologyList WHERE 1 $Search", $dbconn);
+$row = mysql_fetch_row($sql);
+?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>출력 순서</title>
+<script type="text/javascript" src="/script/script.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/program.js"></script>
+<script src="../js/program.js"></script>
+
+<script type="text/javascript"> 
+//셀 스타일 변경
+jQuery(document).ready(function(){
+	jQuery(".fixed_table th:first div").css("border-left","none");
+});
+</script>
+<link href="../style/style.css" rel="stylesheet" type="text/css" />
+<link href="../style/popup.css" rel="stylesheet" type="text/css" />
+
+
+
+<script language="javascript">
+function frmUpdateChk() {
+	form1 = document.frmUpd;
+	var len = form1.elements.length;
+	var NUM=0;
+
+	for(z=0;z<len;z++) {
+		if (form1.elements[z].name=="UID[]" && form1.elements[z].checked==true) {
+			NUM++;
+		}
+	}
+
+	if(NUM==0) {
+		window.alert("체크된 목록이 없습니다. 변경할 목록을 체크하세요.");
+		return;
+	}
+
+	form1.listorder_num.value = document.getElementsByName("listorder_input")[0].value;
+	form1.submit();
+}
+</script>
+
+
+</head>
+<body>
+
+<table width="100%">
+	<tr>
+		<td>
+			<ul class="menu_tab_01"> 
+				<li class="on">
+					<span class="on"><a href="#void">출력순서</a></span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>
+<div style="padding:10px;">
+			<table width="100%">
+				<tr>
+					<td></td>
+				</tr>
+			</table>
+</div>	
+		</td>
+	</tr>
+	<tr>
+		<td style="padding:3px 10px 0 10px; text-align:right;">
+			<div style="float:left;">
+				<input type="text" name="listorder_input" maxlength="5" size="5" class="input_M onlyNumber" style="text-align:center; padding:2px; 0;"> 번째 아래로
+				<span class="s_btn_04"><a href="#link" onclick="frmUpdateChk(); return false;"><strong style="min-width:60px;">출력 순서 이동</strong></a></span>
+			</div>
+
+			<span style="color:#666666; font-size:11px; padding:0 5px 0 0;">
+				총 : <strong style="color:#FF0000;"><?=$row[0]?></strong> 개 (<?=$cpage?>/<?=$max_page?>)
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding:3px 10px 0 10px; font-size:11px;">
+			1. 0 번째로 입력하면 맨 위로 이동합니다. 총 개수 보다 높은 숫자를 입력하면 맨 아래로 이동합니다.<br>
+			2. 아래 목록의 번호를 입력하면 해당 번호 바로 뒤로 이동합니다.
+		</td>
+	</tr>
+	<tr>
+		<td style="padding:0px 10px;">
+
+<form method="post" name="frmUpd" action="<?=$_SERVER["SCRIPT_NAME"]?>">
+
+<input type="hidden" name="mode" value="orderBySel">
+<input type="hidden" name="listorder_num" value="listorder_num">
+
+	<div class="fixed_table_wrap" style="height:475px;">
+		<div class="th_bg"></div>
+		<div class="fixed_table_in">
+			<table class="fixed_table" cellspacing="0">
+				<colgroup>
+					<col width="5%" />
+					<col width="10%" />
+					<col width="70%" />
+					<col width="15%" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th><div style="width:5%;">선택</div></th>
+						<th><div style="width:10%;">번호</div></th>
+						<th><div style="width:70%;">제목</div></th>
+						<th><div style="width:15%;">순서이동</div></th>
+					</tr>
+				</thead>
+
+				<tbody>
+<?
+//$query = "SELECT * FROM technologyList WHERE 1 $Search ORDER BY listorder ASC, uid DESC LIMIT 100";
+$query = "SELECT * FROM technologyList WHERE 1 $Search ORDER BY listorder ASC, uid DESC";
+$result= mysql_query($query,$dbconn);
+
+if (!$result) {
+	echo(" 쿼리 에러 ");
+}
+$sid=1;
+while($row=mysql_fetch_array($result)) {
+
+
+	$upd = mysql_query("UPDATE technologyList SET listorder='".$sid."' WHERE uid='".$row["uid"]."'",$dbconn);
+
+	$yearView="";
+	if($row["year_tech_trans"]) {
+		$yearView="<span style=\"color:#4dabbf;\">".$row["year_tech_trans"]."</span> - ";
+	}
+
+	echo "
+					<tr align=\"center\" height=\"25\">
+						<td><input type=\"checkbox\" name=\"UID[]\" value=\"".$row["uid"]."\"></td>
+						<td>".$sid."</td>
+						<td style=\"text-align:left;\">".$yearView."".stripSlashNotUsed($row["subject"])."</td>
+						<td>
+							<a href=\"".$PHP_SELF."?mode=asc&uid=".$row["uid"]."&".$subquery."&cpage=".$cpage."&spage=".$spage."\">▲</a>
+							<a href=\"".$PHP_SELF."?mode=desc&uid=".$row["uid"]."&".$subquery."&cpage=".$cpage."&spage=".$spage."\">▼</a>
+						</td>
+					</tr>";
+
+
+	$sid++;
+}
+?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</form>
+
+
+
+
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

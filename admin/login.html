@@ -1,0 +1,147 @@
+<?session_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+###############143.248.121.12 아이피만 관리자 접속 추가 START###############
+if($_SERVER["REMOTE_ADDR"]!="143.248.120.123") {
+	GO_REFRESH("/");
+	exit;
+}
+###############143.248.121.12 아이피만 관리자 접속 추가 ENG###############
+
+if($_SESSION["session_admin_id"]){
+
+	if($_SESSION["session_admin_auth"]=="C") {
+		//GO_REFRESH("/admin/staff_list/list.html&G_state=");
+		GO_REFRESH("/admin/staff_list/list.html");
+	}else{
+		GO_REFRESH("/admin/staff_list/list.html");
+	}
+
+	exit;
+}
+
+
+if($_GET["mode"]=="check") {
+//admin_auth : A 최고 관리자, B: , C:
+//admin_auth_confession : 관리자 승인유무
+	$sql = mysql_query("SELECT * FROM member WHERE admin_auth<>'' AND admin_auth_confession='Y' AND member_id='".$_POST["log_id"]."' AND passwd='".md5($_POST["log_pwd"])."'",$dbconn);
+
+	$res = mysql_fetch_array($sql);
+	if(!$res["member_id"]){
+		ERROR_BACK("아이디와 비밀번호를 정확하게 입력하세요");
+		exit;
+	}else{
+		$_SESSION["session_admin_id"] = $res["member_id"];
+		$_SESSION["session_admin_name"] = $res["member_name"];
+		$_SESSION["session_admin_email"] = $res["email"];
+		$_SESSION["session_admin_auth"] = $res["admin_auth"];
+		$_SESSION["session_admin_auth_conf"]=$res["admin_auth_confession"];
+
+
+		$_SESSION["session_usr_id"] = $res["member_id"];
+		$_SESSION["session_usr_name"] = $res["member_name"];
+		$_SESSION["session_usr_auth"] = $res["member_auth"];
+		$_SESSION["session_usr_auth_num"] = $res["member_auth_num"];
+		$_SESSION["session_usr_email"]= $res["email"];
+
+
+		//최근로그인
+		$upd = mysql_query("UPDATE member SET lastlogin=now() WHERE member_id='".$res["member_id"]."'",$dbconn);
+
+
+		if($_SESSION["session_admin_auth"]=="C") {
+			//GO_REFRESH("/admin/staff_list/list.html&G_state=");
+			GO_REFRESH("/admin/staff_list/list.html");
+		}else{
+			GO_REFRESH("/admin/staff_list/list.html");
+		}
+	}
+
+	exit;
+}
+?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>IoT기반 지속가능한 건설관리 연구실 ADMIN</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<!--<link href="/admin/style/style.css" rel="stylesheet" type="text/css">-->
+
+<link rel="shortcut icon" href="/images/common/favicon.ico">
+
+<script language="JavaScript">
+<!--
+
+function confirmation(){
+
+    if( !document.admin.log_id.value){
+        alert("아이디를 입력하십시요!");
+		document.admin.log_id.focus();
+		return false;
+	}
+	
+    if( !document.admin.log_pwd.value ){
+        alert("비밀번호를 입력하십시요.");
+		document.admin.log_pwd.focus();
+		return false;
+	}	
+
+	return true; 
+}
+
+//-->
+</script>
+</head>
+<style>
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p,
+a, address, em, img, strong,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td{margin: 0; padding:0; border:0;}
+
+body { color:#333333; font-size:12px; line-height:15px; font-family:"돋움", sans-serif; background: #FFFFFF;height:100%; }
+
+table { border-collapse:collapse; border-spacing:0; }
+
+img{font:0/0 arial;}
+html{padding:0px; margin: 0; height:100%; overflow-y:scroll;} 
+
+table.admin_form{ width:100%; margin:54px 0 0 0; }
+table.admin_form td{/* border:1px solid red;*/ text-align:left; vertical-align:top;}
+.admin_input_01 {border:1px solid #c8c8c8; background:#c8c8c8;  font-size:1em; height:15px; padding:3px 0 0 3px; margin:0px 0 0 0; vertical-align:middle; color:#2f2f2f; width:170px;}
+
+</style>
+<body onLoad="document.admin.log_id.focus()">
+<table style="width:100%; height:100%;">
+	<tr>
+		<td style="text-align:center; background:url(img/admin_bg.jpg) no-repeat center center;">
+		<form method="post" name="admin" action="?mode=check" onSubmit="return confirmation()">
+		<div style="width:352px; margin:0 auto;">
+			<table class="admin_form">
+			<colgroup>
+				<col width="105px" />
+				<col width="177px" />
+				<col width="" />
+			</colgroup>
+				<tr>
+					<td rowspan="2"></td>
+					<td><input type="text" name="log_id" class="admin_input_01"  maxlength="15" tabindex="1" /></td>
+					<td rowspan="2"><input type="image" src="img/admin_login_btn.jpg" tabindex="3" /></td>
+				</tr>
+				<tr>
+					<td><input type="password" name="log_pwd" class="admin_input_01"  maxlength="15" tabindex="2" /></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+        <div style="top:40px; position:relative;">
+            Copyright ⓒ  
+            <a href="http://www.ebiweb.co.kr" target="_blank" style="text-decoration:underline;">EBIWEB</a>
+            All right reserved.
+        </div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

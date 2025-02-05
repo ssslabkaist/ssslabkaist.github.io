@@ -1,0 +1,89 @@
+<?
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+include "./config/common.php";
+
+if($view_auth) {	
+	if(!preg_match("/".$boardUsrAuth."/",$view_auth) && !$_SESSION["session_admin_id"]) {
+		ERROR_BACK("접근 권한이 없습니다.");
+	}
+}
+
+
+$sql = mysql_query("SELECT content,upfile,upfile2,upfile3 FROM `".$tn."` WHERE sid='".$sid."'", $dbconn);
+$row = mysql_fetch_row($sql);
+
+//$html = remove_tag(stripSlashNotUsed($row[0]), array('script','div'));
+$viewContent = stripSlashNotUsed($row[0]);
+$viewContent = removeTag($viewContent, array('script'));
+//$viewContent = removeTag($viewContent, array('script','iframe'));
+?>
+<html>
+<head>
+
+<link href="/style_program/content_common.css" rel="stylesheet" type="text/css" />
+<?
+if(!$_COOKIE["mobileYorN"]) {			//PC 일때
+	echo "
+	<style type=\"text/css\">
+		html,body {font-family:\"NotoSansKR-Light\",\"sans-serif\"; color:#fff;}
+	</style>";
+}else{									//PC 아닐때
+	echo "
+	<style type=\"text/css\">
+		html,body {font-family:AppleSDGothicNeo-Light,DroidSans,HelveticaNeue,sans-serif; overflow-y:auto; color:#fff !important;}
+	</style>";
+}
+?>
+<script type="text/javascript" src="../script/jquery.1.12.0.min.js"></script>
+<script type="text/javascript" src="/js/board_content_iframe.js"></script>
+
+<script language="javascript"> 
+//window.onload = parent.vContentSize;
+</script>
+
+<script language="javascript">
+function parentOnload() {
+	bodyHeight = document.getElementById("p_wrap").scrollHeight+15;
+	parent.vContentSize(bodyHeight);
+}
+
+
+$(window).load(function () {
+	bodyHeight = document.getElementById("p_wrap").scrollHeight+15;
+	parent.vContentSize(bodyHeight);
+});
+</script>
+
+<base target="_blank" />
+
+</head>
+<?if(!$_SESSION["session_admin_id"]) {?>
+<body onContextmenu="return false;" onDragstart="return false;" onSelectstart="return false;">
+<?}else{?>
+<body>
+<?}?>
+<div id="p_wrap">
+
+<?
+if(getFileType($row[1])=="img") {
+	echo "<div><img src=\"/program_file/board/".$tn."/".$row[1]."\" /></div>";
+}
+if(getFileType($row[2])=="img") {
+	echo "<div><img src=\"/program_file/board/".$tn."/".$row[2]."\" /></div>";
+}
+if(getFileType($row[3])=="img") {
+	echo "<div><img src=\"/program_file/board/".$tn."/".$row[3]."\" /></div>";
+}
+/*
+if(getBfFileImg($tn,$row[1],"view")) {
+	echo "<div><img src=\"/program_file/board/".$tn."/".$row[1]."\" /></div>";
+}
+*/
+?>
+
+<?=$viewContent?>
+</div>
+</body>
+</html>

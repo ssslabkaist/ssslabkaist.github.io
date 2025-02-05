@@ -1,0 +1,141 @@
+<?session_start();
+include "./common/loginchk.html";
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//네비게이션 위치 START
+$menuBcategory = "00000000";
+$menuMcategory = "00000000";
+//네비게이션 위치 END
+
+if($mode=="end"){
+
+	$qury = "SELECT * FROM member WHERE admin_auth_confession='Y' AND member_id='".$_SESSION["session_admin_id"]."'";
+    $sql = mysql_query($qury,$dbconn);
+	$res = mysql_fetch_array($sql);
+
+	if(!$res){
+		ERROR_BACK("Query Error");
+	}else{
+		if($res[passwd]==md5($oldpwd)){
+			
+			$newpwd1=$_POST['newpwd1'];
+
+			//$query = "update member set member_id='$newid', passwd='$newpwd1' where member_auth='A'";
+
+			$query = "UPDATE member SET passwd='".md5($newpwd1)."',passwd_moddt=now() WHERE member_id='".$_SESSION["session_admin_id"]."'";
+			$result = mysql_query($query,$dbconn);
+			if(!$result){
+				ERROR_BACK("Query Error");
+			}
+
+		}else{
+			ERROR_BACK("기존 비밀번호를 정확하게 입력하세요!");
+		}
+
+	}
+
+	echo"
+	<script language='javascript'>
+		alert('변경 되었습니다.');
+	</script>
+	<meta http-equiv='Refresh' content='0; URL=admin_modi.html'>";
+
+	exit;
+
+}
+
+include "./include/header.html";
+?>
+
+<script language="javascript">
+function frm_chk(){
+	
+	form1 = document.adminmodi;
+/*		
+	if(!form1.oldid.value){
+		alert("기존 ID를 입력하세요!");
+		form1.oldid.focus();
+		return false;
+	}
+	if(!form1.newid.value){
+		alert("변경 ID를 입력하세요!");
+		form1.newid.focus();
+		return false;
+	}
+*/
+	if(!form1.oldpwd.value){
+		alert("기존 비밀번호를 입력하세요!");
+		form1.oldpwd.focus();
+		return false;
+	}
+	if(!form1.newpwd1.value){
+		alert("변경 비밀번호를 입력하세요!");
+		form1.newpwd1.focus();
+		return false;
+	}
+	if(!form1.newpwd2.value){
+		alert("비밀번호를 한번 더 입력하세요!");
+		form1.newpwd2.focus();
+		return false;
+	}
+	if(form1.newpwd1.value!=form1.newpwd2.value){
+		alert("변경할 비밀번호가 일치하지 않습니다.!");
+		form1.newpwd2.focus();
+		return false;
+	}
+
+	return true;
+
+}
+</script>
+
+
+
+<div style="border-bottom:1px solid #d9dde2;">
+	<span class="con_title">비밀번호 변경</span>
+	<span class="con_navi">관리자 &gt; 운영관리 &gt; 비밀번호 변경</span>
+	<div style="clear:both; height:1px;"></div>
+</div>
+
+
+<form name="adminmodi" method="post" action="?mode=end" onsubmit="return frm_chk()">
+<input type="hidden" name="auth" value="<?=$auth?>">
+
+<div style="padding:10px;" id="tableId">
+	<table class="view_table_01">
+		<colgroup>
+			<col width="150px" />
+			<col width="" />
+		</colgroup>
+		<tr> 
+			<th>기존 비밀번호</th>
+			<td>
+				<input type="password" name="oldpwd" size="20" maxlength="15" class="input_sel">
+			</td>
+		</tr>
+		<tr> 
+			<th>변경 비밀번호</th>
+			<td> 
+				<input type="password" name="newpwd1" size="20" maxlength="15" class="input_sel">
+			</td>
+		</tr>
+		<tr> 
+			<th>비밀번호 재확인</th>
+			<td> 
+				<input type="password" name="newpwd2" size="20" maxlength="15" class="input_sel">
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<!--가운데 정렬일때-->
+<div style="text-align:center;padding:5px 0;">
+	<span class="input_btn_01"><input type="submit" value="수정하기" style="min-width:60px; vertical-align:middle;"></span>
+</div>
+
+
+</form>
+
+<?include "./include/footer.html";?>

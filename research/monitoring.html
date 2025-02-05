@@ -1,0 +1,69 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "3";			//대메뉴
+$mMenuNum = "1";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<section class="contents research monitoring">
+	<div class="contents-wrap monitoring">
+		
+		<div class="research-tab tabWrap">
+			<ul>
+				<li><a href="./testing.html">Nodestructive Testing</a></li>
+				<li class="on"><a href="#void">Structural Health Monitoring</a></li>
+				<li><a href="./printing.html">3D Printing</a></li>
+				<li><a href="./analytice.html">Data Analytice</a></li>
+				<li><a href="./sensor.html">Sensor &amp; Sensing</a></li>
+			</ul>
+		</div>
+	
+		<div class="research-tit">
+			<h2>Structural Health Monitoring (SHM)</h2>
+			<p>Structural health monitoring is a procedure to continuously or periodically assess the safety and integrity of a structural system based on sensing data.<br>For example, after extreme events like earthquakes, the SHM system can  provide  a rapid condition  assessment  of a structure. The SHM system can also detect gradual time-dependent degradation  and aging of the system. It has immediate life-saving benefits and market potentials.</p>
+		</div>
+		
+		<div class="testing-list research-list insertBg">
+			<div class="research-wrapper">
+<?
+$code = array('cAq81DfCZk8','g0XGBAJ9Nzw','TnzOtt7b5ts','FFkALFn8bMQ','3o9eLWUB1bw','ypKrVd9pGG4','RAI1nvl_kgQ','usjAN0zkyWE','03i6C4p-JSE','Kr3wOl8Zrsg','u6GhdSCA20c');
+$name = array(
+'Reference free fatigue crack detection using nonlinear ultrasonic modulation',
+'Tension leg force estimation of submerged floating tunnel using ultrasonic wave',
+'Detection and localization of material degradation',
+'Structural Displacement Estimation by Fusing Millimeter-wave Radar and Accelerometer',
+'Nonlinear Ultrasonic Analysis Inspired by Phase-based Motion Magnification',
+'Development of fatigue crack detection and remaining useful life estimation techniques',
+'BIM model based structural damage localization using visual inertial odometry',
+'Structural inspection system with marking damage information at onsite based on an augmented reality',
+'Post-tensioning tendon force estimation of in-service PSC structure using cylindrical Lamb waves',
+'Remaining fatigue life estimation undervarying loading conditions',
+' Yield strength evaluation of 3D-printed components based on non-contact eddy-current measurement');
+$codeLength = count($code);
+for($i=0; $i<$codeLength; $i++){
+?>
+				<div class="research-item"><a href="https://www.youtube.com/watch?v=<?=$code[$i]?>" target="_blank" title="새창 열림">
+					<div class="img">
+						<img src="https://img.youtube.com/vi/<?=$code[$i]?>/sddefault.jpg" alt="" />
+						<span class="i-play"></span>
+					</div>
+					<p><?=$name[$i]?></p>
+				</a></div>
+<?}?>
+			
+			</div>
+			<!-- <div class="swiper-scrollbar"></div> -->
+		</div>
+		
+		
+		
+	</div>
+</section>

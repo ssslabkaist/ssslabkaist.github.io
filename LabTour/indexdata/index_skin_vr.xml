@@ -1,0 +1,1388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano version="1.20.11">
+
+    
+
+
+  <style name="Iconspot_inside"
+         url="%FIRSTXML%/spots/arrows-buttons-round-orange-up_user_defaultpoint2.png"
+         visible="false"
+         edge="center"
+         alpha="0.8"
+         onloaded="showPermanentTooltip(all);"
+         onover="onoverIconspot_inside"
+         onout="onoutIconspot_inside"
+
+
+         />
+  <action name="onoverIconspot_inside">
+tween(scale, 1.2);
+tween(alpha, 1);
+
+  </action>
+  <action name="onoutIconspot_inside">
+    tween(scale, 1);
+    tween(alpha, 0.8);
+
+  </action>
+
+
+
+    
+
+
+  <style name="Icontooltip_hotspot"
+         url="%FIRSTXML%/spots/info_bw01_user_defaultpoint6.png"
+         visible="false"
+         edge="bottom" ox="0" oy="0"
+         onloaded="showPermanentTooltip(all, bottom);"
+         onhover="onhoverIcontooltip_hotspot"
+         onout="onoutIcontooltip_hotspot"
+
+
+         />
+  <action name="onhoverIcontooltip_hotspot">
+    showtooltip('hotspot');
+  </action>
+  <action name="onoutIcontooltip_hotspot">
+    hideTooltip();
+
+
+
+  </action>
+
+
+
+    
+
+
+  <style name="Icontooltip_hotspot_long"
+         url="%FIRSTXML%/spots/info_bw01_user_defaultpoint17.png"
+         visible="false"
+         edge="bottom" ox="0" oy="0"
+         onloaded="showPermanentTooltip(all, bottom);"
+         onhover="onhoverIcontooltip_hotspot_long"
+         onout="onoutIcontooltip_hotspot_long"
+
+
+         />
+  <action name="onhoverIcontooltip_hotspot_long">
+    showtooltip('hotspot');
+  </action>
+  <action name="onoutIcontooltip_hotspot_long">
+    hideTooltip();
+
+
+
+  </action>
+
+
+
+    
+
+
+  <style name="Icontooltip_hotspot_big"
+         url="%FIRSTXML%/spots/info_bw01_user_defaultpoint23.png"
+         visible="false"
+         edge="bottom" ox="0" oy="0"
+         onloaded="showPermanentTooltip(all, bottom);"
+         onhover="onhoverIcontooltip_hotspot_big"
+         onout="onoutIcontooltip_hotspot_big"
+
+
+         />
+  <action name="onhoverIcontooltip_hotspot_big">
+    showtooltip('hotspot');
+  </action>
+  <action name="onoutIcontooltip_hotspot_big">
+    hideTooltip();
+
+
+
+  </action>
+
+
+
+<include url="%FIRSTXML%/graphics/easyhtmllightbox/easy_html_lightbox_vr.xml" />
+<plugin name="easy_html_lightbox" url="%FIRSTXML%/graphics/easyhtmllightbox/easy_html_lightbox.js" keep="true" include_reset="false"  include_jquery="false" 
+	theme="dark" 
+	background_color="#1e1e1e"
+	background_alpha="1"
+	stop_autorotate="true"
+	apply_blur="true"
+	plugin_font_name="inherit"
+	info_box_style="style_1_fixed_expanded"
+	
+	info_box_style_font_name="inherit"
+	info_box_style_btn_text="Go To"
+	info_box_style_font_size="15"
+	info_box_style_image_width="122"
+
+	info_box_style_title_color="0x000000"
+
+	info_box_style_bg_color="0xffffff"
+	info_box_style_bg_alpha="1"
+	info_box_style_text_color="0x000000"
+
+	info_box_style_btn_bg_color="0xe7cd8e"
+	info_box_style_btn_bg_alpha="1"
+	info_box_style_btn_text_color="0x"
+	
+/>
+
+
+
+
+<action name="kolorboxjsready_easyhtmllightbox"></action>
+
+
+
+<include url="%FIRSTXML%/graphics/blowup/blowupcore.xml" />
+
+<action name="Blowupconvert" type="Javascript" >
+  <![CDATA[
+var krpano = document.getElementById("krpanoSWFObject");
+
+var decodeEntities = (function() {
+
+  var element = document.createElement('div');
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+var text = decodeEntities(args[1]);
+krpano.set('Blowuphsho2', text);
+
+ ]]>
+ </action>
+
+<action name="Blowupgo">
+if (tour_displayspots,
+for(set(Blowupai,0), Blowupai LT hotspot.count, inc(Blowupai),
+
+if(hotspot[get(Blowupai)].style == "Iconspot_description150",
+set(Blowupaaname, get(hotspot[get(Blowupai)].name));
+Blowupget_thumb(get(Blowupaaname));
+);
+);
+);
+</action>
+
+<action name="Blowupremove">
+
+for(set(Blowupaai,0), Blowupaai LT hotspot.count, inc(Blowupaai),
+
+if(hotspot[get(Blowupaai)].style == "Iconspot_description150",
+set(Blowupraaname, get(hotspot[get(Blowupaai)].name));
+Blowupremove_(get(Blowupraaname));
+Blowuphide(get(Blowupraaname));
+);
+);
+</action>
+
+
+
+<action name="Blowupshow">
+if(autorotate.enabled,
+pauseautorotation(forceplugin););
+set(hotspot[BlowupHotspot_Ghost%1].visible, true);
+set(layer[Blowuptitle%1].visible, true);
+set(layer[Blowupdescription%1].visible, true);
+set(layer[Blowupbox%1].visible, true);
+set(layer[BlowupImage%1].visible, true);
+set(layer[BlowupBoxPict%1].visible, true);
+</action>
+
+<action name="Blowuphide">
+if(autorotate.enabled == false,
+resumeautorotation(forceplugin);
+);
+set(hotspot[BlowupHotspot_Ghost%1].visible, false);
+set(layer[Blowuptitle%1].visible, false);
+set(layer[Blowupdescription%1].visible, false);
+set(layer[Blowupbox%1].visible, false);
+set(layer[BlowupImage%1].visible, false);
+set(layer[BlowupBoxPict%1].visible, false);
+</action>
+
+
+
+
+
+
+<action name="Blowupget_thumb" >
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+
+
+set(hotspot[%1].onhover,
+Blowupshow(%1);
+Blowupgo2(%1);
+);
+
+
+set(hotspot[%1].onout,
+Blowuphide(%1);
+
+hideTooltip();
+tween(hotspot[%1].scale,1,0.5);
+);
+
+
+<!--set(hotspot[%1].onup,
+Blowuphide(%1);
+hideTooltip();
+
+);-->
+
+</action>
+
+<action name="Blowupgo2">
+
+
+add(BlowupmarginW, 5 , 300);
+add(BlowupmarginH, 150 , 5);
+
+set(Blowuptul,get(hotspot[%1].linktarget));
+set(Blowuptu, get(scene[get(Blowuptul)].thumburl));
+if(Blowuptu == null,
+set(Blowuptu, get(panoramagroup[get(Blowuptul)].thumburl));
+);
+
+
+set(BlowupHH_center, calc(0++200  + (5*2)));
+
+set(BlowupHH, calc(0 + 150 + (5*2)));
+
+set(Blowuplarghezza, calc(0 + 300 + (5*2)));
+
+<!--set(BlowupPOSX, calc(0 + (5*2)));-->
+
+set(BlowupPOSY, calc( 0 + 5 -10));
+
+
+
+
+
+set(layer[Blowupdescription%1].width, calc(0 +  300 + (5*2)));
+set(layer[Blowuptitle%1].width,300);
+set(layer[Blowupbox%1].height, get(BlowupHH_center));
+set(layer[Blowupbox%1].width, get(Blowuplarghezza));
+set(layer[BlowupBoxPict%1].x,0);
+set(layer[Blowupdescription%1].x,get(BlowupPOSX));
+
+set(layer[BlowupBoxPict%1].y,calc(5 + 200));
+set(layer[Blowupdescription%1].edge,center);
+set(layer[Blowupdescription%1].align,center);
+set(layer[Blowupdescription%1].y,0);
+
+set(layer[BlowupBoxPict%1].edge,bottom);
+set(layer[BlowupBoxPict%1].align,bottom);
+
+
+
+
+
+
+
+hideTooltip();
+
+set(Blowupax, get(hotspot[%1].ath));
+set(Blowupay, get(hotspot[%1].atv));
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].visible,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+set(hotspot[%1].edge,center);
+set(hotspot[%1].align,center);
+
+
+addhotspot(BlowupHotspot_Ghost%1);
+set(hotspot[BlowupHotspot_Ghost%1].visible, true);
+set(hotspot[BlowupHotspot_Ghost%1].capture, true);
+set(hotspot[BlowupHotspot_Ghost%1].zoom, false);
+set(hotspot[BlowupHotspot_Ghost%1].zorder2, 100 );
+set(hotspot[BlowupHotspot_Ghost%1].zorder, 100 );
+set(hotspot[BlowupHotspot_Ghost%1].ath,get(Blowupax));
+set(hotspot[BlowupHotspot_Ghost%1].distorted,false);
+set(hotspot[BlowupHotspot_Ghost%1].atv,get(Blowupay));
+set(hotspot[BlowupHotspot_Ghost%1].width, get(BlowupmarginW));
+set(hotspot[BlowupHotspot_Ghost%1].height, get(BlowupmarginH));
+set(hotspot[BlowupHotspot_Ghost%1].keep,true);
+set(hotspot[BlowupHotspot_Ghost%1].url, '%FIRSTXML%/graphics/blowup/white.png');
+
+set(hotspot[BlowupHotspot_Ghost%1].enable,true);
+set(hotspot[BlowupHotspot_Ghost%1].bgalpha,1);
+set(hotspot[BlowupHotspot_Ghost%1].ox,0);
+set(Blowupbobo,get(layer[Blowupbox%1].height));
+set(hotspot[BlowupHotspot_Ghost%1].oy,calc((30  + (Blowupbobo / 2 )) *-1));
+
+addlayer(Blowupbox%1);
+set(layer[Blowupbox%1].bgalpha,0.90000762951094837);
+set(layer[Blowupbox%1].bgcolor, 0x000000);
+set(layer[Blowupbox%1].visible, true);
+set(layer[Blowupbox%1].align, center);
+set(layer[Blowupbox%1].edge, center);
+<!--set(layer[Blowupbox%1].scale,get(Blowupmyscale));-->
+set(layer[Blowupbox%1].scale,1);
+set(layer[Blowupbox%1].scalechildren,true);
+
+set(layer[Blowupbox%1].bgborder, 0 0x000000 1);
+set(layer[Blowupbox%1].bgshadow, 0 0 0 0 000000 0.7000076295109483);
+set(layer[Blowupbox%1].bgroundedge, 10);
+set(layer[Blowupbox%1].capture, true);
+set(layer[Blowupbox%1].y,0);
+set(layer[Blowupbox%1].x,0);
+set(layer[Blowupbox%1].enabled, true);
+set(layer[Blowupbox%1].keep, true);
+set(layer[Blowupbox%1].type, container);
+
+set(layer[Blowupbox%1].parent,hotspot[BlowupHotspot_Ghost%1]);
+
+
+
+
+getmessage(Blowuphsho, get(hotspot[%1].descriptionID));
+
+getmessage(Blowuphshot, get(scene[get(Blowuptul)].titleid));
+set(Blowuptestyes,true);
+if(Blowuphsho !== null
+,
+set(hotspot[BlowupHotspot_Ghost%1].height,150
+);,);
+
+addlayer(Blowupdescription%1);
+
+set(layer[Blowupdescription%1].height,200);
+set(layer[Blowupdescription%1].handcursor, false);
+set(layer[Blowupdescription%1].width,300);
+set(layer[Blowupdescription%1].type,text);
+set(layer[Blowupdescription%1].vcenter,true );
+set(layer[Blowupdescription%1].zorder,1);
+set(layer[Blowupdescription%1].bgroundedge, 0);
+
+
+
+
+Blowupconvert(get(Blowuphsho));
+set(layer[Blowupdescription%1].onloaded,Blowupadd_html_code(get(Blowuphsho),20,%1));
+
+
+
+
+set(layer[Blowupdescription%1].css,padding:5px; );
+set(layer[Blowupdescription%1].parent,layer[Blowupbox%1]);
+set(layer[Blowupdescription%1].bgalpha,0);
+set(layer[Blowupdescription%1].bgcolor,0xffffff);
+
+
+
+
+</action>
+<events name="Blowupstascale"
+keep="true"
+onresize="Blowupremove();Blowuprespo();"
+
+/>
+<action name="Blowuprespo">
+
+set(BlowupstageSize, stagewidth);
+
+set(Blowupmyscale, calc(stagewidth / 1000));
+clamp(Blowupmyscale, 0.6,1);
+
+  </action>
+
+
+<action name="Blowupremove_">
+
+set(hotspot[BlowupHotspot_Ghost%1].visible, false);
+hideTooltip();
+removehotspot(BlowupHotspot_Ghost%1);
+removelayer(Blowupbox%1);
+removelayer(BlowupImage%1);
+removelayer(BlowupBoxPict%1);
+removelayer(Blowupdescription%1);
+removelayer(Blowuptitle%1);
+removelayer(Blowupclose%1);
+
+  </action>
+
+<action name="Blowupstopvideo" type="javascript" >
+  <![CDATA[
+  $("iframe").addClass("Blowupyt_player_iframe");
+    $('.Blowupyt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+<action name="Blowupautoplayvideo" type="javascript" >
+  <![CDATA[
+
+    $('.Blowupyt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+
+<action name="Blowupadd_html_code" type="Javascript"><![CDATA[
+
+        var div = document.createElement("div");
+
+        div.style.webkitUserSelect = "text"
+        div.style.MozUserSelect = "text"
+        div.style.msUserSelect = "text"
+        div.style.userSelect = "text";
+
+        var nam = "myID" + args[3];
+
+
+        div.setAttribute("id",nam);
+        div.setAttribute("style", "vertical-align: middle;  -moz-user-select: text;-webkit-user-select: text;-ms-user-select: text;user-select: text; color:#666666; font-Family:Noto Sans CJK KR Regular; overflow:auto; width:100%; height:100%; font-size:calc(12px + 0.2vw); box-sizing:border-box; padding-top:5px; padding-right:5px; padding-bottom: 5px;padding-left: 5px; text-align:left; font-weight:normal;font-style:normal;" );
+
+        div.addEventListener("mousewheel", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("DOMMouseScroll", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("touchstart", function(event){ if(krpano.device.ios && window.innerHeight == krpano.display.htmltarget.offsetHeight){ /* avoid the iOS 'overscrolling' for fullpage viewers */ var bs = document.body.parentNode.style; bs.position="fixed"; bs.top=0; bs.left=0; bs.right=0; bs.bottom=0; } krpano.control.preventTouchEvents = false; event.stopPropagation(); }, true);
+        div.addEventListener("touchend", function(event){ krpano.control.preventTouchEvents = true; event.stopPropagation(); }, true);
+        div.addEventListener("gesturestart", function(event){ event.preventDefault(); }, true);
+
+        // add some html code:
+        div.innerHTML = args[1];
+
+        // add the div to the layer element:
+        caller.sprite.appendChild(div);
+
+
+
+
+
+ ]]></action>
+
+
+
+
+
+// TODO: Bloup, create actions for open blowup external
+
+
+
+<events name="loopfx_eve_start"  keep="true"
+onnewpano="if(tour_displayspots,loopfx_start_action(););"
+onxmlcomplete="trace('Spotmove Plugin v.1.0 -- Panotourplugin.com');"
+/>
+<action name="loopfx_start_action">
+set(loopfx_counter_me,0);
+for(set(loopfx_i,0), loopfx_i LT hotspot.count, inc(loopfx_i),
+set(loopfx_hspolyname, get(hotspot[get(loopfx_i)].name));
+if(hotspot[get(loopfx_hspolyname)].style == "Iconspot_description50",
+loopfx_BlinkPoly(get(loopfx_hspolyname));
+););
+</action>
+<action name="loopfx_BlinkPoly" scope="local" args="loopfx_namepoly">
+
+
+
+
+
+	delayedcall(0,
+	tween(hotspot[get(loopfx_namepoly)].scale , 0.9, 0.5, linear,
+	tween(hotspot[get(loopfx_namepoly)].scale , 1,0.5, linear, loopfx_BlinkPoly(get(loopfx_namepoly)));
+	);
+	);
+
+
+
+</action>
+
+
+
+
+
+<include url="%FIRSTXML%/graphics/blowup1/blowupcore.xml" />
+
+<action name="Blowup1convert" type="Javascript" >
+  <![CDATA[
+var krpano = document.getElementById("krpanoSWFObject");
+
+var decodeEntities = (function() {
+
+  var element = document.createElement('div');
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+var text = decodeEntities(args[1]);
+krpano.set('Blowup1hsho2', text);
+
+ ]]>
+ </action>
+
+<action name="Blowup1go">
+if (tour_displayspots,
+for(set(Blowup1ai,0), Blowup1ai LT hotspot.count, inc(Blowup1ai),
+
+if(hotspot[get(Blowup1ai)].style == "Iconspot_description50",
+set(Blowup1aaname, get(hotspot[get(Blowup1ai)].name));
+Blowup1get_thumb(get(Blowup1aaname));
+);
+);
+);
+</action>
+
+<action name="Blowup1remove">
+
+for(set(Blowup1aai,0), Blowup1aai LT hotspot.count, inc(Blowup1aai),
+
+if(hotspot[get(Blowup1aai)].style == "Iconspot_description50",
+set(Blowup1raaname, get(hotspot[get(Blowup1aai)].name));
+Blowup1remove_(get(Blowup1raaname));
+Blowup1hide(get(Blowup1raaname));
+);
+);
+</action>
+
+
+
+<action name="Blowup1show">
+if(autorotate.enabled,
+pauseautorotation(forceplugin););
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, true);
+set(layer[Blowup1title%1].visible, true);
+set(layer[Blowup1description%1].visible, true);
+set(layer[Blowup1box%1].visible, true);
+set(layer[Blowup1Image%1].visible, true);
+set(layer[Blowup1BoxPict%1].visible, true);
+</action>
+
+<action name="Blowup1hide">
+if(autorotate.enabled == false,
+resumeautorotation(forceplugin);
+);
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, false);
+set(layer[Blowup1title%1].visible, false);
+set(layer[Blowup1description%1].visible, false);
+set(layer[Blowup1box%1].visible, false);
+set(layer[Blowup1Image%1].visible, false);
+set(layer[Blowup1BoxPict%1].visible, false);
+</action>
+
+
+<events name="Blowup1checkhotspots" keep="true"
+onviewchange="if (tour_displayspots,Blowup1checkhotspots(););"
+hotspots_visibility_changed="if(tour_displayspots,,events.dispatch(onremovepano););"
+devices="mobile"/>
+
+ <events name="Blowup1hotspotsdisplayevents"
+          hotspots_visibility_changed="Blowup1updateHideShowHotspotsButtons"
+          keep="true"/>
+	<action name="Blowup1HideHideShowHotspotsButtons">
+		events.dispatch(onremovepano);
+	</action>
+	<action name="Blowup1ShowHideShowHotspotsButtons">
+		if (tour_displayspots,
+		,
+			events.dispatch(onremovepano);
+		);
+	</action>
+
+	<action name="Blowup1updateHideShowHotspotsButtons">
+		set(Blowup1DisplayHideShowHotspotsButtons, false);
+		if (Blowup1IsOpened, set(Blowup1DisplayHideShowHotspotsButtons, true););
+		if (Blowup1DisplayHideShowHotspotsButtons,
+			Blowup1ShowHideShowHotspotsButtons();
+		,
+			Blowup1HideHideShowHotspotsButtons();
+		);
+	</action>
+
+<action name="Blowup1checkhotspots">
+for(set(Blowup1x,0), Blowup1x LT hotspot.count, inc(Blowup1x),
+    if (hotspot[get(Blowup1x)].style == "Iconspot_description50",
+    copy(Blowup1hs,hotspot[get(Blowup1x)]);
+        set(Blowup1aname, get(hotspot[get(Blowup1x)].name));
+    Blowup1hs.getcenter(Blowup1hs_h, Blowup1hs_v);
+    getlooktodistance(Blowup1d, Blowup1hs_h, Blowup1hs_v);
+
+    if(Blowup1d LT 10,
+    callwith(hotspot[get(Blowup1aname)], onhover);
+    ,
+    callwith(hotspot[get(Blowup1aname)], onout);
+
+      );););
+</action>
+
+
+
+
+<action name="Blowup1get_thumb" >
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+
+
+set(hotspot[%1].onhover,
+Blowup1show(%1);
+Blowup1go2(%1);
+);
+
+
+set(hotspot[%1].onout,
+Blowup1hide(%1);
+
+hideTooltip();
+tween(hotspot[%1].scale,1,0.5);
+);
+
+
+<!--set(hotspot[%1].onup,
+Blowup1hide(%1);
+hideTooltip();
+
+);-->
+
+</action>
+
+<action name="Blowup1go2">
+
+
+add(Blowup1marginW, 10 , 240);
+add(Blowup1marginH, 50 , 10);
+
+set(Blowup1tul,get(hotspot[%1].linktarget));
+set(Blowup1tu, get(scene[get(Blowup1tul)].thumburl));
+if(Blowup1tu == null,
+set(Blowup1tu, get(panoramagroup[get(Blowup1tul)].thumburl));
+);
+
+
+set(Blowup1HH_center, calc(0++50  + (10*2)));
+
+set(Blowup1HH, calc(0 + 50 + (10*2)));
+
+set(Blowup1larghezza, calc(0 + 240 + (10*2)));
+
+<!--set(Blowup1POSX, calc(0 + (10*2)));-->
+
+set(Blowup1POSY, calc( 0 + 10 -10));
+
+
+
+
+
+set(layer[Blowup1description%1].width, calc(0 +  250 + (10*2)));
+set(layer[Blowup1title%1].width,240);
+set(layer[Blowup1box%1].height, get(Blowup1HH_center));
+set(layer[Blowup1box%1].width, get(Blowup1larghezza));
+set(layer[Blowup1BoxPict%1].x,0);
+set(layer[Blowup1description%1].x,get(Blowup1POSX));
+
+set(layer[Blowup1BoxPict%1].y,calc(10 + 50));
+set(layer[Blowup1description%1].edge,center);
+set(layer[Blowup1description%1].align,center);
+set(layer[Blowup1description%1].y,0);
+
+set(layer[Blowup1BoxPict%1].edge,bottom);
+set(layer[Blowup1BoxPict%1].align,bottom);
+
+
+
+
+
+
+
+hideTooltip();
+
+set(Blowup1ax, get(hotspot[%1].ath));
+set(Blowup1ay, get(hotspot[%1].atv));
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].visible,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+set(hotspot[%1].edge,center);
+set(hotspot[%1].align,center);
+
+
+addhotspot(Blowup1Hotspot_Ghost%1);
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, true);
+set(hotspot[Blowup1Hotspot_Ghost%1].capture, true);
+set(hotspot[Blowup1Hotspot_Ghost%1].zoom, false);
+set(hotspot[Blowup1Hotspot_Ghost%1].zorder2, 100 );
+set(hotspot[Blowup1Hotspot_Ghost%1].zorder, 100 );
+set(hotspot[Blowup1Hotspot_Ghost%1].ath,get(Blowup1ax));
+set(hotspot[Blowup1Hotspot_Ghost%1].distorted,false);
+set(hotspot[Blowup1Hotspot_Ghost%1].atv,get(Blowup1ay));
+set(hotspot[Blowup1Hotspot_Ghost%1].width, get(Blowup1marginW));
+set(hotspot[Blowup1Hotspot_Ghost%1].height, get(Blowup1marginH));
+set(hotspot[Blowup1Hotspot_Ghost%1].keep,true);
+set(hotspot[Blowup1Hotspot_Ghost%1].url, '%FIRSTXML%/graphics/blowup1/white.png');
+
+set(hotspot[Blowup1Hotspot_Ghost%1].enable,true);
+set(hotspot[Blowup1Hotspot_Ghost%1].bgalpha,1);
+set(hotspot[Blowup1Hotspot_Ghost%1].ox,0);
+set(Blowup1bobo,get(layer[Blowup1box%1].height));
+set(hotspot[Blowup1Hotspot_Ghost%1].oy,calc((30  + (Blowup1bobo / 2 )) *-1));
+
+addlayer(Blowup1box%1);
+set(layer[Blowup1box%1].bgalpha,0.90000762951094837);
+set(layer[Blowup1box%1].bgcolor, 0x000000);
+set(layer[Blowup1box%1].visible, true);
+set(layer[Blowup1box%1].align, center);
+set(layer[Blowup1box%1].edge, center);
+<!--set(layer[Blowup1box%1].scale,get(Blowup1myscale));-->
+set(layer[Blowup1box%1].scale,1);
+set(layer[Blowup1box%1].scalechildren,true);
+
+set(layer[Blowup1box%1].bgborder, 0 0x000000 1);
+set(layer[Blowup1box%1].bgshadow, 0 0 0 0 000000 0.7000076295109483);
+set(layer[Blowup1box%1].bgroundedge, 10);
+set(layer[Blowup1box%1].capture, true);
+set(layer[Blowup1box%1].y,0);
+set(layer[Blowup1box%1].x,0);
+set(layer[Blowup1box%1].enabled, true);
+set(layer[Blowup1box%1].keep, true);
+set(layer[Blowup1box%1].type, container);
+
+set(layer[Blowup1box%1].parent,hotspot[Blowup1Hotspot_Ghost%1]);
+
+
+
+
+getmessage(Blowup1hsho, get(hotspot[%1].descriptionID));
+
+getmessage(Blowup1hshot, get(scene[get(Blowup1tul)].titleid));
+set(Blowup1testyes,true);
+if(Blowup1hsho !== null
+,
+set(hotspot[Blowup1Hotspot_Ghost%1].height,50
+);,);
+
+addlayer(Blowup1description%1);
+
+set(layer[Blowup1description%1].height,50);
+set(layer[Blowup1description%1].handcursor, false);
+set(layer[Blowup1description%1].width,250);
+set(layer[Blowup1description%1].type,text);
+set(layer[Blowup1description%1].vcenter,true );
+set(layer[Blowup1description%1].zorder,1);
+set(layer[Blowup1description%1].bgroundedge, 0);
+
+
+
+
+Blowup1convert(get(Blowup1hsho));
+set(layer[Blowup1description%1].onloaded,Blowup1add_html_code(get(Blowup1hsho),20,%1));
+
+
+
+
+set(layer[Blowup1description%1].css,padding:0px; );
+set(layer[Blowup1description%1].parent,layer[Blowup1box%1]);
+set(layer[Blowup1description%1].bgalpha,0);
+set(layer[Blowup1description%1].bgcolor,0xffffff);
+
+
+
+
+</action>
+<events name="Blowup1stascale"
+keep="true"
+onresize="Blowup1remove();Blowup1respo();"
+
+/>
+<action name="Blowup1respo">
+
+set(Blowup1stageSize, stagewidth);
+
+set(Blowup1myscale, calc(stagewidth / 1000));
+clamp(Blowup1myscale, 0.6,1);
+
+  </action>
+
+
+<action name="Blowup1remove_">
+
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, false);
+hideTooltip();
+removehotspot(Blowup1Hotspot_Ghost%1);
+removelayer(Blowup1box%1);
+removelayer(Blowup1Image%1);
+removelayer(Blowup1BoxPict%1);
+removelayer(Blowup1description%1);
+removelayer(Blowup1title%1);
+removelayer(Blowup1close%1);
+
+  </action>
+
+<action name="Blowup1stopvideo" type="javascript" >
+  <![CDATA[
+  $("iframe").addClass("Blowup1yt_player_iframe");
+    $('.Blowup1yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+<action name="Blowup1autoplayvideo" type="javascript" >
+  <![CDATA[
+
+    $('.Blowup1yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+
+<action name="Blowup1add_html_code" type="Javascript"><![CDATA[
+
+        var div = document.createElement("div");
+
+        div.style.webkitUserSelect = "text"
+        div.style.MozUserSelect = "text"
+        div.style.msUserSelect = "text"
+        div.style.userSelect = "text";
+
+        var nam = "myID" + args[3];
+
+
+        div.setAttribute("id",nam);
+        div.setAttribute("style", "vertical-align: middle;  -moz-user-select: text;-webkit-user-select: text;-ms-user-select: text;user-select: text; color:#666666; font-Family:Noto Sans CJK KR Regular; overflow:auto; width:100%; height:100%; font-size:calc(12px + 0.2vw); box-sizing:border-box; padding-top:0px; padding-right:0px; padding-bottom: 0px;padding-left: 0px; text-align:center; font-weight:normal;font-style:normal;" );
+
+        div.addEventListener("mousewheel", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("DOMMouseScroll", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("touchstart", function(event){ if(krpano.device.ios && window.innerHeight == krpano.display.htmltarget.offsetHeight){ /* avoid the iOS 'overscrolling' for fullpage viewers */ var bs = document.body.parentNode.style; bs.position="fixed"; bs.top=0; bs.left=0; bs.right=0; bs.bottom=0; } krpano.control.preventTouchEvents = false; event.stopPropagation(); }, true);
+        div.addEventListener("touchend", function(event){ krpano.control.preventTouchEvents = true; event.stopPropagation(); }, true);
+        div.addEventListener("gesturestart", function(event){ event.preventDefault(); }, true);
+
+        // add some html code:
+        div.innerHTML = args[1];
+
+        // add the div to the layer element:
+        caller.sprite.appendChild(div);
+
+
+
+
+
+ ]]></action>
+
+
+
+
+
+// TODO: Bloup, create actions for open blowup external
+
+
+
+<events name="loopfx_1eve_start"  keep="true"
+onnewpano="if(tour_displayspots,loopfx_1start_action(););"
+onxmlcomplete="trace('Spotmove Plugin v.1.0 -- Panotourplugin.com');"
+/>
+<action name="loopfx_1start_action">
+set(loopfx_1counter_me,0);
+for(set(loopfx_1i,0), loopfx_1i LT hotspot.count, inc(loopfx_1i),
+set(loopfx_1hspolyname, get(hotspot[get(loopfx_1i)].name));
+if(hotspot[get(loopfx_1hspolyname)].style == "Iconimage_gallery",
+loopfx_1BlinkPoly(get(loopfx_1hspolyname));
+););
+</action>
+<action name="loopfx_1BlinkPoly" scope="local" args="loopfx_1namepoly">
+
+
+
+
+
+	delayedcall(0,
+	tween(hotspot[get(loopfx_1namepoly)].scale , 0.8, 0.5, linear,
+	tween(hotspot[get(loopfx_1namepoly)].scale , 1,0.5, linear, loopfx_1BlinkPoly(get(loopfx_1namepoly)));
+	);
+	);
+
+
+
+</action>
+
+
+
+
+
+
+<events name="loopfx_2eve_start"  keep="true"
+onnewpano="if(tour_displayspots,loopfx_2start_action(););"
+onxmlcomplete="trace('Spotmove Plugin v.1.0 -- Panotourplugin.com');"
+/>
+<action name="loopfx_2start_action">
+set(loopfx_2counter_me,0);
+for(set(loopfx_2i,0), loopfx_2i LT hotspot.count, inc(loopfx_2i),
+set(loopfx_2hspolyname, get(hotspot[get(loopfx_2i)].name));
+if(hotspot[get(loopfx_2hspolyname)].style == "IconVideo_Play",
+loopfx_2BlinkPoly(get(loopfx_2hspolyname));
+););
+</action>
+<action name="loopfx_2BlinkPoly" scope="local" args="loopfx_2namepoly">
+
+
+
+
+
+	delayedcall(0,
+	tween(hotspot[get(loopfx_2namepoly)].alpha , 0.6, 0.5, linear,
+	tween(hotspot[get(loopfx_2namepoly)].alpha , 1,0.5, linear, loopfx_2BlinkPoly(get(loopfx_2namepoly)));
+	);
+	);
+
+
+
+</action>
+
+
+
+
+
+<include url="%FIRSTXML%/graphics/blowup2/blowupcore.xml" />
+
+<action name="Blowup2convert" type="Javascript" >
+  <![CDATA[
+var krpano = document.getElementById("krpanoSWFObject");
+
+var decodeEntities = (function() {
+
+  var element = document.createElement('div');
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+var text = decodeEntities(args[1]);
+krpano.set('Blowup2hsho2', text);
+
+ ]]>
+ </action>
+
+<action name="Blowup2go">
+if (tour_displayspots,
+for(set(Blowup2ai,0), Blowup2ai LT hotspot.count, inc(Blowup2ai),
+
+if(hotspot[get(Blowup2ai)].style == "Iconspot_description_image",
+set(Blowup2aaname, get(hotspot[get(Blowup2ai)].name));
+Blowup2get_thumb(get(Blowup2aaname));
+);
+);
+);
+</action>
+
+<action name="Blowup2remove">
+
+for(set(Blowup2aai,0), Blowup2aai LT hotspot.count, inc(Blowup2aai),
+
+if(hotspot[get(Blowup2aai)].style == "Iconspot_description_image",
+set(Blowup2raaname, get(hotspot[get(Blowup2aai)].name));
+Blowup2remove_(get(Blowup2raaname));
+Blowup2hide(get(Blowup2raaname));
+);
+);
+</action>
+
+
+
+<action name="Blowup2show">
+if(autorotate.enabled,
+pauseautorotation(forceplugin););
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, true);
+set(layer[Blowup2title%1].visible, true);
+set(layer[Blowup2description%1].visible, true);
+set(layer[Blowup2box%1].visible, true);
+set(layer[Blowup2Image%1].visible, true);
+set(layer[Blowup2BoxPict%1].visible, true);
+</action>
+
+<action name="Blowup2hide">
+if(autorotate.enabled == false,
+resumeautorotation(forceplugin);
+);
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, false);
+set(layer[Blowup2title%1].visible, false);
+set(layer[Blowup2description%1].visible, false);
+set(layer[Blowup2box%1].visible, false);
+set(layer[Blowup2Image%1].visible, false);
+set(layer[Blowup2BoxPict%1].visible, false);
+</action>
+
+
+
+
+
+
+<action name="Blowup2get_thumb" >
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+
+
+set(hotspot[%1].onhover,
+Blowup2show(%1);
+Blowup2go2(%1);
+);
+
+
+set(hotspot[%1].onout,
+Blowup2hide(%1);
+
+hideTooltip();
+tween(hotspot[%1].scale,1,0.5);
+);
+
+
+<!--set(hotspot[%1].onup,
+Blowup2hide(%1);
+hideTooltip();
+
+);-->
+
+</action>
+
+<action name="Blowup2go2">
+
+
+add(Blowup2marginW, 0 , 340);
+add(Blowup2marginH, 180 , 0);
+
+set(Blowup2tul,get(hotspot[%1].linktarget));
+set(Blowup2tu, get(scene[get(Blowup2tul)].thumburl));
+if(Blowup2tu == null,
+set(Blowup2tu, get(panoramagroup[get(Blowup2tul)].thumburl));
+);
+
+
+set(Blowup2HH_center, calc(0++200  + (0*2)));
+
+set(Blowup2HH, calc(0 + 180 + (0*2)));
+
+set(Blowup2larghezza, calc(0 + 340 + (0*2)));
+
+<!--set(Blowup2POSX, calc(0 + (0*2)));-->
+
+set(Blowup2POSY, calc( 0 + 0 -10));
+
+
+
+
+
+set(layer[Blowup2description%1].width, calc(0 +  340 + (0*2)));
+set(layer[Blowup2title%1].width,340);
+set(layer[Blowup2box%1].height, get(Blowup2HH_center));
+set(layer[Blowup2box%1].width, get(Blowup2larghezza));
+set(layer[Blowup2BoxPict%1].x,0);
+set(layer[Blowup2description%1].x,get(Blowup2POSX));
+
+set(layer[Blowup2BoxPict%1].y,calc(0 + 200));
+set(layer[Blowup2description%1].edge,center);
+set(layer[Blowup2description%1].align,center);
+set(layer[Blowup2description%1].y,0);
+
+set(layer[Blowup2BoxPict%1].edge,bottom);
+set(layer[Blowup2BoxPict%1].align,bottom);
+
+
+
+
+
+
+
+hideTooltip();
+
+set(Blowup2ax, get(hotspot[%1].ath));
+set(Blowup2ay, get(hotspot[%1].atv));
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].visible,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+set(hotspot[%1].edge,center);
+set(hotspot[%1].align,center);
+
+
+addhotspot(Blowup2Hotspot_Ghost%1);
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, true);
+set(hotspot[Blowup2Hotspot_Ghost%1].capture, true);
+set(hotspot[Blowup2Hotspot_Ghost%1].zoom, false);
+set(hotspot[Blowup2Hotspot_Ghost%1].zorder2, 100 );
+set(hotspot[Blowup2Hotspot_Ghost%1].zorder, 100 );
+set(hotspot[Blowup2Hotspot_Ghost%1].ath,get(Blowup2ax));
+set(hotspot[Blowup2Hotspot_Ghost%1].distorted,false);
+set(hotspot[Blowup2Hotspot_Ghost%1].atv,get(Blowup2ay));
+set(hotspot[Blowup2Hotspot_Ghost%1].width, get(Blowup2marginW));
+set(hotspot[Blowup2Hotspot_Ghost%1].height, get(Blowup2marginH));
+set(hotspot[Blowup2Hotspot_Ghost%1].keep,true);
+set(hotspot[Blowup2Hotspot_Ghost%1].url, '%FIRSTXML%/graphics/blowup2/white.png');
+
+set(hotspot[Blowup2Hotspot_Ghost%1].enable,true);
+set(hotspot[Blowup2Hotspot_Ghost%1].bgalpha,1);
+set(hotspot[Blowup2Hotspot_Ghost%1].ox,0);
+set(Blowup2bobo,get(layer[Blowup2box%1].height));
+set(hotspot[Blowup2Hotspot_Ghost%1].oy,calc((30  + (Blowup2bobo / 2 )) *-1));
+
+addlayer(Blowup2box%1);
+set(layer[Blowup2box%1].bgalpha,0);
+set(layer[Blowup2box%1].bgcolor, 0x000000);
+set(layer[Blowup2box%1].visible, true);
+set(layer[Blowup2box%1].align, center);
+set(layer[Blowup2box%1].edge, center);
+<!--set(layer[Blowup2box%1].scale,get(Blowup2myscale));-->
+set(layer[Blowup2box%1].scale,1);
+set(layer[Blowup2box%1].scalechildren,true);
+
+set(layer[Blowup2box%1].bgborder, 0 0x000000 1);
+set(layer[Blowup2box%1].bgshadow, 0 0 0 0 000000 0.7000076295109483);
+set(layer[Blowup2box%1].bgroundedge, 0);
+set(layer[Blowup2box%1].capture, true);
+set(layer[Blowup2box%1].y,0);
+set(layer[Blowup2box%1].x,0);
+set(layer[Blowup2box%1].enabled, true);
+set(layer[Blowup2box%1].keep, true);
+set(layer[Blowup2box%1].type, container);
+
+set(layer[Blowup2box%1].parent,hotspot[Blowup2Hotspot_Ghost%1]);
+
+
+
+
+getmessage(Blowup2hsho, get(hotspot[%1].descriptionID));
+
+getmessage(Blowup2hshot, get(scene[get(Blowup2tul)].titleid));
+set(Blowup2testyes,true);
+if(Blowup2hsho !== null
+,
+set(hotspot[Blowup2Hotspot_Ghost%1].height,180
+);,);
+
+addlayer(Blowup2description%1);
+
+set(layer[Blowup2description%1].height,200);
+set(layer[Blowup2description%1].handcursor, false);
+set(layer[Blowup2description%1].width,340);
+set(layer[Blowup2description%1].type,text);
+set(layer[Blowup2description%1].vcenter,true );
+set(layer[Blowup2description%1].zorder,1);
+set(layer[Blowup2description%1].bgroundedge, 0);
+
+
+
+
+Blowup2convert(get(Blowup2hsho));
+set(layer[Blowup2description%1].onloaded,Blowup2add_html_code(get(Blowup2hsho2),20,%1));
+
+
+
+
+set(layer[Blowup2description%1].css,padding:0px; );
+set(layer[Blowup2description%1].parent,layer[Blowup2box%1]);
+set(layer[Blowup2description%1].bgalpha,0);
+set(layer[Blowup2description%1].bgcolor,0xffffff);
+
+
+
+
+</action>
+<events name="Blowup2stascale"
+keep="true"
+onresize="Blowup2remove();Blowup2respo();"
+
+/>
+<action name="Blowup2respo">
+
+set(Blowup2stageSize, stagewidth);
+
+set(Blowup2myscale, calc(stagewidth / 1000));
+clamp(Blowup2myscale, 0.6,1);
+
+  </action>
+
+
+<action name="Blowup2remove_">
+
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, false);
+hideTooltip();
+removehotspot(Blowup2Hotspot_Ghost%1);
+removelayer(Blowup2box%1);
+removelayer(Blowup2Image%1);
+removelayer(Blowup2BoxPict%1);
+removelayer(Blowup2description%1);
+removelayer(Blowup2title%1);
+removelayer(Blowup2close%1);
+
+  </action>
+
+<action name="Blowup2stopvideo" type="javascript" >
+  <![CDATA[
+  $("iframe").addClass("Blowup2yt_player_iframe");
+    $('.Blowup2yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+<action name="Blowup2autoplayvideo" type="javascript" >
+  <![CDATA[
+
+    $('.Blowup2yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+
+<action name="Blowup2add_html_code" type="Javascript"><![CDATA[
+
+        var div = document.createElement("div");
+
+        div.style.webkitUserSelect = "text"
+        div.style.MozUserSelect = "text"
+        div.style.msUserSelect = "text"
+        div.style.userSelect = "text";
+
+        var nam = "myID" + args[3];
+
+
+        div.setAttribute("id",nam);
+        div.setAttribute("style", "vertical-align: middle;  -moz-user-select: text;-webkit-user-select: text;-ms-user-select: text;user-select: text; color:#666666; font-Family:Noto Sans CJK KR Regular; overflow:auto; width:100%; height:100%; font-size:calc(12px + 0.2vw); box-sizing:border-box; padding-top:0px; padding-right:0px; padding-bottom: 0px;padding-left: 0px; text-align:center; font-weight:normal;font-style:normal;" );
+
+        div.addEventListener("mousewheel", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("DOMMouseScroll", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("touchstart", function(event){ if(krpano.device.ios && window.innerHeight == krpano.display.htmltarget.offsetHeight){ /* avoid the iOS 'overscrolling' for fullpage viewers */ var bs = document.body.parentNode.style; bs.position="fixed"; bs.top=0; bs.left=0; bs.right=0; bs.bottom=0; } krpano.control.preventTouchEvents = false; event.stopPropagation(); }, true);
+        div.addEventListener("touchend", function(event){ krpano.control.preventTouchEvents = true; event.stopPropagation(); }, true);
+        div.addEventListener("gesturestart", function(event){ event.preventDefault(); }, true);
+
+        // add some html code:
+        div.innerHTML = args[1];
+
+        // add the div to the layer element:
+        caller.sprite.appendChild(div);
+
+            $('#' + nam + ' a').css("color","#d90b0b");
+            $('#' + nam + ' a').css("text-decoration","none");
+
+
+
+
+ ]]></action>
+
+
+
+
+
+// TODO: Bloup, create actions for open blowup external
+
+  <action name="hideTourInfo">set(tour_displayinfo, false);events.dispatch(onhidetourinfo);</action>
+  <action name="showTourInfo">set(tour_displayinfo, true); events.dispatch(onshowtourinfo);</action>
+
+<action name="setTourLanguage">
+  if (%1 == null,
+    showlog();
+    trace("CHANGE TOUR LANGUAGE : NO LANGUAGE SET");
+   ,
+    set(tour_language, %1);
+    js(eventTourChangeLanguage(get(tour_language)));
+    events.dispatch(changetourlanguage);
+  );
+</action>
+
+  <action name="exitFullScreen" devices="fullscreensupport">set(tour_fullscreen,false);js(setFullscreen(false));</action>
+  <action name="enterFullScreen" devices="fullscreensupport">set(tour_fullscreen,true);js(setFullscreen(true));</action>
+  <action name="switchFullScreen">if(tour_fullscreen,exitFullScreen();,enterFullScreen(););</action>
+
+  
+  <events name="krpanoExitFullscreenEvent"
+    onexitfullscreen="if(tour_fullscreen,exitFullScreenChangeEvent(););"
+    keep="true" />
+
+  <action name="exitFullScreenChangeEvent" devices="fullscreensupport">set(tour_fullscreen,false);events.dispatch(onexitfullscreen);</action>
+  <action name="enterFullScreenChangeEvent" devices="fullscreensupport">set(tour_fullscreen,true);events.dispatch(onenterfullscreen);</action>
+  <action name="exitFullScreenFallback">set(fullscreen,false);</action>
+  <action name="enterFullScreenFallback">set(fullscreen,true);</action>
+  
+  <action name="resizeFullScreenEvent">delayedcall(0,updatescreen(););</action>
+
+  <action name="hideTourControls">set(tour_displaycontrols, false);events.dispatch(hidetourcontrols);</action>
+  <action name="showTourControls">set(tour_displaycontrols, true); events.dispatch(showtourcontrols);</action>
+
+
+<action name="viewControlZoomIn">
+	if(%1,
+		if(%2,
+			if(%2 LT view.fovmin,
+				zoomto(get(view.fovmin));
+			,
+				if(%2 LT view.fov,
+					zoomto(%2);
+				);
+			);
+		,
+			set(fov_moveforce, -1);
+			delayedcall(0.1, viewControlZoomStop());
+		);
+	,
+		set(fov_moveforce, -1);
+	);
+</action>
+<action name="viewControlZoomOut">
+	if(%1,
+		if(%2,
+			if(%2 GT view.fovmax,
+				zoomto(get(view.fovmax));
+			,
+				if(%2 GT view.fov,
+					zoomto(%2);
+				);
+			);
+		,
+			set(fov_moveforce, +1);
+			delayedcall(0.1, viewControlZoomStop());
+		);
+	,
+		set(fov_moveforce, +1);
+	);
+</action>
+<action name="viewControlZoomStop">
+	set(fov_moveforce, 0);
+</action>
+
+  <action name="shareTour">events.dispatch(onsharetour);</action>
+
+</krpano>

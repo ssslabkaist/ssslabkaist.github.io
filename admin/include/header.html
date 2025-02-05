@@ -1,0 +1,314 @@
+<?
+if($menuBcategory || $menuMcategory) {
+	$_SESSION["session_menuBcategory"]=$menuBcategory;
+	$_SESSION["session_menuMcategory"]=$menuMcategory;
+}
+
+if(!$menuBcategory && $menuMcategory) {
+	$_SESSION["session_menuBcategory"] = substr($menuMcategory,0,2)."000000";
+}
+
+if($menuMcategory) {
+	$_SESSION["session_menuBcategory"] = substr($menuMcategory,0,2)."000000";
+	$_SESSION["session_menuMcategory"] = $menuMcategory;
+}
+?>
+<html>
+<head>
+<title>KAIST 스마트구조시스템 연구실 ADMIN</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="imagetoolbar" content="no" />
+
+
+<script type="text/javascript" src="/script/script.js"></script>
+<script type="text/javascript" src="/js/jquery.1.12.0.min.js"></script>
+<script type="text/javascript" src="/js/program.js"></script>
+<script type="text/javascript" src="/js/date_account.js"></script>
+<script type="text/javascript" src="/js/area_search.js"></script>
+<script src="/admin/js/program.js"></script>
+
+<link rel="shortcut icon" href="/images/common/favicon.ico">
+<link href="/admin/style/style.css" rel="stylesheet" type="text/css">
+
+<!--다음 도로명 주소 API START-->
+<?if($_SERVER["HTTPS"]=="on") {?>
+	<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+<?}else{?>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<?}?>
+<!--다음 도로명 주소 API END-->
+
+
+<script type="text/javascript">
+//가로사이즈 변화시 왼쪽메뉴, 퀵 스타일 변경
+jQuery(document).ready(function() {
+	jQuery(window).resize(function(){
+		var width = parseInt(jQuery(this).width());
+		//var height = parseInt(jQuery(this).height());
+		var height = parseInt(jQuery('.left_fixed').height());
+		//window.alert(height);
+		
+		//if (width < 995) {
+		if (width < 1250 || height > 600) {
+			jQuery('.left_fixed').css({ 'position': 'absolute', 'top':'77px', 'margin':'0','z-index':'1' });
+		} else  {
+			jQuery('.left_fixed').css({ 'position': 'fixed', 'top':'77px', 'margin':'0','z-index':'100' });
+		}
+
+		/*
+		if (width < 1250) {
+			//jQuery("body").css({'background':'blue'});
+			jQuery('#quick_top').css({ 'position': 'fixed', 'top':'0px', 'margin':'0','z-index':'120' });
+		} else  {
+			jQuery('#quick_top').css({ 'position': 'absolute', 'top':'0px', 'margin':'0','z-index':'120' });
+		}
+		*/
+		
+		
+	}).resize(); 
+
+});
+</script>
+
+
+<script>
+//게시판 반응형으로 적용되지 않게
+jQuery(document).ready(
+	//게시판 반응형으로 적용되지 않게
+	function() {
+		//일반 게시판
+		$("div#adminBoardId *").removeClass('hidden-xs');
+
+		//갤러리 게시판
+		$("div#adminBoardId").find(".list_gallery").find("li.col-sm-4").addClass("col-xs-4");
+
+		//갤러리+간략설명 게시판
+		$("div#adminBoardId").find(".list_gallery_list").find(".col-sm-2").addClass("col-xs-2");
+		$("div#adminBoardId").find(".list_gallery_list").find(".col-sm-10").addClass("col-xs-10");
+	}
+);
+</script>
+
+</head>
+<body>
+<div class="top_fixed">
+	<!--▽gnb-->
+	<div class="top_gnb">
+		<!--<div class="logo"><span><a href="#link">이비아이-인트라넷</a><img src="/admin/images/include/logo_right.jpg" style="vertical-align: bottom;" /></span></div>-->
+		<div class="logo"><!--<a href="/admin/main/main.html"><img src="/admin/images/include/logo_right.jpg" /></a>--><img src="/admin/images/include/logo_right.jpg" /></div>
+		<ul class="gnb">
+			<li class="line"></li>
+			<li><span class="s_btn_01"><a href="/main/main.html" target="_blank"><strong>홈바로가기</strong></a></span></li>
+			<!--<li><span class="s_btn_01"><a href="#link"><strong>관리자메인</strong></a></span></li>-->
+			<li><span class="s_btn_01"><a href="/admin/logout.html"><strong>로그아웃</strong></a></span></li>
+
+<!--
+			<li class="line"></li>
+			<li class="etc"><span class="s_btn_01"><a href="/admin/count/count.html?menuBcategory=05000000&menuMcategory=05020000"><img src="/admin/images/include/icon_01.gif" style="padding:4px 0 0 3px;vertical-align: top;" /><strong>접속통계</strong></a></span></li>
+-->
+
+			<li class="line"></li>
+			<li class="etc"><span class="s_btn_01"><a href="/admin/admin_modi.html?menuBcategory=05000000&menuMcategory=05010000"><img src="/admin/images/include/icon_02.gif" style="padding:1px 0 0 3px;vertical-align: top;" /><strong>비밀번호변경</strong></a></span></li>
+		</ul>
+	</div>
+	<!--△gnb-->
+	<!--▽top 메뉴-->
+	<div class="top_bar">
+		<div class="top_day"><img src="/admin/images/include/icon_clock.jpg" alt="시계"  /><span><?=date("Y")?>. <?=date("m")?>. <?=date("d")?> <?=date("A")?> <?=date("g")?>:<?=date("i")?> [<?=weekChange(date("w"))?>]</span></div>
+		<ul id="top1menu">
+
+
+
+
+<?
+$menuSql = mysql_query("SELECT catename,cateurl,catecode FROM menuCategory WHERE view_state='Y' AND catedeg='1' AND INSTR(admin_auth,'@@".$_SESSION["session_admin_auth"]."@@') ORDER BY listorder ASC, catename ASC",$dbconn);
+
+$menuNum = mysql_num_rows($menuSql);
+$menu=0;
+while($menuRow = mysql_fetch_row($menuSql)) {
+
+	if($menu!=0) {
+		$tdStyle = "style=\"padding-left:1px\"";
+	}else{
+		$tdStyle="";
+	}
+
+	if($_SESSION["session_menuBcategory"]==$menuRow[2]) {
+		$classView=" class=\"on\"";
+		$leftTitle="".stripslashes($menuRow[0])."";
+	}else{
+		$classView="";
+	}
+
+
+	$menuLeftSql = mysql_query("SELECT catename,cateurl,catecode FROM menuCategory WHERE view_state='Y' AND catedeg='2' AND SUBSTRING(catecode,1,2)='".substr($menuRow[2],0,2)."' AND INSTR(admin_auth,'@@".$_SESSION["session_admin_auth"]."@@') AND cateurl<>'' ORDER BY listorder ASC, catename ASC LIMIT 1",$dbconn);
+	$menuLeftRow = mysql_fetch_row($menuLeftSql);
+
+	
+	$menuTopLocation = $menuLeftRow[1];
+	if($menuRow[1]) {
+		$menuTopLocation = $menuRow[1];
+	}
+
+
+	if($menuTopLocation) {
+
+		$q = explode("?",$menuTopLocation);
+		if(sizeof($q)>1) {
+			$connentStr="&";
+		}else{
+			$connentStr="?";
+		}
+		echo "
+			<li>
+				<a href=\"#void\" ".$classView." onClick=\"location.href='".$menuTopLocation."".$connentStr."menuBcategory=".$menuRow[2]."';\"><strong ".$classView.">".stripslashes($menuRow[0])."</strong></a>
+			</li>";
+
+		/*	아래 조건 삭제시 정상 연결
+		////주문 페이지 작업 완료되면 삭제하고 위에 주속 풀기 START
+		if($menuRow[2]!="03000000") {
+			echo "
+			<li>
+				<a href=\"#void\" ".$classView." onClick=\"location.href='".$menuTopLocation."".$connentStr."menuBcategory=".$menuRow[2]."';\"><strong ".$classView.">".stripslashes($menuRow[0])."</strong></a>
+			</li>";
+		}else{
+			echo "
+			<li>
+				<a href=\"#void\" ".$classView." onClick=\"return false;\"><strong ".$classView.">".stripslashes($menuRow[0])."</strong></a>
+			</li>";
+		}
+		////주문 페이지 작업 완료되면 삭제하고 위에 주속 풀기 END
+		*/
+
+	}else{
+		echo "
+			<li>
+				<a href=\"#void\" ".$classView." onClick=\"return false;\"><strong ".$classView.">".stripslashes($menuRow[0])."</strong></a>
+			</li>";
+	}
+
+	$menu++;
+}
+
+if(!$leftTitle) {
+	$leftTitle="관리자";
+}
+?>
+		</ul>
+	</div>
+	<!--△top 메뉴-->
+</div>
+<div class="top_gab"></div>
+<table width="100%" style="border-left:4px solid #69614e;border-right:4px solid #69614e;">
+	<tr>
+		<td class="left_menu_area">
+			<div class="left_fixed">
+				<div class="left_title"><span><?=$leftTitle?></span></div>
+				<ul class="left_menus">
+
+
+
+
+<?
+if($_SESSION["session_menuBcategory"]) {
+
+	$BcategoryH = substr($_SESSION["session_menuBcategory"],0,2);
+/*
+	if($BcategoryH=="04") {
+		include "".$_SERVER["DOCUMENT_ROOT"]."/admin/include/bid_num.html";
+	}
+*/
+
+	$menuLeftSql = mysql_query("SELECT catename,cateurl,catecode FROM menuCategory WHERE view_state='Y' AND catedeg='2' AND SUBSTRING(catecode,1,2)='".$BcategoryH."' AND INSTR(admin_auth,'@@".$_SESSION["session_admin_auth"]."@@') ORDER BY listorder ASC, catename ASC",$dbconn);
+	$menuLeft=0;
+	while($menuLeftRow = mysql_fetch_row($menuLeftSql)) {
+
+		if(!$_SESSION["session_menuMcategory"]) {
+			if($menuLeft==0) {
+				$classLeft = "class=\"on\"";
+			}else{
+				$classLeft = "";
+			}
+		}else{
+			if($_SESSION["session_menuMcategory"]==$menuLeftRow[2]) {
+				$classLeft = "class=\"on\"";
+			}else{
+				$classLeft = "";
+			}
+		}
+
+		$menuBcategory = substr($menuLeftRow[2],0,2)."000000";
+
+		$q = explode("?",$menuLeftRow[1]);
+		if(sizeof($q)>1) {
+			$connentStr="&";
+		}else{
+			$connentStr="?";
+		}
+
+
+
+		$view_echo="";
+		if($BcategoryH=="04") {
+			$view_echo = ${"d_".substr($menuLeftRow[2],0,4)};
+
+		}
+
+		if($menuLeftRow[1]) {
+
+			$newMark = "";
+
+	
+			if(preg_match("/\/order\/list_step_1.html/",$menuLeftRow[1])) {
+				if(orderStepNum("",1)) {
+					$newMark = "<span style=\"color:#ffc1c1;\">".orderStepNum("",1)."건</span>";
+				}
+			}
+			if(preg_match("/\/order\/list_step_2.html/",$menuLeftRow[1])) {
+				if(orderStepNum("",2)) {
+					$newMark = "<span style=\"color:#ffc1c1;\">".orderStepNum("",2)."건</span>";
+				}
+			}
+			if(preg_match("/\/order\/list_step_3.html/",$menuLeftRow[1])) {
+				if(orderStepNum("",3)) {
+					$newMark = "<span style=\"color:#ffc1c1;\">".orderStepNum("",3)."건</span>";
+				}
+			}
+			if(preg_match("/\/order\/list_step_4.html/",$menuLeftRow[1])) {
+				if(orderStepNum("",4)) {
+					$newMark = "<span style=\"color:#ffc1c1;\">".orderStepNum("",4)."건</span>";
+				}
+			}
+			if(preg_match("/\/order\/list_step_21.html/",$menuLeftRow[1])) {
+				if(orderStepNum("",21)) {
+					$newMark = "<span style=\"color:#ffc1c1;\">".orderStepNum("",21)."건</span>";
+				}
+			}
+			if(preg_match("/\/order\/list_step_41.html/",$menuLeftRow[1])) {
+				if(orderStepNum("",41)) {
+					$newMark = "<span style=\"color:#ffc1c1;\">".orderStepNum("",41)."건</span>";
+				}
+			}
+			if(preg_match("/\/order\/list_step_11.html/",$menuLeftRow[1])) {
+				if(orderStepNum("",11)) {
+					$newMark = "<span style=\"color:#ffc1c1;\">".orderStepNum("",11)."건</span>";
+				}
+			}
+
+
+			echo "
+					<li ".$classLeft."><a href=\"".$menuLeftRow[1]."".$connentStr."menuBcategory=".$menuBcategory."&menuMcategory=".$menuLeftRow[2]."\" ".$classLeft.">".stripslashes($menuLeftRow[0])." ".$newMark."</a></li>";
+		}else{
+			echo "
+					<li ".$classLeft." style=\"background:#000000;\"><a href=\"#void\" ".$classLeft.">".stripslashes($menuLeftRow[0])."</a></li>";
+		}
+
+
+		$menuLeft++;
+	}
+}
+?>
+				</ul>
+			</div>
+		</td>
+		<td style=" padding:0px; height:800px; vertical-align:top;">

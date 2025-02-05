@@ -1,0 +1,484 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//include "../../config/functions_refresh.inc";
+
+
+include "../include/header.html";
+?>
+
+<script language="javascript">
+<!--
+//등록
+	function Bcode_Add() {
+		if(!document.categoryForm.BcategoryName.value){
+			alert("생성하실 1단계분류를 입력 하세요.");
+			document.categoryForm.BcategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_OK.html?cateMode=Bcode_Add"
+		categoryForm.submit();
+	}
+	function Mcode_Add(Bcode) {
+	    if(!document.categoryForm.Bcategory.value){
+			alert("생성된 1단계분류를 선택하세요.");
+			return false;
+		}
+		if(!document.categoryForm.McategoryName.value){
+			alert("생성하실 2단계분류를 입력 하세요.");
+			document.categoryForm.McategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_OK.html?cateMode=Mcode_Add" + "&Bcode="+ Bcode ;
+		categoryForm.submit();
+	}
+	function Scode_Add(Bcode,Mcode) {
+		if(!document.categoryForm.Mcategory.value){
+			alert("생성된 2단계분류를 선택하세요.");
+			return false;
+		}
+		if(!document.categoryForm.ScategoryName.value){
+			alert("생성하실 3단계분류를 입력 하세요.");
+			document.categoryForm.ScategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_OK.html?cateMode=Scode_Add" + "&Bcode="+ Bcode + "&Mcode=" + Mcode ;
+		categoryForm.submit();
+	}
+	function SScode_Add(Bcode,Mcode,Scode) {
+		if(!document.categoryForm.Scategory.value){
+			alert("생성된 3단계분류를 선택하세요.");
+			return false;
+		}
+		if(!document.categoryForm.SScategoryName.value){
+			alert("생성하실 4단계분류를 입력 하세요.");
+			document.categoryForm.SScategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_OK.html?cateMode=SScode_Add" + "&Bcode="+ Bcode + "&Mcode=" + Mcode + "&Scode=" + Scode ;
+		categoryForm.submit();
+	}
+//수정
+	function Bcode_Mod(Bcode) {
+		if(!document.categoryForm.Bcategory.value){
+			alert("수정하실 1단계분류를 선택 하세요.");
+			return false;
+		}
+		if(!document.categoryForm.BcategoryName.value){
+			alert("수정하실 1단계분류명을 입력 하세요.");
+			document.categoryForm.BcategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_MODIOK.html?cateMode=Bcode_Mod"+"&Bcode="+ Bcode;
+		categoryForm.submit();
+	}
+	function Mcode_Mod(Bcode, Mcode) {
+		if(!document.categoryForm.Mcategory.value){
+			alert("수정하실 2단계분류를 선택 하세요.");
+			return false;
+		}
+		if(!document.categoryForm.McategoryName.value){
+			alert("수정하실 2단계분류명을 입력 하세요.");
+			document.categoryForm.McategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_MODIOK.html?cateMode=Mcode_Mod"+"&Bcode="+ Bcode+"&Mcode=" + Mcode ;
+		categoryForm.submit();
+	}
+	function Scode_Mod(Bcode,Mcode,Scode) {
+		if(!document.categoryForm.Scategory.value){
+			alert("수정하실 3단계분류를 선택 하세요.");
+			return false;
+		}
+		if(!document.categoryForm.ScategoryName.value){
+			alert("수정하실 3단계분류명을 입력 하세요.");
+			document.categoryForm.ScategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_MODIOK.html?cateMode=Scode_Mod"+"&Bcode="+ Bcode+"&Mcode=" + Mcode + "&Scode=" +Scode ;
+		categoryForm.submit();
+	}
+	function SScode_Mod(Bcode,Mcode,Scode,SScode) {
+		if(!document.categoryForm.SScategory.value){
+			alert("수정하실 4단계분류를 선택 하세요.");
+			return false;
+		}
+		if(!document.categoryForm.SScategoryName.value){
+			alert("수정하실 4단계분류명을 입력 하세요.");
+			document.categoryForm.SScategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_MODIOK.html?cateMode=SScode_Mod"+"&Bcode="+ Bcode+"&Mcode=" + Mcode + "&Scode=" +Scode + "&SScode=" +SScode ;
+		categoryForm.submit();
+	}
+//삭제
+	function Bcode_Del(Bcode) {
+		if(!document.categoryForm.Bcategory.value){
+			alert("삭제하실 1단계분류를 선택 하세요.");
+			return false;
+		}
+		if (confirm('1단계분류를 복구 하실수 없습니다. \n 그래도 삭제 하시겠습니까?') ) 
+		{
+			location.href="category_DELOK.html?cateMode=Bcode_Del"+"&Bcode="+ Bcode ;
+		}
+	}
+	function Mcode_Del(Bcode,Mcode) {
+		if(!document.categoryForm.Mcategory.value){
+			alert("삭제하실 2단계분류를 선택 하세요.");
+			return false;
+		}
+		if (confirm("2단계분류 복구 하실수 없습니다. \n 그래도 삭제 하시겠습니까?") ) 
+		{
+			location.href="category_DELOK.html?cateMode=Mcode_Del"+"&Bcode="+ Bcode +"&Mcode=" + Mcode ;
+		}
+	}
+	function Scode_Del(Bcode,Mcode,Scode) {
+		if(!document.categoryForm.Scategory.value){
+			alert("삭제하실 3단계분류를 선택 하세요.");
+			return false;
+		}
+		if (confirm("3단계분류 복구 하실수 없습니다. \n 그래도 삭제 하시겠습니까?") ) 
+		{
+			location.href="category_DELOK.html?cateMode=Scode_Del"+"&Bcode="+ Bcode +"&Mcode=" + Mcode  + "&Scode=" +Scode;
+		}
+	}
+	function SScode_Del(Bcode,Mcode,Scode,SScode) {
+		if(!document.categoryForm.SScategory.value){
+			alert("삭제하실 4단계분류를 선택 하세요.");
+			return false;
+		}
+		if (confirm("4단계분류 복구 하실수 없습니다. \n 그래도 삭제 하시겠습니까?") ) 
+		{
+			location.href="category_DELOK.html?cateMode=SScode_Del"+"&Bcode="+ Bcode +"&Mcode=" + Mcode  + "&Scode=" +Scode  + "&SScode=" +SScode;
+		}
+	}
+//onchange	
+	function Bmenu(CheckBcode){
+		if(CheckBcode)
+		{
+			location.href="./reg.html?CheckBcode="+CheckBcode;
+		}
+	}
+	function Mmenu(CheckBcode,CheckMcode){
+		if(CheckMcode)
+		{
+			location.href="./reg.html?CheckBcode="+CheckBcode+"&CheckMcode="+CheckMcode;
+		}
+	}
+	function Smenu(CheckBcode,CheckMcode,CheckScode){
+		if(CheckScode)
+		{
+			location.href="./reg.html?CheckBcode="+CheckBcode+"&CheckMcode="+CheckMcode+"&CheckScode="+CheckScode;
+		}
+	}
+	function SSmenu(CheckBcode,CheckMcode,CheckScode,CheckSScode){
+		if(CheckScode)
+		{
+			location.href="./reg.html?CheckBcode="+CheckBcode+"&CheckMcode="+CheckMcode+"&CheckScode="+CheckScode+"&CheckSScode="+CheckSScode;
+		}
+	}
+//-->
+</script>
+
+
+
+
+<script language="javascript">
+function Code_BList() {
+	var url = "./listorder_bcode.html";
+	window.open(url,'Code_BList','top=0,left=0,width=400,height=500,scrollbars=yes');
+}
+</script>
+
+<script language="javascript">
+function Code_MList(CheckCode) {
+	if(!CheckCode) {
+		window.alert("1단계 분류를 선택하세요");
+		return false;
+	}
+	var url = "./listorder_mcode.html?CheckCode="+CheckCode;
+	window.open(url,'Code_MList','top=0,left=0,width=400,height=500,scrollbars=yes');
+}
+</script>
+
+<script language="javascript">
+function Code_SList(CheckCode) {
+	if(!CheckCode) {
+		window.alert("2단계 분류를 선택하세요");
+		return false;
+	}
+	var url = "./listorder_scode.html?CheckCode="+CheckCode;
+	window.open(url,'Code_SList','top=0,left=0,width=400,height=500,scrollbars=yes');
+}
+</script>
+
+<script language="javascript">
+function Code_SSList(CheckCode) {
+	if(!CheckCode) {
+		window.alert("2단계 분류를 선택하세요");
+		return false;
+	}
+	var url = "./listorder_sscode.html?CheckCode="+CheckCode;
+	window.open(url,'Code_SSList','top=0,left=0,width=400,height=500,scrollbars=yes');
+}
+</script>
+<script language="javascript">
+function category_List_Pop(CheckCode) {
+	if(!CheckCode) {
+		window.alert("카테고리를 선택하세요");
+		return false;
+	}
+	var url = "./category_top_manager.html?CheckCode="+CheckCode;
+	window.open(url,'Brand_List','top=0,left=0,width=600,height=500,scrollbars=yes');
+}
+</script>
+
+
+
+
+
+<div style="border-bottom:1px solid #d9dde2;">
+				<span class="con_title">사용자관리사용자관리사용자관리사용자관리</span>
+				<span class="con_navi">관리자 &gt; 사용자관리</span>
+				<div style="clear:both; height:1px;"></div>
+			</div>
+
+
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+
+<form name="categoryForm" method="post">
+	<tr>
+		<td height="46">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="s_tit">업종관리</td>
+					<td align="right" valign="top" style="padding-top:24px">
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td style="padding-right:5px"><img src="../images/include/icon_navi.gif"></td>
+								<td class="navi">관리자 &gt; 운영관리 &gt; 업종관리</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td height="20" bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF" >
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td style="border:1px solid #cfd4da; padding:1px;">
+						<table class="list_001">
+							<colgroup>
+								<col width="33%" />
+								<col width="33%" />
+<!--								<col width="33%" />-->
+							</colgroup>
+							<tr>
+								<th>1단계분류</th>
+								<th class="end_none">2단계분류</th>
+<!--								<th class="end_none">3단계분류</th>-->
+							</tr>
+							<tr>
+								<td>
+								
+									<select name="Bcategory" size="20" style="width:100%; height:200px;" onchange="Bmenu(this.value);" class="input_sel">
+<?
+		$query = "SELECT catecode, catename FROM upjong_category WHERE catedeg='1' ORDER BY listorder ASC,catecode ASC";
+
+		$sql=mysql_query($query,$dbconn);
+
+		$num = mysql_num_rows($sql);
+
+		if (!$num){
+			
+		}else{
+
+			while ($row = mysql_fetch_row($sql))
+			{
+?>
+										<option value=<?=$row[0]?> <? if ($CheckBcode==$row[0]){ echo(' selected');}?>><?=$row[1]?> (<?=$row[0]?>)</option>
+<?			
+			}
+		}
+?>
+									</select>
+								</td>
+								<td>
+								
+									<select name="Mcategory" size="20" style="width:100%; height:200px;" onchange="Mmenu('<?=$CheckBcode?>',this.value);" class="input_sel">
+<?
+		$CBcode = substr($CheckBcode,0,2);
+		$query = "SELECT catecode, catename FROM upjong_category WHERE catedeg='2' AND catecode LIKE BINARY('$CBcode%') ORDER BY listorder ASC,catecode ASC";
+
+		$sql=mysql_query($query,$dbconn);
+
+		$num = mysql_num_rows($sql);
+
+		if (!$num || !$CheckBcode) {
+
+		}else{
+			while ($row = mysql_fetch_row($sql))
+			{
+?>
+										<option value=<?=$row[0]?> <? if ($CheckMcode==$row[0]){ echo(' selected');}?> ><?=$row[1]?> (<?=$row[0]?>)</option>
+<?			
+			}	
+		}
+?>
+
+									</select>
+								</td>
+<!--
+								<td>
+
+
+			<select name="Scategory" size="20" style="width:100%; height:200px;" onchange="Smenu('<?=$CheckBcode?>','<?=$CheckMcode?>', this.value);" class="input_sel">
+<?
+		$CMcode = substr($CheckMcode,0,4);
+		$query = "SELECT catecode, catename FROM upjong_category WHERE catedeg='3' AND catecode LIKE BINARY('$CMcode%')";
+		
+		$sql=mysql_query($query,$dbconn);
+		
+		$num=mysql_num_rows($sql);
+
+		if (!$num || !$CheckMcode){
+			
+		}else{
+
+			while ($row = mysql_fetch_row($sql))
+			{
+?>
+				<option value=<?=$row[0]?> <? if ($CheckScode==$row[0]){ echo(' selected');}?> ><?=$row[1]?> (<?=$row[0]?>)</option>
+<?			
+			}	
+		}
+?>
+
+			</select>
+								</td>
+-->
+							</tr>
+							<tr>
+								<td valign="top" class="all_none">
+									<table border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="bl_tit" valign="top">1단계 추가</td>
+											<td style="padding-left:5px">
+												<table>
+													<tr>
+														<td style="padding-right:2px;">
+															<input type="text" size="30" name="BcategoryName" class="input_sel">
+															<a href="#viod" onClick="Bcode_Add();"><img src="../images/board/btn_add.gif" border="0" style="vertical-align:middle; margin:0 0 2px 0;" /></a>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" height="3"></td>
+										</tr>
+										<tr>
+											<td class="bl_tit">1단계 변경</td>
+											<td style="padding-left:5px">
+												<table border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td><a href="#viod" onClick="Bcode_Mod('<?=$CheckBcode?>');"><img src="../images/board/btn_modify.gif" border="0" style="vertical-align:middle;" /></a></td>
+														<td><a href="#viod" onClick="Bcode_Del('<?=$CheckBcode?>');"><img src="../images/board/btn_del.gif" border="0" style="vertical-align:middle;" /></a></td>
+														<td><a href="#viod" onClick="Code_BList();"><img src="../images/board/btn_change.gif" border="0" style="vertical-align:middle;" /></a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td valign="top" class="all_none">
+									<table border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="bl_tit" valign="top">2단계 추가</td>
+											<td style="padding-left:5px">
+												<table border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td style="padding-right:2px;">
+															<input type="text" size="30" name="McategoryName" class="input_sel">
+															<a href="#viod" onClick="Mcode_Add('<?=$CheckBcode?>');"><img src="../images/board/btn_add.gif" border="0" style="vertical-align:middle; margin:0 0 2px 0;" /></a>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" height="3"></td>
+										</tr>
+										<tr>
+											<td class="bl_tit">2단계 변경</td>
+											<td style="padding-left:5px">
+												<table border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td><a href="#viod" onClick="Mcode_Mod('<?=$CheckBcode?>','<?=$CheckMcode?>');"><img src="../images/board/btn_modify.gif" border="0" style="vertical-align:middle;" /></a></td>
+														<td><a href="#viod" onClick="Mcode_Del('<?=$CheckBcode?>','<?=$CheckMcode?>');"><img src="../images/board/btn_del.gif" border="0" style="vertical-align:middle;" /></a></td>
+														<td><a href="#viod" onClick="Code_MList('<?=$CheckBcode?>');"><img src="../images/board/btn_change.gif" border="0" style="vertical-align:middle;" /></a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+<!--
+								<td valign="top" class="all_none">
+									<table border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="bl_tit" valign="top">3단계 추가</td>
+											<td style="padding-left:5px">
+												<table border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td style="padding-right:2px;">
+															<input type="text" size="15" name="ScategoryName" class="input_sel">
+															<a href="#viod" onClick="Scode_Add('<?=$CheckBcode?>', '<?=$CheckMcode?>');"><img src="../images/board/btn_add.gif" border="0" style="vertical-align:middle; margin:0 0 2px 0;" /></a>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" height="3"></td>
+										</tr>
+										<tr>
+											<td class="bl_tit">3단계 변경</td>
+											<td style="padding-left:5px">
+												<table border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td><a href="#viod" onClick="Scode_Mod('<?=$CheckBcode?>', '<?=$CheckMcode?>', '<?=$CheckScode?>');"><img src="../images/board/btn_modify.gif" border="0" /></a></td>
+														<td><a href="#viod" onClick="Scode_Del('<?=$CheckBcode?>', '<?=$CheckMcode?>', '<?=$CheckScode?>');"><img src="../images/board/btn_del.gif" border="0" /></a></td>
+														<td><a href="#viod" onClick="Code_SList('<?=$CheckScode?>');"><img src="../images/board/btn_change.gif" border="0" /></a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+-->
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+</form>
+
+</table>
+
+<?include "../include/footer.html";?>

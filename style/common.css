@@ -1,0 +1,206 @@
+@charset "utf-8";
+
+/* *************************** 프린트-부트스트랩 제어 *************************** */
+@media print {
+	html, body {min-width:992px !important;} /* 프린트시 부트스트랩 스타일 제어 */
+    a:link:after,a:visited:after {content: none;}
+	* {-webkit-print-color-adjust:exact;} /* 크롬에서 배경색, 이미지를 강제 인쇄 */
+}
+@media screen and (max-width:767px){
+	.hidden-xs {display:none !important;}
+}
+
+/* *************************** 폰트 / 상황에 맞춰 사용 *************************** */
+@font-face {
+  font-family: 'NotoSansKR';
+  font-style: normal;
+  font-weight: 100;
+  src: url(../fonts/NotoSansKR-Thin.woff2) format('woff2'),
+       url(../fonts/NotoSansKR-Thin.woff) format('woff'),
+       url(../fonts/NotoSansKR-Thin.otf) format('opentype');
+}
+@font-face {
+  font-family: 'NotoSansKR';
+  font-style: normal;
+  font-weight: 300;
+  src: url(../fonts/NotoSansKR-Light.woff2) format('woff2'),
+       url(../fonts/NotoSansKR-Light.woff) format('woff'),
+       url(../fonts/NotoSansKR-Light.otf) format('opentype');
+}
+@font-face {
+   font-family: 'NotoSansKR';
+   font-style: normal;
+   font-weight: 400;
+   src: url(../fonts/NotoSansKR-Regular.woff2) format('woff2'),
+        url(../fonts/NotoSansKR-Regular.woff) format('woff'),
+        url(../fonts/NotoSansKR-Regular.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'NotoSansKR';
+   font-style: normal;
+   font-weight: 500;
+   src: url(../fonts/NotoSansKR-Medium.woff2) format('woff2'),
+        url(../fonts/NotoSansKR-Medium.woff) format('woff'),
+        url(../fonts/NotoSansKR-Medium.otf) format('opentype');
+ }
+ @font-face {
+   font-family: 'NotoSansKR';
+   font-style: normal;
+   font-weight: 700;
+   src: url(../fonts/NotoSansKR-Bold.woff2) format('woff2'),
+        url(../fonts/NotoSansKR-Bold.woff) format('woff'),
+        url(../fonts/NotoSansKR-Bold.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'NotoSansKR';
+   font-style: normal;
+   font-weight: 900;
+   src: url(../fonts/NotoSansKR-Black.woff2) format('woff2'),
+        url(../fonts/NotoSansKR-Black.woff) format('woff'),
+        url(../fonts/NotoSansKR-Black.otf) format('opentype');
+ }
+/* ******************** //NotoSansKR ******************** */
+
+/* ******************** paybooc ******************** */
+@font-face {
+  font-family:'paybooc';
+  font-style: normal;
+  font-weight: 300;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff'),
+       url(../fonts/paybooc%20Light.ttf) format('truetype'),
+       url(../fonts/paybooc%20OTF%20Light.otf) format('opentype');
+}
+@font-face {
+   font-family:'paybooc';
+   font-style: normal;
+   font-weight: 500;
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Medium.woff') format('woff'),
+        url(../fonts/paybooc%20Medium.ttf) format('truetype'),
+        url(../fonts/paybooc%20OTF%20Medium.otf) format('opentype');
+ }
+ @font-face {
+   font-family:'paybooc';
+   font-style: normal;
+   font-weight: 700;
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff'),
+        url(../fonts/paybooc%20Bold.ttf) format('truetype'),
+        url(../fonts/paybooc%20OTF%20Bold.otf) format('opentype');
+ }
+@font-face {
+   font-family:'paybooc';
+   font-style: normal;
+   font-weight: 900;
+   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-ExtraBold.woff') format('woff'),
+        url(../fonts/paybooc%20ExtraBold.ttf) format('truetype'),
+        url(../fonts/paybooc%20OTF%20ExtraBold.otf) format('opentype');
+ }
+/* ******************** //paybooc ******************** */
+
+/* *************************** COMMON *************************** */
+
+/* IE10 뷰포트 버그대응 */
+@-ms-viewport { width: device-width; }
+@-o-viewport { width: device-width; }
+@viewport { width: device-width; }
+
+body {width:100%; height:100%; min-width:320px;}
+body .clear {clear:both;}
+body .split {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+body a {text-decoration:none !important; outline:none !important; word-wrap:expression( this.style.wordWrap="normal",this.hideFocus=true);}
+body #ie-warning {display:none; font-family:inherit;}
+
+i,cite,em,var,address,dfn {font-style:normal;}
+h1,h2,h3,h4,h5,h6 {line-height:1; padding:0; margin:0;}
+table {border-collapse:collapse; width: 100%; max-width: 100%; background:#fff;}
+
+hr {
+  height: 0;
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+pre {
+	display: block;
+	padding: 9.5px;
+	margin: 0 0 10px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	color: #333;
+	word-break: break-all;
+	word-wrap: break-word;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+  
+	white-space: pre-wrap; /* CSS3*/
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-all; /* Internet Explorer 5.5+ */ 
+}
+
+/* 정렬 */
+.align_l {text-align:left;}
+.align_r {text-align:right;}
+.align_c {text-align:center;}
+.float_l {float:left;}
+.float_r {float:right;}
+
+
+/* 자식높이 부모에게 반영 */
+[class *= "box"]:before,[class *= "box"]:after {content:""; display:block; clear:both;}
+[class *= "wrap"]:before,[class *= "wrap"]:after {content:""; display:block; clear:both;}
+
+/* 이미지팝업 - 인증서 등 이전,다음 버튼 있음 */
+.imgOpen2 {z-Index:999999; position:fixed; overflow:hidden; left:0; top:0; width:100%; height:0; overflow:hidden; background-color:rgba(0,0,0,.8); text-align:center; font-weight:normal;}
+.imgOpen2 .wrap {position:relative; display:table; width:100%; height:100%;}
+.imgOpen2 .wrap div {position:relative; display:table-cell; overflow:hidden; width:100%; padding:0; text-align:center; vertical-align:middle;}
+.imgOpen2 .wrap img {max-height:100%; max-width:100%; border:50px solid transparent;}
+.imgOpen2 .popTitle {z-Index:100; position:absolute; left:0; bottom:20px; width:100%; font-size:14px; text-align:center;}
+.imgOpen2 .popTitle p {display:inline-block; padding:10px 20px; color:#fff; background:rgba(0,0,0,.4); border-radius:100px; line-height:1.2;}
+.imgOpen2 button {z-index:300; position:absolute; display:block; top:50%; width:60px; height:60px; padding:0; background-color:rgba(0,0,0,.2); font-size:12px; color:#fff; border:0; border-radius:50%; cursor:pointer; background-position:50%; background-repeat:no-repeat; background-size:30%;}
+.imgOpen2 button:hover {background-color:rgba(0,0,0,.9);}
+.imgOpen2 button img {max-width:initial; max-height:initial;}
+.imgOpen2 button.off {opacity:.2; cursor:default;}
+.imgOpen2 button.prev {left:20px;}
+.imgOpen2 button.next {right:20px;}
+.imgOpen2 button.close {top:20px; right:20px;}
+@media screen and (max-width:767px){
+	.imgOpen2 {padding:0 !important; margin:0 !important;}
+	.imgOpen2 button {width:40px; height:40px;}
+	.imgOpen2 button img {width:30%; height:30%;}
+	.imgOpen2 button.prev {left:10px;}
+	.imgOpen2 button.next {right:10px;}
+	.imgOpen2 button.close {top:10px; right:10px;}
+	.imgOpen2 .popTitle {bottom:10px; font-size:12px; text-align:center;}
+}
+/* 라인 */
+* [class*="lineH"] {clear:both; width:100%; border-bottom:1px solid #ddd;}
+.lineH5 {height:5px; margin-bottom:5px;}
+.lineH10 {height:10px; margin-bottom:10px;}
+.lineH20 {height:20px; margin-bottom:20px;}
+.lineH30 {height:30px; margin-bottom:30px;}
+.lineH50 {height:50px; margin-bottom:50px;}
+.lineH60 {height:60px; margin-bottom:60px;}
+.lineH70 {height:70px; margin-bottom:70px;}
+.lineH80 {height:80px; margin-bottom:80px;}
+.lineH100 {height:100px; margin-bottom:100px;}
+
+
+/* 여백 */
+.h5 {height:5px; padding:0; margin:0; clear:both;}
+.h10 {height:10px; padding:0; margin:0; clear:both;}
+.h20 {height:20px; padding:0; margin:0; clear:both;}
+.h30 {height:30px; padding:0; margin:0; clear:both;}
+.h40 {height:40px; padding:0; margin:0; clear:both;}
+.h50 {height:50px; padding:0; margin:0; clear:both;}
+.h60 {height:60px; padding:0; margin:0; clear:both;}
+.h70 {height:70px; padding:0; margin:0; clear:both;}
+.h80 {height:80px; padding:0; margin:0; clear:both;}
+.h90 {height:90px; padding:0; margin:0; clear:both;}
+.h100 {height:100px; padding:0; margin:0; clear:both;}

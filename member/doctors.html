@@ -1,0 +1,247 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+if(!$staff_course) {
+	$scAsql = mysql_query("SELECT catecode FROM staffCourse WHERE catedeg='1' AND view_state='Y' ORDER BY listorder ASC, catecode ASC LIMIT 1",$dbconn);
+	$scArow = mysql_fetch_row($scAsql);
+	$staff_course = $scArow[0];
+}
+
+
+$scChkSql = mysql_query("SELECT catecode FROM staffCourse WHERE view_state='Y' AND catecode='".$staff_course."'",$dbconn);
+$scChkRow = mysql_fetch_row($scChkSql);
+
+if(!$scChkRow[0]) {
+	GO_REFRESH("./list.html");
+	exit;
+}
+
+$aCategory = substr($staff_course,0,4);
+$bCategory = substr($staff_course,0,8);
+
+//exit;
+//=======메뉴인식 START=========//
+$bMenuNum = "2";			//대메뉴
+$mMenuNum = (int)$aCategory;			//중메뉴
+$sMenuNum = (int)substr($staff_course,4,4);				//소메뉴
+
+
+//=======메뉴인식 END=========//
+
+$subquery="staff_course=".$staff_course."";
+
+$allCategory = substr($staff_course,4,8);
+
+if($allCategory == '00000000'){	
+	// 멥버 서브 카테고리가 ALL 경우
+	$Search.="AND SUBSTRING(a.staff_course,1,4) = '".$aCategory."'";
+}else{
+	// 멥버 서브 카테고리 코드가 있을 경우
+	$Search.="AND a.staff_course=".$staff_course."";
+}
+$Search.=" AND a.view_state='Y' ";
+
+include "../include/header.html";
+
+?>
+<!-- // header -->
+
+<? //배경 이미지를 위한 클래스 설정
+if($staff_course === "000100000000") {$staffType='post';}
+else if($staff_course === "000200000000") {$staffType='phd';}
+else if($staff_course === "000300000000") {$staffType='ms';}
+else if($staff_course === "000400000000") {$staffType='administrator';}
+else {$staffType='alumni';}
+?>
+
+<section class="contents doctors <?=$staffType?>">
+	<div class="contents-wrap people">
+
+<?
+$scBtabSql = mysql_query("SELECT catecode,catename FROM staffCourse WHERE catedeg='2' AND view_state='Y' AND SUBSTRING(catecode,1,4)='".$aCategory."' ORDER BY listorder ASC, catecode ASC",$dbconn);
+$scBtabNum = mysql_num_rows($scBtabSql);
+
+if(0<$scBtabNum) {
+?>
+		 <div class="member-tab tabWrap type2">
+			<?/*<a class="tabText mobile" href="./doctors.html?staff_course=<?=$aCategory."00000000"?>">ALL</a>*/?>
+			<a class="tabText mobile" href="#void">ALL</a>
+			<ul class="li-3">
+				<li <?=${"sMenu_2".(int)$aCategory."0"}?>><a href="./doctors.html?staff_course=<?=$aCategory."00000000"?>">All</a></li>
+			<?
+			while($scBtabRow = mysql_fetch_row($scBtabSql)) {
+			?>
+				<li <?=${"sMenu_2".(int)$aCategory.(int)substr($scBtabRow[0],4,4)}?>>
+					<a href="./doctors.html?staff_course=<?=$scBtabRow[0]?>"><?=stripSlashNotUsed($scBtabRow[1])?></a>
+				</li>
+			<?
+			}
+			?>
+			</ul>
+		</div>
+<?
+}
+?>
+
+<?
+			$query = "SELECT a.*, b.catename FROM staffList a left outer join staffCourse b ON a.staff_course = b.catecode WHERE 1 ".$Search." ";
+			$query.= "ORDER BY a.listorder ASC,a.uid DESC ";
+			
+			//echo $query;
+			//exit;
+			
+			$sql = mysql_query($query,$dbconn);
+
+			$rowCount = mysql_num_rows($sql);
+			$s = 0;
+
+			?>
+
+		<div class="peopleWrap tabInner insertBg">
+		<?
+		if($rowCount < 1){
+		?>
+			<ul style="padding:20px 20px; border-style:solid; border-color:rgba(255,255,255,.5); border-width:1px 0 1px 0; font-size:16px;">
+				<li>
+					<div style="text-align:center;"><dl>조회된 정보가 없습니다.</dl></div>
+				</li>
+			</ul>
+		<?
+		}
+
+		?>
+		
+			<ul class="peopleList">
+				<!-- 먼저 들어온사람이 위로 -->
+			<?
+			while($row = mysql_fetch_array($sql)){
+
+				$imgView="<img src=\"../images/list_noimg.png\" alt=\"".stripSlashNotUsed($row["name_kor"])."\">";
+				if($row["img1"]) {
+					$imgView="<img src=\"/program_file/staff_list/img1/".$row["img1"]."\" alt=\"".stripSlashNotUsed($row["name_kor"])."\">";
+				}
+
+			?>
+				<li>
+					<?//<span class="img"><img src="../images/member/people_0<?=$i.jpg" alt="" /></span>//?>
+					<span class="img"><?=$imgView?></span>
+					<div class="peopleList-info">
+						<h3><?=stripSlashNotUsed($row["name_kor"])?></h3>
+						<dl>
+							<dt>Course</dt>
+							<dd><?=stripSlashNotUsed($row["catename"])?></dd>
+							<?
+							if($aCategory == '0007'){
+								//if($row["belong"]){
+							?>
+							<dt>Current Affiliation</dt>
+							<dd>
+								<?=nl2br(stripSlashNotUsed($row["belong"]))?>
+							</dd>
+							<?
+								//}
+							}else{
+								//if($row["email"]){
+							?>
+							<dt>Email</dt>
+							<dd>
+								<a href="mailto:<?=$row["email"]?>"><?=$row["email"]?></a>
+							</dd>
+							<?
+								//}
+							}?>
+							
+							<dt>Detail</dt>
+							<dd><a class="plus" href="javascript:;" onclick="show_detail('<?=$row["uid"]?>');"><span>자세히보기</span></a></dd>
+						</dl>
+					</div>
+				</li>
+			<?}?>
+			</ul>
+		</div>
+			
+	</div>
+</section>
+
+<div class="layer people on">
+	<div class="cover"></div>
+	<div class="layerWrap">
+		<a class="layerClose" href="#void"></a>
+		<div class="layerInner">
+			<!-- <div class="layerInfo insertBg">
+				<span class="img"><img src="../images/member/people_03.jpg" alt="" /></span>
+				<div class="layerInfo-text">
+					<h3>Peipei Liu</h3>
+					<dl>
+						<dt>Course</dt>
+						<dd>Research Professor</dd>
+						<dt>Email</dt>
+						<dd><a href="mailto:peipeiliu@kaist.ac.kr">peipeiliu@kaist.ac.kr</a></dd>
+					</dl>
+				</div>
+			</div>
+			<div class="layerDetail">
+				<ul>
+					<li>
+						<span>Research Interest</span>
+						<p>Laser ultrasonic, non-linear data analysis</p>
+					</li>
+					<li>
+						<span>Education</span>
+						<p>Ph.D., Civil and Environmental Eng., KAIST (2017)</p>
+						<p>M.S., Instrument Science and Technology, NUAA, China (2012)</p>
+						<p>B.S., Aircraft Design and Engineering, NUAA, China (2010)</p>
+					</li>
+				</ul>
+			</div> -->
+		</div>
+	</div>
+	
+</div>
+
+<script>
+
+	// 상세 레이어팝업 출력
+	function show_detail(uid){
+		
+		$(".layer").fadeIn(300);
+		$("body").css({overflow:"hidden"});
+		
+		var defHtml = "";
+		defHtml += "<div class=\"layerInfo\">조회 중 입니다.</div>";
+		$(".layerInner").html(defHtml);
+
+		// 상세화면 가져오기
+		var setUrl = "./doctors_view.html?uid="+uid;
+
+		$.ajax({
+			type:'GET',
+			url : setUrl,
+			cache : false,
+			//async: false, // 동기화 처리
+			dataType: "html" ,
+			success: function(html){
+
+				$(".layerInner").html(html);
+				insertBg(); 
+			}
+		});		
+	}
+	
+
+	$(function(){
+		/*
+		$(".peopleList li .plus").on("click", function(){	
+		});
+		*/
+		// 상세 레이어팝업 닫기 클릭
+		$(".layerClose, .layer .cover").on("click", function(){
+			$(this).closest(".layer").fadeOut(300);
+			$("body").css({overflow:""});
+			$(".layerInner").html("");
+		});
+	});
+</script>
+

@@ -1,0 +1,208 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+if($cateMode=="Bcode_Add"){		//1단계분류 등록
+
+
+	$sql = mysql_query("SELECT MAX(catecode) FROM menuCategory WHERE catedeg='1'",$dbconn);
+	$row = mysql_fetch_row($sql);
+	$Bcatecode = substr($row[0],0,2);
+
+	if (!$Bcatecode){
+		$maxBCode = "01";
+	}else{
+		$maxBCode = $Bcatecode + 1 ;
+	}
+	if (strlen($maxBCode) <= 1){
+		$maxBCode = "0".$maxBCode;
+	}
+	$maxBcode = $maxBCode."000000";
+
+	$lo_sql = mysql_query("SELECT COUNT(*),MAX(listorder) FROM menuCategory WHERE catedeg='1'",$dbconn);
+	$lo_row = mysql_fetch_row($lo_sql);
+
+	if(!$lo_row[0]) {
+		$listorder=0;
+	}else{
+		$listorder=$lo_row[1]+1;
+	}
+
+
+
+
+	$query ="INSERT INTO menuCategory SET ";
+	$query.="catecode='$maxBcode',";
+	$query.="catedeg='1',";
+	$query.="catename='$BcategoryName',";
+	$query.="cateurl='$BcategoryURL',";
+	$query.="listorder='$listorder',";
+	$query.="writedate=now() ";
+
+	//echo $query;
+	//exit;
+	$sql = mysql_query($query, $dbconn);
+
+	echo "<script>
+			alert('1단계분류가 생성되었습니다.');
+			location.href='./reg.html?CheckBcode=$maxBCode';
+		  </script>";
+
+}else if($cateMode=="Mcode_Add"){	//2단계분류 등록
+
+	$Bcatecode = substr($Bcode,0,2);
+
+	$sql = mysql_query("SELECT MAX(catecode) FROM menuCategory WHERE catedeg='2' AND catecode LIKE BINARY('$Bcatecode%')" ,$dbconn);
+	$row = mysql_fetch_row($sql);
+
+	$Mcode = substr($row[0],2,2);
+
+	if (!$Mcode){
+		$maxMCode = "01";
+	}else{
+		$maxMCode = $Mcode + 1 ;
+	}
+
+	if (strlen($maxMCode) <= 1){
+		$maxMCode = "0".$maxMCode;
+	}
+	$maxMCode = $Bcatecode.$maxMCode."0000";
+	
+	$lo_sql = mysql_query("SELECT COUNT(*),MAX(listorder) FROM menuCategory WHERE catedeg='2' AND catecode LIKE BINARY('$Bcatecode%')",$dbconn);
+
+	$lo_row = mysql_fetch_row($lo_sql);
+
+	if(!$lo_row[0]) {
+		$listorder=0;
+	}else{
+		$listorder=$lo_row[1]+1;
+	}
+
+	//echo "$listorder , SELECT MAX(listorder) FROM menuCategory WHERE catedeg='2' AND catecode LIKE BINARY('$Bcatecode%')";
+	//exit;
+
+	$query ="INSERT INTO menuCategory SET ";
+	$query.="catecode='$maxMCode',";
+	$query.="catedeg='2',";
+	$query.="catename='$McategoryName',";
+	$query.="cateurl='$McategoryURL',";
+	$query.="listorder='$listorder',";
+	$query.="writedate=now() ";
+	$sql = mysql_query($query, $dbconn);
+
+	
+	echo "<script>
+			alert('2단계분류가 생성되었습니다.');
+			location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$maxMCode';
+		  </script>";
+
+}else if($cateMode=="Scode_Add"){		//3단계분류 등록
+
+	$Mcatecode = substr($Mcode,0,4);
+
+	$sql = mysql_query("SELECT catecode, catename FROM menuCategory WHERE catedeg='3' AND catename='$ScategoryName' AND catecode LIKE BINARY('$Mcatecode%')",$dbconn);
+	$num = mysql_num_rows($sql);
+
+	if ($num){
+		echo "<script>
+				alert('이미등록된 카테고리명입니다.');
+				history.back();
+			  </script>";
+	}else{
+
+		$sql = mysql_query("SELECT MAX(catecode) FROM menuCategory WHERE catedeg='3' AND catecode LIKE BINARY('$Mcatecode%')" ,$dbconn);
+		$row = mysql_fetch_row($sql);
+
+		$Scode = substr($row[0],4,2);
+
+		if (!$Scode){
+			$maxSCode = "01";
+		}else{
+			$maxSCode = $Scode + 1 ;
+		}
+
+		if (strlen($maxSCode) <= 1){
+			$maxSCode = "0".$maxSCode;
+		}
+		$maxSCode = $Mcatecode.$maxSCode."00";
+
+		$lo_sql = mysql_query("SELECT COUNT(*),MAX(listorder) FROM menuCategory WHERE catedeg='3' AND catecode LIKE BINARY('$Mcatecode%')",$dbconn);
+		$lo_row = mysql_fetch_row($lo_sql);
+
+		if(!$lo_row[0]) {
+			$listorder=0;
+		}else{
+			$listorder=$lo_row[1]+1;
+		}
+
+		$query ="INSERT INTO menuCategory SET ";
+		$query.="catecode='$maxSCode',";
+		$query.="catedeg='3',";
+		$query.="catename='$ScategoryName',";
+		$query.="listorder='$listorder',";
+		$query.="writedate=now() ";
+
+		//echo $query;
+		//exit;
+		$sql = mysql_query($query, $dbconn);
+
+
+
+
+		echo "<script>
+				alert('3단계분류가 생성되었습니다.');
+				location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode'+'&CheckScode=$maxSCode';
+			  </script>";
+	}
+
+
+}else if($cateMode=="SScode_Add"){		//4단계분류 등록
+
+
+				$sql = mysql_query("select Bcode, Mcode, Scode, code, name from cateSSID where name='$SScategoryName' and Bcode='$Bcode' and Mcode='$Mcode' and Scode='$Scode'",$dbconn);
+				$num = mysql_num_rows($sql);
+
+				if ($num){
+					echo "<script>
+							alert('이미등록된 카테고리명입니다.');
+							history.back();
+						  </script>";
+				}else{
+
+
+					$sql = mysql_query("select MAX(code) from cateSSID where Bcode='$Bcode' and Mcode='$Mcode' and Scode='$Scode'" ,$dbconn);
+					$row = mysql_fetch_row($sql);
+
+					if (!$row){
+						$maxSCode = "01";
+					}else{
+						$maxSCode = $row[0] + 1 ;
+					}
+
+					if (strlen($maxSCode) <= 1){
+
+						$maxSCode = "0".$maxSCode;
+					}
+
+
+					$query = "insert into cateSSID (Bcode, Mcode, Scode, code, name) values ('$Bcode', '$Mcode', '$Scode', '$maxSCode', '$SScategoryName')";
+					$sql = mysql_query($query, $dbconn);
+
+
+					echo "<script>
+							alert('4단계분류가 생성되었습니다.');
+							location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode'+'&CheckScode=$Scode'+'&CheckSScode=$maxSCode';
+						  </script>";
+
+				}
+
+
+}
+
+
+?>

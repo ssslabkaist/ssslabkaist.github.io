@@ -1,0 +1,143 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+$menuMcategory = "05030000";
+//접속 권한, 네비게이션 위치 END
+
+
+include "../include/header.html";
+?>
+
+<div style="border-bottom:1px solid #d9dde2;">
+	<span class="con_title">방문자 - 시간별</span>
+	<span class="con_navi">관리자 &gt; 통계 &gt; 방문자 - 시간별</span>
+	<div style="clear:both; height:1px;"></div>
+</div>
+
+
+
+<div style="padding:10px;">
+<form action="<?=$PHP_SELF?>" name='myform' method='get'>
+	<table width="100%">
+		<tr>
+			<td style="border:3px solid #a09c9a; padding:10px;">
+
+				<table class="search_table_01">
+					<tr>
+						<td>
+							<span>
+								<strong>년도 : </strong>
+								<select name="Syear" class="select_M">
+<?
+$toyy=date("Y");
+$tomm=date("m");
+$todd=date("d");
+
+if(!$Syear){$Syear=$toyy;}
+if(!$Smonth){$Smonth=$tomm;}
+if(!$day){$day=$todd;}
+
+for($i=2010; $i<=$toyy; $i++){
+	echo "
+									<option value='$i'";if($i==$Syear){echo"selected";}echo">$i</option>";
+}
+?>
+								</select>년
+
+
+
+								<select name="Smonth" class="select_M">
+<?
+for($i=1; $i<=12; $i++){
+	echo "
+									<option value='$i'";if($i==$Smonth){echo"selected";}echo">$i</option>";
+}
+?>
+								</select>월
+								<select name="day" class="select_M">
+<?
+for($i=1; $i<=31; $i++){
+	echo "
+									<option value='$i'";if($i==$day){echo"selected";}echo">$i</option>";
+}
+?>
+								</select>월
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td style=" text-align:left; border:none; color:#919191;"><span class="input_btn_01"><input type="submit" value="검색하기" style="min-width:60px; vertical-align:middle;"></span></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</form>
+
+
+	<!--왼쪽, 오른쪽 정렬일때-->
+	<div style="clear:both;padding:5px 0;">
+<?/*
+		<div style="float:left;">
+			<span class="s_btn_06"><a href="#link" onclick="location.href='./excel/list_3_excel.html?Syear=<?=$Syear?>&Smonth=<?=$Smonth?>&day=<?=$day?>';"><strong style="min-width:100px;">EXCEL 다운로드</strong></a></span>
+		</div>
+*/?>
+		<div style="clear:both;"></div>
+	</div>
+
+	<table class="list_table_graph_01">
+		<colgroup>
+			<col width="8%" />
+			<col width="82%" />
+			<col width="10%" />
+		</colgroup>
+		<tr>
+			<th>접속시간</th>
+			<th>접속경로</th>
+			<th style="background:#f1f1f1;">IP</th>
+		</tr>
+
+
+<?
+$KDAY=array("일","월","화","수","목","금","토");
+$Smonth=sprintf("%02d",$Smonth);
+
+$sql="SELECT wdate,course,IP FROM Log_analysis WHERE year(wdate)='$Syear' AND month(wdate)='$Smonth' AND dayofmonth(wdate)='$day'";
+//echo "$sql";
+$fetch=mysql_query($sql,$dbconn);
+
+while($row=mysql_fetch_row($fetch)){
+	$DAY = explode(" ",$row[0]);
+
+	echo "
+		<tr>
+			<td align=\"center\">".$DAY[1]."</td>
+			<td style=\"padding:0 5px;\"><a href=\"".$row[1]."\" target=\"_blank\">".$row[1]."</a></td>
+			<td align=\"center\" style=\"border-right:none;\">".$row[2]."</td>
+		</tr>";
+
+	$Mtotal+=$row[1];
+}
+
+$Ysql=mysql_query("SELECT SUM(count) FROM Mcount WHERE year(wdate)='$Syear'",$dbconn);
+$Yrow=mysql_fetch_row($Ysql);
+$Tsql=mysql_query("SELECT SUM(count) FROM Mcount",$dbconn);
+$Trow=mysql_fetch_row($Tsql);
+?>
+
+	</table>
+
+
+	<div style="clear:both;padding:5px 0; text-align:center;">
+		<div>
+			<span class="s_btn_03"><a href="./list_2.html?Syear=<?=$Syear?>&Smonth=<?=$Smonth?>"><strong style="min-width:60px;">일별통계</strong></a></span>
+		</div>
+	</div>
+
+</div>
+
+<?include "../include/footer.html";?>

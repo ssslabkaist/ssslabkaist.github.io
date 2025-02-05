@@ -1,0 +1,53 @@
+<?
+/*외부 로그인시 사용
+$_SESSION["session_usr_id"] = $loginRow["member_id"];
+$_SESSION["session_usr_name"] = $loginRow["member_name"];
+$_SESSION["session_usr_auth"] = $loginRow["member_auth"];
+$_SESSION["session_usr_auth_num"] = $loginRow["member_auth_num"];
+$_SESSION["session_usr_email"]= $loginRow["email"];
+$_SESSION["session_usr_staff_yorn"] = $loginRow["staff_yorn"];
+$_SESSION["session_usr_external_kind"] = $loginRow["external_kind"];
+
+
+if($accessToken) {
+	$updMemQue.= ", external_access_token='".$accessToken."'";
+}
+if($refreshToken) {
+	$updMemQue.= ", external_refresh_token='".$refreshToken."'";
+}
+
+$updMemSql ="UPDATE member SET lastlogin=now() ".$updMemQue." WHERE member_id='".$loginRow["member_id"]."'";
+//echo $updMemSql;
+$updMemRes = mysql_query($updMemSql,$dbconn);
+*/
+?>
+
+
+<?
+/*
+$_SESSION["session_usr_id"] = $loginRow["member_id"];
+$_SESSION["session_usr_name"] = $loginRow["member_name"];
+$_SESSION["session_usr_auth"] = $loginRow["member_auth"];
+$_SESSION["session_usr_auth_num"] = $loginRow["member_auth_num"];
+$_SESSION["session_usr_email"]= $loginRow["email"];
+$_SESSION["session_usr_external_kind"] = $loginRow["external_kind"];
+*/
+
+if($loginRow["membership"]=="Y" && $loginRow["member_auth_confession"]=="Y") {
+	$_SESSION["session_usr_id"] = $loginRow["member_id"];
+	$_SESSION["session_usr_name"] = $loginRow["member_name"];
+	$_SESSION["session_usr_auth"] = $loginRow["member_auth"];
+	$_SESSION["session_usr_auth_num"] = $loginRow["member_auth_num"];
+	$_SESSION["session_usr_email"]= $loginRow["email"];
+	$_SESSION["session_usr_staff_yorn"] = $loginRow["staff_yorn"];
+	//$_SESSION["session_usr_external_kind"] = $loginRow["external_kind"];
+}else{
+	$_SESSION["session_usr_id"] = "";
+	$_SESSION["session_usr_name"] = "";
+	$_SESSION["session_usr_auth"] = "";
+	$_SESSION["session_usr_auth_num"] = "";
+	$_SESSION["session_usr_email"]= "";
+	$_SESSION["session_usr_staff_yorn"]= "";
+	//$_SESSION["session_usr_external_kind"] = "";
+}
+?>

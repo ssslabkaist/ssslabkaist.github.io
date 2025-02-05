@@ -1,0 +1,101 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+if($cateMode=="Bcode_Mod"){		//1단계분류 수정
+
+/*
+mysql> desc category;
++-----------+------------------+------+-----+---------------------+-------+
+| Field     | Type             | Null | Key | Default             | Extra |
++-----------+------------------+------+-----+---------------------+-------+
+| catecode  | varchar(12)      |      | PRI |                     |       |
+| catedeg   | char(1)          |      |     | 1                   |       |
+| catename  | varchar(255)     |      |     |                     |       |
+| listorder | int(11) unsigned | YES  |     | NULL                |       |
+| writedate | datetime         | YES  |     | 0000-00-00 00:00:00 |       |
++-----------+------------------+------+-----+---------------------+-------+
+5 rows in set (0.00 sec)
+*/
+
+
+				$sql = mysql_query("update menuCategory set catename='$BcategoryName',cateurl='$BcategoryURL' where catecode='$Bcode'" ,$dbconn);
+				
+
+				echo "<script>
+						alert('1단계분류 수정되었습니다.');
+						location.href='./reg.html?CheckBcode=$Bcode';
+					  </script>";
+
+
+
+}else if($cateMode=="Mcode_Mod"){	//2단계분류 수정
+
+				$sql = mysql_query("update menuCategory set catename='$McategoryName',cateurl='$McategoryURL' where catecode='$Mcode'" ,$dbconn);
+				
+				
+				echo "<script>
+						alert('2단계분류 수정되었습니다.');
+						location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode';
+					  </script>";
+
+}else if($cateMode=="Scode_Mod"){		//3단계분류 수정
+
+				$sql = mysql_query("select catecode, catename from menuCategory where catename='$ScategoryName' and catedeg='3'",$dbconn);
+				
+				$num = mysql_num_rows($sql);
+
+/*
+				if ($num){
+					echo "<script>
+							alert('이미등록된 카테고리명입니다.');
+							history.back();
+						  </script>";
+				}else{
+*/
+
+					$sql = mysql_query("update menuCategory set catename='$ScategoryName' where catecode='$Scode'" ,$dbconn);
+
+
+					echo "<script>
+							alert('3단계분류 수정되었습니다.');
+							location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode'+'&CheckScode=$Scode';
+						  </script>";
+
+//				}
+
+
+}else if($cateMode=="SScode_Mod"){		//4단계분류 수정
+
+				$sql = mysql_query("select Bcode, Mcode, Scode, code, name from cateSSID where name='$SScategoryName' and Bcode='$Bcode' and Mcode='$Mcode' and Scode='$Scode' and code='$SScode'",$dbconn);
+				
+				$num = mysql_num_rows($sql);
+
+				if ($num){
+					echo "<script>
+							alert('이미등록된 카테고리명입니다.');
+							history.back();
+						  </script>";
+				}else{
+
+
+					$sql = mysql_query("update cateSSID set name='$SScategoryName' where Bcode='$Bcode' and Mcode='$Mcode' and Scode='$Scode' and code='$SScode'" ,$dbconn);
+
+
+					echo "<script>
+							alert('4단계분류 수정되었습니다.');
+							location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode'+'&CheckScode=$Scode'+'&CheckSScode=$SScode';
+						  </script>";
+
+				}
+
+
+}
+
+
+?>

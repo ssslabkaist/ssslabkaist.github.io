@@ -1,0 +1,318 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "4";			//대메뉴
+$mMenuNum = "6";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+
+//--------------환경설정 시작-------------------------------//
+if(!$list_count) {
+	$list_count = 10;
+}
+$page_count = 5;
+
+
+if ($cpage == "" ){	$cpage = 1; }
+if ($spage == "" ){ $spage = 1; }
+//---------------환경설정 끝-------------------------------//
+
+$subquery="";
+//$subquery="year_s=".$year_s."";
+
+$Search.=" AND view_state='Y'";
+
+if($status_current_s){
+	$Search.=" AND status_current = '".$status_current_s."' ";	
+}
+
+if($year_s) {	
+	if(strpos($year_s,"bef_") !== false) {
+		$year_s = str_replace("bef_","",$year_s);
+		// 포함 경우 이전년도 검색 조회
+		$Search.=" AND year_tech_trans <= '".$year_s."' ";
+	}else{
+		$Search.=" AND year_tech_trans = '".$year_s."' ";
+	}
+}
+
+$que ="SELECT COUNT(*) FROM constTechList ";
+$que.="WHERE 1 ".$Search."";
+
+$sql = mysql_query($que,$dbconn);
+
+if(!$sql) {
+	echo("query_error");
+}
+
+$row = mysql_fetch_row($sql);
+
+if (($row[0] % $list_count) == 0) {
+	$max_page = intval($row[0] / $list_count);
+}else{
+	$max_page = intval($row[0] / $list_count + 1);
+}
+
+$sid = $row[0]-($cpage-1)*$list_count;
+$set_num = intval(($cpage - 1) * $list_count);
+
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<style>
+.journalWrap .journal-list-item-list-desc dd {padding-left: 180px !important;}
+</style>
+
+<section class="contents journal const board_ebi">	
+	<div class="contents-wrap patents">
+		<div class="journalWrap">
+<!-- 			
+			<div class="journal-tab tabWrap type2">
+				<a class="tabText mobile" href="<?=$_SERVER["SCRIPT_NAME"]?>">ALL</a>
+				<ul>
+					<li <?if(!$year_s){?> class="on" <?}?>><a href="<?=$_SERVER["SCRIPT_NAME"]?>">All</a></li>
+			<?
+			$nowYY = date('Y');
+			for($i=0; $i < 8; $i++){
+				$minusYY = '-'.$i.' year';
+				$selectYY = date('Y',strtotime(date("").$minusYY));
+				$befYY = date('Y',strtotime(date("").'-8 year'));
+			?>
+					<li <?if($year_s == $selectYY){?> class="on" <?}?>>
+						<a href="<?=$_SERVER["SCRIPT_NAME"]?>?status_current_s=<?=$status_current_s?>&year_s=<?=$selectYY?>"><?=$selectYY?></a>
+					</li>
+			<?}?>
+					<li <?if($year_s == $befYY){?> class="on" <?}?>>
+						<a href="<?=$_SERVER["SCRIPT_NAME"]?>?status_current_s=<?=$status_current_s?>&year_s=bef_<?=$befYY?>">Before <?=$befYY?></a>
+					</li>
+				</ul>
+			</div>
+-->
+			<div class="journal-info">Total : <?=$row[0]?>, Now : <?=$cpage?>/<?=$max_page?> page</div>
+			<div class="journal-list tabInner">
+				<ul class="journal-list-item">
+					
+					<li class="on">
+						<ul class="journal-list-item-list">
+<?
+$query ="SELECT * ";
+$query.="FROM constTechList ";
+$query.="WHERE 1 ".$Search." ORDER BY listorder ASC, uid DESC LIMIT $set_num, $list_count";
+
+
+$result= mysql_query($query,$dbconn);
+
+if (!$result) {
+	echo $query;
+	exit;
+	//ERROR_BACK("Qeury Error");
+}
+
+$i=0;
+while($row = mysql_fetch_array($result)){
+
+	$statusCurrentClass="";
+
+/*
+	$numberView = "";
+	if(onlyBlankSpaceChk(stripSlashNotUsed($row["application_number"]))) {
+		$numberView = stripSlashNotUsed($row["application_number"]);
+	}
+	if(onlyBlankSpaceChk(stripSlashNotUsed($row["publication_number"]))) {
+
+		if($numberView) {
+			$numberView = " ㆍ ";
+		}
+		$numberView = stripSlashNotUsed($row["publication_number"]);
+	}*/
+?>
+<?/*
+							<li>
+								<a href="./const_tech_view.html?uid=<?=$row["uid"]?>&cpage=<?=$cpage?>&spage=<?=$spage?>&<?=$subquery?>">
+								</a>
+							</li>
+*/?>
+							<li>
+								<a>
+									<div class="journal-list-item-list-num pc"><?=$sid?></div>
+									<div class="journal-list-item-list-desc">
+										<p><?=stripSlashNotUsed($row["subject"])?></p>
+										<dl>
+											<dt>Registration Number</dt>
+											<dd><?=$row["registration_number"]?></dd>
+											<dt>Date</dt>
+											<dd><?=$row["registration_date"]?></dd>
+										</dl>
+									</div>
+								</a>
+							</li>
+
+<?
+	$i++;
+	$sid--;
+}
+?>
+
+						</ul>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+
+		<!-- 페이징 -->
+		<div class="page_box">	
+			<ul class="mobile">
+<?
+$page_count_mobile = 1;
+if ($cpage>1) {
+
+	$spagePrev = $spage;
+	if(($cpage-1)%$page_count==0 && 1<($cpage-1)) {
+		$spagePrev = (intval(($cpage-1)/$page_count)*$page_count)-$page_count+1;
+	}
+	if($spagePrev<=$page_count) {
+		$spagePrev = 1;
+	}
+
+	echo "
+				<li><a class=\"btn prev\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".($cpage-$page_count_mobile)."&spage=".$spagePrev."\" alt=\"이전\" title=\"이전\"></a></li>";
+}else{
+	echo "
+				<li><a class=\"btn prev\" href=\"#void\" onclick=\"window.alert('처음입니다.');\" alt=\"이전\" title=\"이전\"></a></li>";
+}
+
+
+if ($cpage<$max_page) {
+
+	$spageNext = $spage;
+	if($cpage%$page_count==0 && $cpage<=$max_page) {
+		$spageNext = (intval($cpage/$page_count)*$page_count)+1;
+	}
+
+	echo "
+				<li><a class=\"btn next\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".($cpage+$page_count_mobile)."&spage=".$spageNext."\" alt=\"다음\" title=\"다음\"></a></li>";
+}else{
+	echo "
+				<li><a class=\"btn next\" href=\"#void\" onclick=\"window.alert('마지막입니다.');\" alt=\"다음\" title=\"다음\"></a></li>";
+}
+
+echo "
+				<li>
+					<label for=\"page\" class=\"col-lg-2 control-label\">페이징</label>
+					<select id=\"page\" onChange=\"pageGo(this.value);\">";
+
+$spageGo = 1;
+for($pageGo=1; $pageGo<=$max_page; $pageGo++) {
+
+/*	
+	if ($spage+$page_count<=$max_page){
+		$spageNext = $spage+$page_count;
+	}else{
+		$spageNext = $spage;
+	}
+*/
+	
+	if(($pageGo-1)%$page_count==0 && 0<($pageGo-1)) {
+		$spageGo = (intval($pageGo/$page_count)*$page_count)+1;
+	}
+
+
+
+	echo "
+						<option value=\"".$_SERVER["SCRIPT_NAME"]."?cpage=".$pageGo."&spage=".$spageGo."&$subquery\""; if($cpage==$pageGo) { echo " selected"; } echo ">".$pageGo."</option>";
+}
+
+echo "
+					</select>
+				</li>";
+?>
+			</ul>
+
+
+			<!-- PC 페이징 -->
+			<ul class="pagination pc">
+<?
+echo "
+				<li><a class=\"first\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=1&spage=1\"><img src=\"/img/common_responsive/first.png\" alt=\"처음\"></a></li>";
+if ($spage>1) {
+
+	if($spage-$page_count<1 || $spage-$page_count<1) {
+		echo "
+				<li><a class=\"prev\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=1&spage=1\"><img src=\"/img/common_responsive/prev.png\" alt=\"이전\"></a></li>";		
+	}else{
+		echo "
+				<li><a class=\"prev\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".($spage-$page_count)."&spage=".($spage-$page_count)."\"><img src=\"/img/common_responsive/prev.png\" alt=\"이전\"></a></li>";
+	}
+}else{
+	echo "
+				<li><a class=\"prev\" href=\"#void\" onclick=\"window.alert('처음입니다.');\"><img src=\"/img/common_responsive/prev.png\" alt=\"이전\"></a></li>";
+}
+
+
+$a=0;
+for ($i=$spage; $i<$spage+$page_count; $i++) {
+	if ($i<=$max_page){
+/*
+		if ($a!=0) {
+			echo " | ";
+		}
+*/
+		if ($cpage==intval($i)) {
+			echo "
+				<li><a href=\"#void\" class=\"active\">".$i."</a></li>";
+		}else{
+			echo "
+				<li><a href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=$i&spage=$spage\">".$i."</a></li>";
+		}
+		$a++;
+	}
+}
+
+if($max_page/$page_count<=1) {
+	$last_spage="1";
+}else{
+	$last_spage=(intval($max_page/$page_count)*$page_count) + 1;
+}
+
+
+if ($cpage < $max_page) {
+	
+	// 마지막
+	if($max_page < intval($spage*$page_count)){
+		$next_cpage = ($cpage+1);
+		$next_spage = $spage;
+	}else{
+		$next_cpage = ($spage+$page_count);
+		$next_spage = $next_cpage;
+	}
+
+	echo "
+				<li><a class=\"next\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".$next_cpage."&spage=".$next_spage."\"><img src=\"/img/common_responsive/next.png\" alt=\"다음\"></a></li>";
+}else{
+	echo "
+				<li><a class=\"next\" href=\"#void\" onclick=\"window.alert('마지막입니다.');\"><img src=\"/img/common_responsive/next.png\" alt=\"다음\"></a></li>";
+}
+
+
+
+if($max_page<1) {
+	$max_page=1;
+}
+
+echo "
+				<li><a class=\"last\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".$max_page."&spage=".$last_spage."\"><img src=\"/img/common_responsive/last.png\" alt=\"마지막\"></a></li>";
+
+?>
+
+			</ul>
+		</div>
+		
+	</div>
+</section>

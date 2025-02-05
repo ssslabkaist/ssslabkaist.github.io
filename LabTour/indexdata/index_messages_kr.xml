@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+
+
+  <data name="kr_project_title"><![CDATA[KAIST SSSLAB]]></data>
+  <data name="kr_project_author_name"><![CDATA[(주)드림브이알]]></data>
+  <data name="kr_project_author_url"><![CDATA[http://dreamvr.co.kr]]></data>
+
+
+  <data name="kr_panogroup363_title"><![CDATA[Laboratory]]></data>
+
+  <data name="kr_pano362_title"><![CDATA[Laboratory 1]]></data>
+  <data name="kr_spotpoint495_tooltip"><![CDATA[Laboratory 5]]></data>
+  <data name="kr_spotpoint496_tooltip"><![CDATA[Laboratory 4]]></data>
+  <data name="kr_spotpoint497_tooltip"><![CDATA[Laboratory 2]]></data>
+  <data name="kr_spotpoint503_tooltip"><![CDATA[Laboratory 3]]></data>
+  <data name="kr_spotpoint523_tooltip"><![CDATA[Optical table for[br] thermography]]></data>
+  <data name="kr_spotpoint524_tooltip"><![CDATA[Metal DED 3D printer[br](Customized)]]></data>
+  <data name="kr_spotpoint525_tooltip"><![CDATA[Femtosecond pulse[br] laser system]]></data>
+  <data name="kr_spotpoint526_tooltip"><![CDATA[Laser ultrasonic[br] system]]></data>
+  <data name="kr_spotpoint527_tooltip"><![CDATA[Nd:YAG nanosecond[br] pulse laser (High power)]]></data>
+  <data name="kr_pano361_title"><![CDATA[Laboratory 2]]></data>
+  <data name="kr_spotpoint498_tooltip"><![CDATA[Laboratory 1]]></data>
+  <data name="kr_spotpoint504_tooltip"><![CDATA[Laboratory 3]]></data>
+  <data name="kr_spotpoint519_tooltip"><![CDATA[Metal DED 3D printer[br](Customized)]]></data>
+  <data name="kr_spotpoint520_tooltip"><![CDATA[Off-axial pulse laser]]></data>
+  <data name="kr_spotpoint521_tooltip"><![CDATA[Off-axial IR & vision[br] camera]]></data>
+  <data name="kr_spotpoint522_tooltip"><![CDATA[Coaxial IR camera]]></data>
+  <data name="kr_spotpoint745_tooltip"><![CDATA[Femtosecond pulse[br] laser system]]></data>
+  <data name="kr_pano360_title"><![CDATA[Laboratory 3]]></data>
+  <data name="kr_spotpoint501_tooltip"><![CDATA[Laboratory 4]]></data>
+  <data name="kr_spotpoint502_tooltip"><![CDATA[Laboratory 1]]></data>
+  <data name="kr_spotpoint505_tooltip"><![CDATA[Laboratory 2]]></data>
+  <data name="kr_spotpoint511_tooltip"><![CDATA[Coaxial IR camera]]></data>
+  <data name="kr_spotpoint512_tooltip"><![CDATA[Metal DED 3D printer[br](Commercial)]]></data>
+  <data name="kr_spotpoint513_tooltip"><![CDATA[Femtosecond pulse[br] laser system]]></data>
+  <data name="kr_spotpoint744_tooltip"><![CDATA[Laser ultrasonic[br]system]]></data>
+  <data name="kr_pano359_title"><![CDATA[Laboratory 4]]></data>
+  <data name="kr_spotpoint499_tooltip"><![CDATA[Laboratory 1]]></data>
+  <data name="kr_spotpoint500_tooltip"><![CDATA[Laboratory 3]]></data>
+  <data name="kr_spotpoint506_tooltip"><![CDATA[Laboratory 5]]></data>
+  <data name="kr_spotpoint508_tooltip"><![CDATA[Optical table for [br]next research]]></data>
+  <data name="kr_spotpoint509_tooltip"><![CDATA[PXIe system[br]with 2-axis stage]]></data>
+  <data name="kr_spotpoint510_tooltip"><![CDATA[Metal DED 3D printer [br](Commercial)]]></data>
+  <data name="kr_spotpoint514_tooltip"><![CDATA[Laser ultrasonic[br]system]]></data>
+  <data name="kr_spotpoint515_tooltip"><![CDATA[Laser ultrasonic receiver]]></data>
+  <data name="kr_spotpoint516_tooltip"><![CDATA[Laser Doppler[br] vibrometer]]></data>
+  <data name="kr_spotpoint517_tooltip"><![CDATA[Nd:YAG nanosecond [br]pulse laser]]></data>
+  <data name="kr_spotpoint518_tooltip"><![CDATA[Micro system [br]analyzer]]></data>
+  <data name="kr_spotpoint743_tooltip"><![CDATA[Femtosecond pulse[br] laser system]]></data>
+  <data name="kr_pano358_title"><![CDATA[Laboratory 5]]></data>
+  <data name="kr_spotpoint483_tooltip"><![CDATA[Fume hood]]></data>
+  <data name="kr_spotpoint484_tooltip"><![CDATA[Simulation computers & [br]Computing servers]]></data>
+  <data name="kr_spotpoint485_tooltip"><![CDATA[Sigle-axis shaker[br] system]]></data>
+  <data name="kr_spotpoint486_tooltip"><![CDATA[Optical microscopy]]></data>
+  <data name="kr_spotpoint487_tooltip"><![CDATA[Optical table for[br] next research]]></data>
+  <data name="kr_spotpoint488_tooltip"><![CDATA[Wire 3D printer]]></data>
+  <data name="kr_spotpoint489_tooltip"><![CDATA[IR camera]]></data>
+  <data name="kr_spotpoint490_tooltip"><![CDATA[Optical table for [br]thermography]]></data>
+  <data name="kr_spotpoint491_tooltip"><![CDATA[2-axis linear arm]]></data>
+  <data name="kr_spotpoint493_tooltip"><![CDATA[Laboratory 6]]></data>
+  <data name="kr_spotpoint494_tooltip"><![CDATA[Laboratory 1]]></data>
+  <data name="kr_spotpoint507_tooltip"><![CDATA[Laboratory 4]]></data>
+  <data name="kr_spotpoint742_tooltip"><![CDATA[Termography[br] system]]></data>
+  <data name="kr_pano357_title"><![CDATA[Laboratory 6]]></data>
+  <data name="kr_spotpoint476_tooltip"><![CDATA[2-axis stage]]></data>
+  <data name="kr_spotpoint477_tooltip"><![CDATA[Vision camera]]></data>
+  <data name="kr_spotpoint478_tooltip"><![CDATA[IR camera]]></data>
+  <data name="kr_spotpoint479_tooltip"><![CDATA[CW laser]]></data>
+  <data name="kr_spotpoint480_tooltip"><![CDATA[Thermography[br] system]]></data>
+  <data name="kr_spotpoint481_tooltip"><![CDATA[Sigle-axis shaker[br] system]]></data>
+  <data name="kr_spotpoint482_tooltip"><![CDATA[Fume hood]]></data>
+  <data name="kr_spotpoint492_tooltip"><![CDATA[Laboratory 5]]></data>
+  <data name="kr_spotpoint616_tooltip"><![CDATA[Laboratory 7]]></data>
+  <data name="kr_pano528_title"><![CDATA[Laboratory 7]]></data>
+  <data name="kr_spotpoint530_tooltip"><![CDATA[Polishing machine]]></data>
+  <data name="kr_spotpoint531_tooltip"><![CDATA[Mounting machine]]></data>
+  <data name="kr_spotpoint617_tooltip"><![CDATA[Laboratory 6]]></data>
+
+  <data name="kr_panogroup121_title"><![CDATA[Office]]></data>
+
+  <data name="kr_pano120_title"><![CDATA[Professor Office]]></data>
+  <data name="kr_pano116_title"><![CDATA[Student Office 1]]></data>
+  <data name="kr_spotpoint130_tooltip"><![CDATA[Student Office 2]]></data>
+  <data name="kr_pano117_title"><![CDATA[Student Office 2]]></data>
+  <data name="kr_spotpoint131_tooltip"><![CDATA[Student Office 1]]></data>
+  <data name="kr_pano112_title"><![CDATA[Student Office 3]]></data>
+  <data name="kr_pano114_title"><![CDATA[Student Office 4]]></data>
+
+
+
+
+
+
+  <data name="kr_contextmenudreamvropenwebsitelabel1"><![CDATA[VR program by (주)드림VR]]></data>
+  <data name="kr_contextmenudreamvrwebsiteurl1"><![CDATA[http://dreamvrad.net]]></data>
+  <data name="kr_contextmenudreamvropenFsLabel"><![CDATA[Enter Fullscreen]]></data>
+  <data name="kr_contextmenudreamvrcloseFsLabel"><![CDATA[Exit Fullscreen]]></data>
+  <data name="kr_descriptiondescription_title"><![CDATA[]]></data>
+  <data name="kr_descriptiondisplay_close_text"><![CDATA[Close]]></data>
+  <data name="kr_SkinPlusdisplayControlsTip"><![CDATA[Show controls]]></data>
+  <data name="kr_SkinPlushideControlsTip"><![CDATA[Hide controls]]></data>
+  <data name="kr_SkinPluszoomInTip"><![CDATA[Zoom in]]></data>
+  <data name="kr_SkinPluszoomOutTip"><![CDATA[Zoom out]]></data>
+  <data name="kr_SkinPlusshareTip"><![CDATA[Share the tour]]></data>
+  <data name="kr_SkinPlusshotpTip"><![CDATA[Shot]]></data>
+  <data name="kr_SkinPluscustumWater"><![CDATA[KAIST EE]]></data>
+  <data name="kr_SkinPlusfontsize"><![CDATA[100]]></data>
+  <data name="kr_SkinPluscode"><![CDATA[]]></data>
+  <data name="kr_cool_hotspotcoolhotspotstyle_name"><![CDATA[spot_inside]]></data>
+  <data name="kr_alpo_sidebar_fullsbDevices"><![CDATA[]]></data>
+  <data name="kr_alpo_sidebar_fullsbcurrent_PanoTxt"><![CDATA[]]></data>
+  <data name="kr_alpo_sidebar_fullSBfontHr"><![CDATA[Noto Sans KR]]></data>
+  <data name="kr_alpo_sidebar_fullsbHrExcludePano"><![CDATA[]]></data>
+  <data name="kr_alpo_sidebar_fullitemName0"><![CDATA[Laboratory]]></data>
+  <data name="kr_alpo_sidebar_fullsubItemIndex0"><![CDATA[]]></data>
+  <data name="kr_alpo_sidebar_fullsubPanoIDs0"><![CDATA[]]></data>
+  <data name="kr_alpo_sidebar_fullitemName1"><![CDATA[Office]]></data>
+  <data name="kr_alpo_sidebar_fullsubItemIndex1"><![CDATA[]]></data>
+  <data name="kr_alpo_sidebar_fullsubPanoIDs1"><![CDATA[]]></data>
+  <data name="kr_alpo_sidebar_fullsb_onclick_logo102264openurlwebsiteurl"><![CDATA[http://ssslab.kaist.ac.kr/]]></data>
+  <data name="kr_alpo_sidebar_fullsbButton1Action101101101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102795changetourlanguagelang"><![CDATA[kr]]></data>
+  <data name="kr_alpo_sidebar_fullsbButton2Action101101101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102101101101102155changetourlanguagelang"><![CDATA[en]]></data>
+  <data name="kr_debugPanoramaDirectoriesseparatorString"><![CDATA[;]]></data>
+  <data name="kr_debugPanoramaDirectoriesseparatorStringG"><![CDATA[;]]></data>
+  <data name="kr_cool_hotspot1coolhotspotstyle_name"><![CDATA[tooltip_hotspot]]></data>
+  <data name="kr_description1display_close_text"><![CDATA[Close]]></data>
+  <data name="kr_Supersocialcopytext"><![CDATA[Url Copied]]></data>
+  <data name="kr_Supersocialcopy_tooltips"><![CDATA[Copy Url]]></data>
+  <data name="kr_Blowupnameh"><![CDATA[spot_description150]]></data>
+  <data name="kr_loopfx_Namestyle"><![CDATA[spot_description50]]></data>
+  <data name="kr_loopfx_StartAlpha"><![CDATA[0.9]]></data>
+  <data name="kr_loopfx_Speed"><![CDATA[0.5]]></data>
+  <data name="kr_loopfx_delayed"><![CDATA[0]]></data>
+  <data name="kr_loopfx_Alphaback"><![CDATA[1]]></data>
+  <data name="kr_loopfx_Speedback"><![CDATA[0.5]]></data>
+  <data name="kr_loopfx_looptime"><![CDATA[0]]></data>
+  <data name="kr_Blowup1nameh"><![CDATA[spot_description50]]></data>
+  <data name="kr_loopfx_1Namestyle"><![CDATA[image_gallery]]></data>
+  <data name="kr_loopfx_1StartAlpha"><![CDATA[0.8]]></data>
+  <data name="kr_loopfx_1Speed"><![CDATA[0.5]]></data>
+  <data name="kr_loopfx_1delayed"><![CDATA[0]]></data>
+  <data name="kr_loopfx_1Alphaback"><![CDATA[1]]></data>
+  <data name="kr_loopfx_1Speedback"><![CDATA[0.5]]></data>
+  <data name="kr_loopfx_1looptime"><![CDATA[0]]></data>
+  <data name="kr_loopfx_2Namestyle"><![CDATA[Video_Play]]></data>
+  <data name="kr_loopfx_2StartAlpha"><![CDATA[0.6]]></data>
+  <data name="kr_loopfx_2Speed"><![CDATA[0.5]]></data>
+  <data name="kr_loopfx_2delayed"><![CDATA[0]]></data>
+  <data name="kr_loopfx_2Alphaback"><![CDATA[1]]></data>
+  <data name="kr_loopfx_2Speedback"><![CDATA[0.5]]></data>
+  <data name="kr_loopfx_2looptime"><![CDATA[0]]></data>
+  <data name="kr_cool_hotspot2coolhotspotstyle_name"><![CDATA[tooltip_hotspot_long]]></data>
+  <data name="kr_Blowup2nameh"><![CDATA[spot_description_image]]></data>
+  <data name="kr_cool_hotspot3coolhotspotstyle_name"><![CDATA[tooltip_hotspot_big]]></data>
+
+
+  <data name="kr_vr_setup_hmd0"><![CDATA[SELECT YOUR HMD]]></data>
+  <data name="kr_vr_setup_advanced"><![CDATA[ADVANCED SETTINGS]]></data>
+  <data name="kr_vr_setup_title"><![CDATA[WEB VR SETTINGS]]></data>
+  <data name="kr_vr_setup_dvn1"><![CDATA[Device:]]></data>
+  <data name="kr_vr_setup_siz1"><![CDATA[Screen size:]]></data>
+  <data name="kr_vr_setup_ipd1"><![CDATA[IPD:]]></data>
+  <data name="kr_vr_setup_hmd1"><![CDATA[HMD:]]></data>
+  <data name="kr_vr_setup_hmd3"><![CDATA[Customize]]></data>
+  <data name="kr_vr_setup_cal"><![CDATA[Calibrate gyroscope]]></data>
+  <data name="kr_vr_setup_sav"><![CDATA[SAVE]]></data>
+  <data name="kr_vr_setup_rst"><![CDATA[RESET]]></data>
+  <data name="kr_vr_setup_simple"><![CDATA[SIMPLE]]></data>
+  <data name="kr_vr_setup_cls"><![CDATA[CLOSE]]></data>
+  <data name="kr_vr_setup_m31"><![CDATA[HMD SETTINGS]]></data>
+  <data name="kr_vr_setup_fov1"><![CDATA[FOV:]]></data>
+  <data name="kr_vr_setup_dst1"><![CDATA[Distortion:]]></data>
+  <data name="kr_vr_setup_d2tx"><![CDATA[Distortion 2:]]></data>
+  <data name="kr_vr_setup_vig1"><![CDATA[Vignette:]]></data>
+  <data name="kr_vr_setup_cac1"><![CDATA[Chromatic aberration:]]></data>
+  <data name="kr_vr_setup_olp1"><![CDATA[Overlap:]]></data>
+  <data name="kr_vr_setup_m35"><![CDATA[RETURN]]></data>
+  <data name="kr_vr_setup_cb1"><![CDATA[GYROSCOPE]]></data>
+  <data name="kr_vr_setup_cb2"><![CDATA[Place the device on a flat and[br]stable surface and tab CALIBRATE[br]to correct a gyroscope drifting.]]></data>
+  <data name="kr_vr_setup_cb3"><![CDATA[CALIBRATE]]></data>
+  <data name="kr_vr_setup_cb4"><![CDATA[RESET]]></data>
+  <data name="kr_vr_setup_cb5"><![CDATA[RETURN]]></data>
+  <data name="kr_vr_setup_cb6"><![CDATA[Calibrating...]]></data>
+  <data name="kr_vr_setup_cb7"><![CDATA[Successful calibration]]></data>
+  <data name="kr_vr_setup_cb8"><![CDATA[Calibration failed]]></data>
+  <data name="kr_vr_setup_unavailable"><![CDATA[VR mode[br]is unavailable on your device]]></data>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</krpano>

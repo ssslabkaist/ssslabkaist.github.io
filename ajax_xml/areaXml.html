@@ -1,0 +1,134 @@
+<?header("Content-type: text/xml; charset=utf-8");
+echo "<?xml version='1.0' encoding='utf-8' ?>\n";
+@session_start();
+
+include "../config/dbconn_2.inc.php";
+?>
+<!--
+	document.getElementsByName('B_code[]')[selIdx].value
+
+	BcategorySel = document.getElementsByName('sidoGugunDong_area[]')[selIdx].selectedIndex;
+	var BcategorySelValue=document.getElementsByName('sidoGugunDong_area[]')[selIdx].options[BcategorySel].value;
+
+	languageSel = document.getElementsByName('B_code[]')[selIdx].selectedIndex;
+	var languageSelValue=document.getElementsByName('B_code[]')[selIdx].options[languageSel].value;
+
+	periodSel = document.getElementsByName('B_code[]')[selIdx].selectedIndex;
+	var periodSelValue=document.getElementsByName('B_code[]')[selIdx].options[periodSel].value;
+
+	courseSel = document.getElementsByName('B_code[]')[selIdx].selectedIndex;
+	var courseSelValue=document.getElementsByName('B_code[]')[selIdx].options[courseSel].value;
+
+	houseSel = document.getElementsByName('B_code[]')[selIdx].selectedIndex;
+	var houseSelValue=document.getElementsByName('B_code[]')[selIdx].options[houseSel].value;
+-->
+
+<?
+/*
+echo "
+<!DOCTYPE response [
+<!ELEMENT language_num (#PCDATA)>
+<!ELEMENT languageValue (#PCDATA)>
+<!ELEMENT courseValue (#PCDATA)>
+<!ELEMENT houseValue (#PCDATA)>
+<!ELEMENT costTrainingValue (#PCDATA)>
+<!ATTLIST costTrainingValue regiCost CDATA #REQUIRED>
+<!ATTLIST costTrainingValue pickupCost CDATA #REQUIRED>
+<!ATTLIST costTrainingValue sspCost1 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue sspCost2 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue bookCost1 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue bookCost2 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue ebCost1 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue ebCost2 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue hdCost1 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue hdCost2 CDATA #REQUIRED>
+<!ATTLIST costTrainingValue janggiCost CDATA #REQUIRED>
+<!ATTLIST costTrainingValue uhakplanJahak CDATA #REQUIRED>
+<!ATTLIST costTrainingValue iCardCost CDATA #REQUIRED>
+<!ATTLIST costTrainingValue visaCost CDATA #REQUIRED>
+<!ATTLIST costTrainingValue totalA CDATA #REQUIRED>
+<!ATTLIST costTrainingValue totalB CDATA #REQUIRED>
+<!ATTLIST costTrainingValue totalAll CDATA #REQUIRED>
+]>
+*/
+echo "
+<response>";
+
+/*euc-kr 일때만
+$sido = iconv("UTF-8", "CP949", $sido);
+$gugun = iconv("UTF-8", "CP949", $gugun);
+$dong = iconv("UTF-8", "CP949", $dong);
+*/
+
+$cbSql = mysql_query("SELECT sido FROM sidoGugunDong WHERE sido='".$sido."'",$dbconn);
+$cbRow = mysql_fetch_row($cbSql);
+
+echo "
+	<BcategorySel>".stripslashes($cbRow[0])."</BcategorySel>";
+
+
+
+$cmSql = mysql_query("SELECT sido,gugun FROM sidoGugunDong WHERE sido='".$sido."' GROUP BY sido, gugun ORDER BY gugun ASC",$dbconn);
+$cmNum = mysql_num_rows($cmSql);
+if($cmNum) {
+	while($cmRow = mysql_fetch_row($cmSql)) {
+
+		//$catename = iconv("CP949", "UTF-8", stripslashes($cmRow[2]));
+		$catename = stripslashes($cmRow[1]);
+		$catename = str_replace("&","&amp;",$catename);
+
+		if($gugun==$cmRow[1]) {
+			$mSel="Y";
+		}else{
+			$mSel="N";
+		}
+
+		echo "
+		<McategoryValue name=\"".$catename."\" value=\"".$cmRow[1]."\" mSel=\"".$mSel."\">";
+
+/* 읍/면/동
+		$query3 ="SELECT sido,gugun,dong FROM sidoGugunDong ";
+		$query3.="WHERE sido='".$sido."' AND gugun='".$cmRow[1]."' AND dong<>'' GROUP BY sido, gugun, dong ORDER BY dong ASC";
+
+		//echo $query3."<br>";
+		$Sql3 = mysql_query($query3,$dbconn);
+		$Num3 = mysql_num_rows($Sql3);
+		if($Num3) {
+			while($Row3 = mysql_fetch_array($Sql3)) {
+				
+				//$catename = iconv("CP949", "UTF-8", stripslashes($Row3[2]));
+				$catename = stripslashes($Row3[2]);
+				$catename = str_replace("&","&amp;",$catename);
+
+				if($dong==$Row3[2]) {
+					$sSel="Y";
+				}else{
+					$sSel="N";
+				}
+
+
+				echo "
+				<ScategoryValue name=\"".$catename."\" value=\"".$Row3[2]."\" sSel=\"".$sSel."\" />";
+			}
+
+		}else{
+			echo "
+				<ScategoryValue name=\"\" value=\"\" />";
+		}
+*/
+
+		echo "
+		</McategoryValue>";
+
+	}
+}else{
+	echo "
+	<McategoryValue name=\"\" value=\"\">
+		<ScategoryValue name=\"\" value=\"\" />
+	</McategoryValue>";
+}
+
+
+echo "
+</response>";
+?>

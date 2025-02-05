@@ -1,0 +1,164 @@
+/* CSS Document utf-8 */
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p,
+a, address, em, img, strong,
+dl, dt, dd,
+fieldset, form, label, legend {margin: 0; padding:0; border:0;}
+
+table { border-collapse:collapse; border-spacing:0; }
+fieldset, img { border:0; }
+
+img{font:0/0 arial;}
+html{overflow-y:scroll;} 
+
+
+/* 나눔고딕*/
+@font-face {
+  font-family: 'NanumGothic-Regular';
+  src: url("/style_program/fonts/NanumGothic-Regular.eot");
+  src: url("/style_program/fonts/NanumGothic-Regular.eot?#iefix") format('embedded-opentype'),
+       url("/style_program/fonts/NanumGothic-Regular.woff") format('woff'),
+       url("/style_program/fonts/NanumGothic-Regular.ttf") format('truetype');
+}
+
+
+/* 노토산스 코리아 기본 */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url("/style_program/fonts/NotoSansKR-Regular.eot");
+  src: url("/style_program/fonts/NotoSansKR-Regular.eot?#iefix") format('embedded-opentype'),
+       url("/style_program/fonts/NotoSansKR-Regular.woff") format('woff'),
+       url("/style_program/fonts/NotoSansKR-Regular.otf") format('opentype');
+}
+/* 노토산스 코리아 가늘게 */
+@font-face {
+  font-family: 'Noto Sans KR-Thin';
+  src: url("/style_program/fonts/NotoSansKR-Thin.eot");
+  src: url("/style_program/fonts/NotoSansKR-Thin.eot?#iefix") format('embedded-opentype'),
+       url("/style_program/fonts/NotoSansKR-Thin.woff") format('woff'),
+       url("/style_program/fonts/NotoSansCJKkr-Thin.otf") format('opentype');
+} 
+/* 아벨 */
+@font-face {
+  font-family: 'Abel';
+  src: url("/style_program/fonts/Abel-Regular.eot");
+  src: url("/style_program/fonts/Abel-Regular.eot?#iefix") format('embedded-opentype'),
+       url("/style_program/fonts/Abel-Regular.woff") format('woff'),
+       url("/style_program/fonts/Abel-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansKR-Light';
+  src: url("/style_program/fonts/NotoSansKR-Light.eot");
+  src: url("/style_program/fonts/NotoSansKR-Light.eot?#iefix") format('embedded-opentype'),
+       url("/style_program/fonts/NotoSansKR-Light.woff") format('woff'),
+       url("/style_program/fonts/NotoSansKR-Light.ttf") format('truetype');
+}
+
+/* 문체부 쓰기 정자 */ 
+@font-face {
+ font-family: 'MSugiJeong';
+ font-weight: 300;
+ src: url("/style_program/fonts/MSugiJeong.eot");
+ src: url("/style_program/fonts/MSugiJeong.eot?#iefix") format('embedded-opentype'),
+      url("/style_program/fonts/MSugiJeong.woff") format('woff'),
+      url("/style_program/fonts/MSugiJeong.woff2") format('woff'),
+      url("/style_program/fonts/MSugiJeong.ttf") format('truetype');
+}
+
+
+
+*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+html,body {width:100%; position:static; font-size:14px; color:#666; line-height:1.6; word-break:break-all;}
+/*html,body {width:100%; position:static; font-size:14px; color:#fff; line-height:1.6; word-break:break-all;}*/
+ /*font-family:"Noto Sans KR",sans-serif !important;*/
+
+
+
+#p_wrap {width:100%;}
+/*
+#p_wrap * {margin:0; padding:0;}
+*/
+#p_wrap img {max-width:100% !important; height:auto !important;}
+#p_wrap iframe {max-width:100% !important;}
+
+
+
+/* #myEditor > p{MARGIN:2px 0;}
+#myEditor > div{MARGIN:2px 0;}
+
+
+#p_wrap > p{MARGIN:2px 0;}
+#p_wrap > div{MARGIN:2px 0;} */
+
+
+/* CSS Document utf-8
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p,
+a, address, em, img, strong,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td{margin: 0; padding:0; border:0;}
+
+hr, legend { display: none; }
+em, address, cite {font-style:normal;}
+ol, ul { list-style:none; }
+table { border-collapse:collapse; border-spacing:0; }
+fieldset, img { border:0; }
+
+
+a:link, a:visited { color:#666666; text-decoration:none; }
+a:hover, a:active { color:#000000; text-decoration:underline;}
+
+
+img{font:0/0 arial;}
+html{overflow-y:scroll;} 
+body{color:#666666; font-size:12px; font-family:"맑은 고딕", "돋움", "sans-serif"; word-break:break-all;}
+*/
+
+
+/* ************************ 데스크탑 (992~) ************************ */
+@media screen and (min-width: 992px), print {
+	/* 반품/교환정보 */
+	.tb_return th {background:#f5f5f5; font-weight:normal;}
+	.tb_return th,
+	.tb_return td {border:1px solid #ddd; padding:15px;}
+}
+
+/* ************************ 데스크탑 (991~768) ************************ */
+@media screen and (max-width: 991px) {	
+	/* 반품/교환정보 */
+	.tb_return th {background:#f5f5f5; font-weight:normal;}
+	.tb_return th,
+	.tb_return td {border:1px solid #ddd; padding:15px;}
+}
+/* ************************ 모바일 (0~767) ************************ */
+@media screen and (max-width: 767px) {
+	.tb_return th, .tb_return td {display:block; padding:5px 10px; border-bottom:0; font-size:13px;}
+	.tb_return td {border-bottom:1px solid #ddd; padding:10px;}
+	.tb_return th {font-weight:bold;}
+}
+
+
+
+@media screen and (max-width: 1024px) {
+	.youtubevideowrapperdiv16-9blind {
+		position: relative;
+		padding-bottom: 83%; /* 영상비율에 따른 수치 */
+		padding-top: 0%;
+		height: 0; 
+	}
+
+	/*.youtubevideowrapperdiv16-9blind:after,*/
+	.youtubevideowrapperdiv16-9blind:before {content:''; display:block; width:100%; height:16.5%; background:#fff; position:absolute; left:0; z-index:999;}
+	.youtubevideowrapperdiv16-9blind:before {top:0;}
+	.youtubevideowrapperdiv16-9blind:after {bottom:0;}
+
+	.youtubevideowrapperdiv iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}

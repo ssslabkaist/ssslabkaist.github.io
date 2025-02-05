@@ -1,0 +1,63 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "3";			//대메뉴
+$mMenuNum = "1";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<section class="contents research analytics">
+	<div class="contents-wrap analytics">
+		
+		<div class="research-tab tabWrap">
+			<ul>
+				<li><a href="./testing.html">Nodestructive Testing</a></li>
+				<li><a href="./monitoring.html">Structural Health Monitoring</a></li>
+				<li><a href="./printing.html">3D Printing</a></li>
+				<li class="on"><a href="#void">Data Analytics</a></li>
+				<li><a href="./sensor.html">Sensor &amp; Sensing</a></li>
+			</ul>
+		</div>
+	
+		<div class="research-tit">
+			<h2>Data Analytics</h2>
+			<p>Data analytics is a process of collecting, modeling, and analyzing data to extract insights that support decision-making. In structural health monitoring, data analytics is used for diagnostics and prediction based on regression analysis, neural networks, and big data. <br>For example, using the acquired data from different conditions of the structure, the data analytics process can classify and quantify the abnormal condition. Also, the data analytics can provide visualization results to the structure manager.</p>
+		</div>
+		
+		<div class="testing-list research-list insertBg">
+			<div class="research-wrapper">
+<?
+$code = array('EOmuI4Xsr7Q','LEKbwHswc30','WQCf026Iyqs','o5MpiIjTZ0Y');
+$name = array(
+'Substrate defect inspection using thermographic approach',
+'Coating defect detection and classification using combined IR RGB image with YOLO v5',
+'Coating thickness estimation using meta learning method by thermography',
+'Noncontact Laser Ultrasonic Inspection of Weld Defect in Lithium-ion Battery Cap ');
+
+$codeLength = count($code);
+for($i=0; $i<$codeLength; $i++){
+?>
+				<div class="research-item"><a href="https://www.youtube.com/watch?v=<?=$code[$i]?>" target="_blank" title="새창 열림">
+					<div class="img">
+						<img src="https://img.youtube.com/vi/<?=$code[$i]?>/sddefault.jpg" alt="" />
+						<span class="i-play"></span>
+					</div>
+					<p><?=$name[$i]?></p>
+				</a></div>
+<?}?>
+			
+			</div>
+			<!-- <div class="swiper-scrollbar"></div> -->
+		</div>
+		
+		
+		
+	</div>
+</section>

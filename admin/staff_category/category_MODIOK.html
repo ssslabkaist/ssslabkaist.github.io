@@ -1,0 +1,36 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+if($cateMode=="Bcode_Mod"){		//1단계분류 수정
+
+
+				$sql = mysql_query("update staffCourse set catename='$BcategoryName' where catecode='$Bcode'" ,$dbconn);
+				
+
+				echo "<script>
+						alert('1단계 Course분류 수정되었습니다.');
+						location.href='./reg.html?CheckBcode=$Bcode';
+					  </script>";
+
+
+
+}else if($cateMode=="Mcode_Mod"){	//2단계분류 수정
+
+				$sql = mysql_query("update staffCourse set catename='$McategoryName' where catecode='$Mcode'" ,$dbconn);
+				
+				
+				echo "<script>
+						alert('2단계 Course분류 수정되었습니다.');
+						location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode';
+					  </script>";
+
+}
+
+
+?>

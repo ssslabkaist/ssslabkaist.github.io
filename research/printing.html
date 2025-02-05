@@ -1,0 +1,65 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "3";			//대메뉴
+$mMenuNum = "1";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<section class="contents research printing">
+	<div class="contents-wrap printing">
+		
+		<div class="research-tab tabWrap">
+			<ul>
+				<li><a href="./testing.html">Nodestructive Testing</a></li>
+				<li><a href="./monitoring.html">Structural Health Monitoring</a></li>
+				<li class="on"><a href="#void">3D Printing</a></li>
+				<li><a href="./analytice.html">Data Analytice</a></li>
+				<li><a href="./sensor.html">Sensor &amp; Sensing</a></li>
+			</ul>
+		</div>
+	
+		<div class="research-tit">
+			<h2>Online monitoring and process control of 3D printing</h2>
+			<p>The goal of the proposed research is to develop key enabling technologies for developing an online, real-time, and noncontact NDE system specifically tailored for metal-based 3D printing (AM: additive manufacturing) processes, so that the productivity and reliability of the 3D printing process and the quality of 3D printed parts can be improved and faulty components and defects can be reduced.</p>
+		</div>
+		
+		<div class="testing-list research-list insertBg">
+			<div class="research-wrapper">
+<?
+$code = array('-LJcn-05kY8','4jgswPom2n0','L-W1xCBh98o','iP6pIbz7rsM','1z7RypGXeDQ','mM03F2WeHCU');
+$name = array(
+'Online melt pool depth estimation using coaxial thermography and laser line scanning',
+'Femtosecond laser ultrasonic inspection of a moving object and its application',
+'Mechanical properties estimation in DED using femtosecond laser ultrasonics and laser polishing',
+'Porosity inspection in directed energy deposition based on transient thermoreflectance measurement',
+'Online microstructure control of 3D printed Ti 6Al 4V alloy by pulsed laser excitation',
+'Online geometry assessment during directed energy deposition using laser line scanner',);
+
+$codeLength = count($code);
+for($i=0; $i<$codeLength; $i++){
+?>
+				<div class="research-item"><a href="https://www.youtube.com/watch?v=<?=$code[$i]?>" target="_blank" title="새창 열림">
+					<div class="img">
+						<img src="https://img.youtube.com/vi/<?=$code[$i]?>/sddefault.jpg" alt="" />
+						<span class="i-play"></span>
+					</div>
+					<p><?=$name[$i]?></p>
+				</a></div>
+<?}?>
+			
+			</div>
+			<!-- <div class="swiper-scrollbar"></div> -->
+		</div>
+		
+		
+		
+	</div>
+</section>

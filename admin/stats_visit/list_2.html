@@ -1,0 +1,159 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+$menuMcategory = "05020000";
+//접속 권한, 네비게이션 위치 END
+
+
+include "../include/header.html";
+?>
+
+<div style="border-bottom:1px solid #d9dde2;">
+	<span class="con_title">방문자 - 일별</span>
+	<span class="con_navi">관리자 &gt; 통계 &gt; 방문자 - 일별</span>
+	<div style="clear:both; height:1px;"></div>
+</div>
+
+
+
+<div style="padding:10px;">
+<form action="<?=$PHP_SELF?>" name='myform' method='get'>
+	<table width="100%">
+		<tr>
+			<td style="border:3px solid #a09c9a; padding:10px;">
+
+				<table class="search_table_01">
+					<tr>
+						<td>
+							<span>
+								<strong>년도 : </strong>
+								<select name="Syear" class="select_M">
+<?
+$toyy=date("Y");
+$tomm=date("m");
+
+if(!$Syear){$Syear=$toyy;}
+if(!$Smonth){$Smonth=$tomm;}
+
+for($i=2010; $i<=$toyy; $i++){
+	echo "
+									<option value='$i'";if($i==$Syear){echo"selected";}echo">$i</option>";
+}
+?>
+								</select>년
+
+
+
+								<select name="Smonth" class="select_M">
+<?
+for($i=1; $i<=12; $i++){
+	echo "
+									<option value='$i'";if($i==$Smonth){echo"selected";}echo">$i</option>";
+}
+?>
+								</select>월
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td style=" text-align:left; border:none; color:#919191;"><span class="input_btn_01"><input type="submit" value="검색하기" style="min-width:60px; vertical-align:middle;"></span></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</form>
+
+
+	<!--왼쪽, 오른쪽 정렬일때-->
+	<div style="clear:both;padding:5px 0;">
+<?/*
+		<div style="float:left;">
+			<span class="s_btn_06"><a href="#link" onclick="location.href='./excel/list_2_excel.html?Syear=<?=$Syear?>&Smonth=<?=$Smonth?>';"><strong style="min-width:100px;">EXCEL 다운로드</strong></a></span>
+		</div>
+*/?>
+		<div style="clear:both;"></div>
+	</div>
+
+
+	<table class="list_table_graph_01">
+		<colgroup>
+			<col width="8%" />
+			<col width="82%" />
+			<col width="10%" />
+		</colgroup>
+		<tr>
+			<th>일</th>
+			<th>접속자 수</th>
+			<th style="background:#f1f1f1;">접속비율</th>
+		</tr>
+
+<?
+$KDAY=array("일","월","화","수","목","금","토");
+$Smonth=sprintf("%02d",$Smonth);
+
+$maxsql=mysql_query("SELECT SUM(count) FROM Mcount WHERE year(wdate)='$Syear' AND month(wdate)='$Smonth'",$dbconn);
+$maxrow=mysql_fetch_row($maxsql);
+
+$sql="SELECT wdate,count FROM Mcount WHERE year(wdate)='$Syear' AND month(wdate)='$Smonth' ORDER BY wdate ASC";
+$fetch=mysql_query($sql,$dbconn);
+$Mtotal=0;
+while($row=mysql_fetch_row($fetch)){
+	$graphwidth=$row[1]/$maxrow[0]*100;
+	$per=sprintf("%01.3f",$graphwidth);
+	$per=round($per,1);
+	$DAY = explode("-",$row[0]);
+	$weekdate = date("w",mktime(0,0,0,$DAY[1],$DAY[2],$DAY[0]));
+
+
+	$graphwidth=round($per);
+	//$graphwidth = 100;
+	
+	echo"
+		<tr>
+			<td align=\"center\"><a href=\"./list_3.html?Syear=".$Syear."&Smonth=".$DAY[1]."&day=".$DAY[2]."\">".$DAY[2]." (".$KDAY[$weekdate].")</a></td>
+			<td>
+				<div class=\"graph_01\">
+					<div class=\"full_width\">
+						<div class=\"grahp_bg_01\" style=\"width:".$graphwidth."%;\">
+							<span>".$row[1]."명</span>
+						</div>
+					</div>
+				</div>
+			</td>
+			<td align=\"center\" style=\"border-right:none;\">".$per."%</td>
+		</tr>";
+
+	$Mtotal+=$row[1];
+}
+
+$Ysql=mysql_query("SELECT SUM(count) FROM Mcount WHERE year(wdate)='$Syear'",$dbconn);
+$Yrow=mysql_fetch_row($Ysql);
+$Tsql=mysql_query("SELECT SUM(count) FROM Mcount",$dbconn);
+$Trow=mysql_fetch_row($Tsql);
+?>
+
+	</table>
+
+
+	<div style="border-bottom:1px solid #aeaeae; padding:7px; font-size:11px;">
+		<strong>월합계 : <?=$Mtotal?></strong>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<strong><font color="#6666CC">년합계 : <?=$Yrow[0]?> </font></strong>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<strong><font color="#6666CC">전체합계 : <?=$Trow[0]?> </font></strong>
+	</div>
+
+
+	<div style="clear:both;padding:5px 0; text-align:center;">
+		<div>
+			<span class="s_btn_03"><a href="./list_1.html?Syear=<?=$Syear?>"><strong style="min-width:60px;">월별통계</strong></a></span>
+		</div>
+	</div>
+
+</div>
+<?include "../include/footer.html";?>

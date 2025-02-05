@@ -1,0 +1,173 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A","Y");
+//접속 권한, 네비게이션 위치 END
+
+$Bcategory = substr($CheckCode,0,4);
+$Mcategory = substr($CheckCode,0,8);
+$Scategory = substr($CheckCode,0,12);
+
+if($mode=="asc") {
+	$sql = mysql_query("SELECT listorder FROM staffCourse WHERE catecode='$catecode'",$dbconn);
+	$row = mysql_fetch_row($sql);
+
+	$listorder=$row[0]-1;
+
+	$li_sql = mysql_query("SELECT * FROM staffCourse WHERE SUBSTRING(catecode,1,4)='$Bcategory' AND catedeg='2' AND listorder<=$listorder ORDER BY listorder DESC LIMIT 1",$dbconn);
+	//echo "SELECT * FROM menuCategory WHERE SUBSTRING(catecode,1,2)='$Bcategory' AND catedeg='2' AND listorder<=$listorder ORDER BY listorder DESC LIMIT 1";
+	//exit;
+	$li_row = mysql_fetch_array($li_sql);
+
+	if($li_row[catecode]) {
+		
+		$upd = "UPDATE staffCourse SET listorder=$row[0] WHERE SUBSTRING(catecode,1,4)='$Bcategory' AND catedeg='2' AND listorder=$li_row[listorder]";
+		$upd_result = mysql_query($upd,$dbconn);
+
+
+		$upd_2 = "UPDATE staffCourse SET listorder=$li_row[listorder] WHERE catecode='$catecode'";
+		$upd_2_result = mysql_query($upd_2,$dbconn);
+	}
+
+	//echo "SELECT listorder FROM $tn WHERE catecode='$catecode' <br>";
+	//echo $upd."<br>";
+	//echo $upd_2."<br>";
+	//exit;
+	GO_REFRESH("$PHP_SELF?CheckCode=$CheckCode");
+	exit;
+}
+
+if($mode=="desc") {
+	
+	$sql = mysql_query("SELECT listorder FROM staffCourse WHERE catecode='$catecode'",$dbconn);
+	$row = mysql_fetch_row($sql);
+
+	$listorder=$row[0]+1;
+
+
+	$li_sql = mysql_query("SELECT * FROM staffCourse WHERE SUBSTRING(catecode,1,4)='$Bcategory' AND catedeg='2' AND listorder>=$listorder ORDER BY listorder ASC LIMIT 1",$dbconn);
+	$li_row = mysql_fetch_array($li_sql);
+
+	if($li_row[catecode]) {
+		$upd = "UPDATE staffCourse SET listorder=$row[0] WHERE SUBSTRING(catecode,1,4)='$Bcategory' AND catedeg='2' AND listorder=$li_row[listorder]";
+		$upd_result = mysql_query($upd,$dbconn);
+
+
+		$upd_2 = "UPDATE staffCourse SET listorder=$li_row[listorder] WHERE catecode='$catecode'";
+		$upd_2_result = mysql_query($upd_2,$dbconn);
+	}
+
+	//echo "SELECT listorder FROM $tn WHERE catecode='$catecode' <br>";
+	//echo $upd."<br>";
+	//echo $upd_2."<br>";
+	//exit;
+	GO_REFRESH("$PHP_SELF?CheckCode=$CheckCode");
+	exit;
+}
+
+
+$Bsql = mysql_query("SELECT catename FROM staffCourse WHERE SUBSTRING(catecode,1,4)='$Bcategory'", $dbconn);
+$Brow = mysql_fetch_row($Bsql);
+
+$sql = mysql_query("SELECT COUNT(*) FROM staffCourse WHERE SUBSTRING(catecode,1,4)='$Bcategory' AND catedeg='2'", $dbconn);
+$row = mysql_fetch_row($sql);
+?>
+<HTML>
+<HEAD>
+<TITLE>Course 분류 출력 순서</TITLE>
+<link rel="stylesheet" href="/style_admin.css">
+
+<script language="javascript">
+function DEL_DEL(url) {
+	if(!confirm("정말로 삭제하시겠습니까?")) {
+		return;
+	}
+
+	location.href=url;
+}
+</script>
+</HEAD>
+<BODY topmargin="0" leftmargin="0">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+  <tr>
+    <td colspan="3" height="15"></td>
+  </tr>
+  <tr>
+    <td width="10"></td>
+    <td align="center">
+	  <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#456285">
+	    <tr>
+		  <td align="center" height="30"><font color="#FFFFFF"><?=stripslashes($Brow[0])?></font></td>
+		</tr>
+	  </table>
+	  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+	    <tr>
+		  <td align="right" height="30">
+		    총 <font color='#0066CC'><b><?=$row[0]?></b></font> 개
+		  </td>
+		</tr>
+	  </table>
+	  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+	    <tr height="30" bgcolor="#456285">
+		  <td align="center" width="10%" class="dod8_"><font color="#FFFFFF">번호</font></td>
+		  <td align="center" width="60%" class="dod8_"><font color="#FFFFFF">Course명</font></td>
+		  <td align="center" width="30%" class="dod8_"><font color="#FFFFFF">순서이동</font></td>
+		</tr>
+<?
+$query = "SELECT * FROM staffCourse WHERE SUBSTRING(catecode,1,4)='$Bcategory' AND catedeg='2' ORDER BY listorder ASC";
+$result= mysql_query($query,$dbconn);
+
+if (!$result) {
+	echo(" 쿼리 에러 ");
+}
+$sid=1;
+while($row=mysql_fetch_array($result)) {
+
+	if($sid==1) {
+		$ListOrder_Link = "";
+	}else{
+		$ListOrder_Link = "<a href=\"?mode=end&catecode=$row[catecode]&listorder=$row[listorder]&CheckCode=$CheckCode\">▲</a>";
+	}
+
+	$upd = mysql_query("UPDATE staffCourse SET listorder='".$sid."' WHERE catecode='".$row[catecode]."'",$dbconn);
+
+	echo "
+	    <tr height=\"25\">
+		  <td align=\"center\" class=\"dod8_\">$sid</td>
+		  <td align=\"center\" class=\"dod8_\">$row[catename]</td>
+		  <td align=\"center\" class=\"dod8_\">
+		    <a href=\"$PHP_SELF?mode=asc&catecode=$row[catecode]&CheckCode=$CheckCode\">▲</a>
+			<a href=\"$PHP_SELF?mode=desc&catecode=$row[catecode]&CheckCode=$CheckCode\">▼</a>
+		  </td>
+		</tr>
+		<tr>
+		  <td colspan=\"11\" bgcolor=\"#cccccc\"></td>
+		</tr>";
+	$sid++;
+}
+?>
+
+	  </table>
+
+	  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+	    <tr>
+		  <td align="center" height="30"></td>
+		</tr>
+	  </table>
+	  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+	    <tr>
+		  <td align="center" height="30">
+			<input type="button" name="button90389" value=" 닫기 " class="input_sel" onClick="javascript:self.close();">
+		  </td>
+		</tr>
+	  </table>
+	</td>
+    <td width="10"></td>
+  </tr>
+</table>
+</BODY>
+</HTML>

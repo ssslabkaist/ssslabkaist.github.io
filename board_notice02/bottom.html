@@ -1,0 +1,29 @@
+<?
+if($_SESSION["session_admin_id"] && $_REQUEST["G_state"]!="Y") {
+?>
+
+		</td>
+	</tr>
+	<tr>
+		<td height="50" bgcolor="#FFFFFF" >&nbsp;</td>
+	</tr>
+</table>
+<? include "../admin/include/footer.html";?>
+
+
+<?
+}else{
+?>
+
+
+		</div>
+		<!-- //board -->
+
+
+
+	</div><!-- //inner -->
+</section><!-- //contents -->
+
+<!-- footer -->
+<?include "../include/footer.html";?>
+<?}?>

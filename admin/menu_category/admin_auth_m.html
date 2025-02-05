@@ -1,0 +1,204 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+
+$Bcategory = substr($CheckCode,0,2);
+$Mcategory = substr($CheckCode,0,4);
+$Scategory = substr($CheckCode,0,6);
+
+
+if($mode=="end") {
+
+	for($i=0;$i<sizeof($CATECODE);$i++) {
+		
+		$sql = mysql_query("SELECT catecode FROM menuCategory WHERE catecode='".$CATECODE[$i]."'",$dbconn);
+		$row = mysql_fetch_row($sql);
+
+		$adminAuthIns = "";
+		if($row[0]) {
+
+			$adminAuthIns="@@A@@";
+			for($z=0;$z<sizeof($adminAuth[$row[0]]);$z++) {
+				if($z==0) {
+					$adminAuthIns=$adminAuthIns.$adminAuth[$row[0]][$z]."@@";
+				}else{
+					$adminAuthIns=$adminAuthIns.$adminAuth[$row[0]][$z]."@@";
+				}
+				/*
+				if($z==sizeof($adminAuth[$row[0]])-1) {
+					$adminAuthIns=$adminAuthIns."@@".$adminAuth[$row[0]][$z]."@@";
+				}else{
+					if($z==0) {
+						$adminAuthIns="@@A@@";
+					}
+					$adminAuthIns=$adminAuthIns."@@".$adminAuth[$row[0]][$z];
+				}
+				*/
+			}
+
+
+			$query ="UPDATE menuCategory SET ";
+			$query.="admin_auth='".$adminAuthIns."' ";
+			$query.="WHERE catecode='".$CATECODE[$i]."'";
+			
+			//echo $query."<br>";
+
+			$result = mysql_query($query,$dbconn);
+
+			if(!$result) {
+				ERROR_BACK("UPDATE ERROR");
+			}
+		}
+	}
+	//exit;
+
+	ERROR_BACK("접속권한이 수정 되었습니다.");
+	exit;
+}
+
+$Bsql = mysql_query("SELECT catename FROM menuCategory WHERE SUBSTRING(catecode,1,2)='$Bcategory'", $dbconn);
+$Brow = mysql_fetch_row($Bsql);
+
+$sql = mysql_query("SELECT COUNT(*) FROM menuCategory WHERE SUBSTRING(catecode,1,2)='$Bcategory' AND catedeg='2'", $dbconn);
+$row = mysql_fetch_row($sql);
+?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>접속권한</title>
+<script type="text/javascript" src="/script/script.js"></script>
+<link href="../style/popup.css" rel="stylesheet" type="text/css" />
+
+
+<script language="javascript">
+function chkUpdate() {
+	
+	var form1 = document.frmName;
+	var NUM = 0;
+
+	var catecodeLen = document.getElementsByName("CATECODE[]").length;
+	for(z=0;z<catecodeLen;z++) {
+		if (document.getElementsByName("CATECODE[]")[z].checked==true) {
+			NUM++;
+		}
+	}
+	if(NUM==0) {
+		window.alert("체크된 목록이 없습니다. 삭제할 목록을 체크하세요.");
+		return;
+	}
+	form1.submit();
+}
+
+function allCheck() {
+	var catecodeLen = document.getElementsByName("CATECODE[]").length;
+
+	if(document.getElementsByName("allChkName")[0].checked==true) {
+		for(var i=0; i<catecodeLen; i++) {
+			document.getElementsByName("CATECODE[]")[i].checked=true;
+		}
+	}else{
+		for(var i=0; i<catecodeLen; i++) {
+			document.getElementsByName("CATECODE[]")[i].checked=false;
+		}
+	}
+}
+</script>
+
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td>
+			<ul class="menu_tab_01"> 
+				<li class="on">
+					<span class="on"><a href="#void">접속권한</a></span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding:0px 10px;">
+
+	<!--왼쪽, 오른쪽 정렬일때-->
+	<div style="clear:both;padding:5px 0;">
+		<div style="float:left;">
+			<span class="s_btn_03"><a href="#link" onclick="chkUpdate();"><strong style="min-width:60px;">선택수정</strong></a></span>
+		</div>
+
+		<div style="float:right; padding:0;position:relative;left:0px; top:8px;">
+			<div style="font-size:11px;">총 : <strong style="color:#FF0000;"><?=$row[0]?></strong> 개</div>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+
+
+
+<form method="post" name="frmName" action="?mode=end">
+
+<div class="popup_con_wrap" style="height:423px; margin:0px;padding:4px;background:#FFFFFF;">
+	<table class="order_detail_03">
+		<colgroup>
+			<col width="" />
+			<col width="" />
+			<col width="" />
+			<col width="" />
+		</colgroup>
+		<tr>
+			<th style="width:60px;"><input type="checkbox" name="allChkName" onClick="allCheck();"></th>
+			<th width="8%">번호</th>
+			<th width="">카테고리명</th>
+			<th width="100px">접속권한</th>
+		</tr>
+<?
+$query = "SELECT * FROM menuCategory WHERE SUBSTRING(catecode,1,2)='$Bcategory' AND catedeg='2' ORDER BY listorder ASC";
+$sql= mysql_query($query,$dbconn);
+
+$sid=1;
+while($row=mysql_fetch_array($sql)) {
+
+	echo "
+		<tr align=\"center\" height=\"25\">
+			<td><input type=\"checkbox\" name=\"CATECODE[]\" value=\"".$row[catecode]."\"></td>
+			<td>".$sid."</td>
+			<td style=\"text-align:left;\">".stripslashes($row[catename])."</td>
+			<td>
+				<ul>";
+
+	$mcapSql = mysql_query("SELECT admin_auth,admin_auth_name FROM menuCategoryAdminPart WHERE admin_auth<>'A' ORDER BY admin_auth ASC",$dbconn);
+	while($mcapRow = mysql_fetch_row($mcapSql)) {
+		echo "
+					<li style=\"float:left;\"><input type=\"checkbox\" name=\"adminAuth[".$row[catecode]."][]\" value=\"".$mcapRow[0]."\" class=\"radio_01\""; if(preg_match("/@@".$mcapRow[0]."@@/",$row[admin_auth])) { echo " checked"; } echo ">".$mcapRow[1]."</li>";
+	}
+
+	echo "
+				</ul>
+			</td>
+		</tr>";
+
+
+	$sid++;
+}
+?>
+	</table>
+
+	<div style="height:5px;"></div>
+
+</div>
+</form>
+
+
+
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+$menuMcategory = "03030000";
+//접속 권한, 네비게이션 위치 END
+
+$subquery= "subject_s=".urlencode($subject_s)."&creator_name_s=".urlencode($creator_name_s)."&registration_number_s=".urlencode($registration_number_s)."&view_state_s=".$view_state_s."";
+
+
+include "../include/header.html";
+?>
+
+<script language="Javascript">
+function frmChk() {
+	form1=document.frmName;
+	var len = form1.elements.length;
+
+	if (!form1.subject.value) {
+		window.alert("제목을 입력하세요");
+		form1.subject.focus();
+		return;
+	}
+	if (!form1.creator_name.value) {
+		window.alert("creator를 입력하세요");
+		form1.creator_name.focus();
+		return;
+	}
+
+
+	form1.submit();
+}
+</script>
+
+<?
+$sql = mysql_query("SELECT * FROM constTechList WHERE uid='".$uid."'",$dbconn);
+$row = mysql_fetch_array($sql);
+?>
+
+
+<div style="border-bottom:1px solid #d9dde2;">
+	<span class="con_title">건설신기술 관리</span>
+	<span class="con_navi">관리자 &gt; Publication &gt; 건설신기술 관리</span>
+	<div style="clear:both; height:1px;"></div>
+</div>
+
+
+<form name="frmName" method="post" action="./process_const_tech_list.php" enctype="multipart/form-data" onsubmit="return false;">
+<input type="hidden" name="mode" value="frmMod">
+
+
+<input type="hidden" name="spage" value="<?=$spage?>">
+<input type="hidden" name="cpage" value="<?=$cpage?>">
+<input type="hidden" name="uid" value="<?=$row["uid"]?>">
+
+<input type="hidden" name="subject_s" value="<?=inputTextPrint($subject_s)?>">
+<input type="hidden" name="creator_name_s" value="<?=inputTextPrint($creator_name_s)?>">
+<input type="hidden" name="registration_number_s" value="<?=inputTextPrint($registration_number_s)?>">
+<input type="hidden" name="view_state_s" value="<?=$view_state_s?>">
+
+
+
+<div style="padding:10px;" id="tableId">
+	<table>
+		<tr>
+			<td style="font-size:11px; line-height:13px;"><img src="/admin/images/include/caution_01.gif" style="vertical-align:middle;">표시는 필수</td>
+		</tr>
+	</table>
+
+
+
+<table class="view_table_01">
+		<colgroup>
+			<col width="12%" />
+			<col width="88%" />
+		</colgroup>
+		<tr>
+			<th>출력여부</th>
+			<td>
+				<label><input type="radio" name="view_state" value="Y"  class="radio_01" <?if ($row["view_state"]=="Y") {echo " checked";}?>> 출력</label>
+				&nbsp;&nbsp;&nbsp;
+				<label><input type="radio" name="view_state" value="N" class="radio_01" <?if ($row["view_state"]=="N") {echo " checked";}?>> 미출력</label>
+			</td>
+		</tr>
+<!--
+		<tr>
+			<th><span class="caution_01">년도</span></th>
+			<td>
+				<select name="year_of_publication" class="select_M">
+					<option value="" <?if(!$row["year_of_publication"]) { echo " selected"; }?>>선택하세요</option>
+<?
+/*
+for($i=date("Y")+1; 1990<=$i; $i--) {
+	echo "
+					<option value=\"".$i."\""; if($row["year_of_publication"]==$i) { echo " selected"; } echo ">".$i."</option>";
+}
+*/
+?>
+				</select>
+			</td>
+		</tr>
+-->
+		<tr>
+			<th><span class="caution_01">제목</span></th>
+			<td>
+				<input type="text" name="subject" style="min-width:1000px; width:80%;" maxlength="500" class="input_M" value="<?=inputTextPrint($row["subject"])?>">
+			</td>
+		</tr>
+		<tr>
+			<th><span class="caution_01">Creator</span></th>
+			<td>
+				<input type="text" name="creator_name" size="150" maxlength="255" class="input_M" value="<?=inputTextPrint($row["creator_name"])?>">
+				<div>{홍길동} 입력시 <span style="text-decoration:underline;">밑줄</span>, [홍길동] 입력시 <span style="font-weight:bold;">굵게</span>, {[홍길동]} 또는 [{홍길동}] <span style="font-weight:bold;"><span style="text-decoration:underline;">밑줄 굵게</span></span> 동시에 표현됩니다.</div>
+			</td>
+		</tr>
+		<tr>
+			<th>등록 날짜</th>
+			<td>
+				<input type="text" name="registration_date" maxlength="10" size="10" class="input_M" value="<?=$row["registration_date"]?>" readonly>
+				<a href="#void" onclick="getCursorData(document.frmName.registration_date); return false;"><img src="/admin/img/bt_cal.gif" border="0"></a>
+				<span style="display:inline-block; width:50px;"></span>
+				<a href="#void" onclick="document.getElementsByName('registration_date')[0].value=''; return false;">[초기화]</a>
+			</td>
+		</tr>
+		<tr>
+			<th>등록 번호</th>
+			<td>
+				<input type="text" name="registration_number" size="50" maxlength="100" class="input_M" value="<?=inputTextPrint($row["registration_number"])?>">
+			</td>
+		</tr>
+	</table>
+</div>
+
+<!--가운데 정렬일때-->
+<div style="text-align:center;padding:5px 0;">
+	<span class="input_btn_01"><input type="button" value="수정하기" style="min-width:60px; vertical-align:middle;" onclick="frmChk();"></span>
+	<span class="input_btn_01"><input type="button" value="목록으로" style="min-width:60px; vertical-align:middle;" onClick="location.href='./list.html?cpage=<?=$cpage?>&spage=<?=$spage?>&<?=$subquery?>'; return false;"></span>
+</div>
+
+</form>
+
+
+<?include "../include/footer.html";?>
+
+
+<div id="calenderPop" style="position:absolute; visibility:hidden;">
+  <table border="0" id="Select_Rayer" style="position:absloute; display:none;">
+    <tbody>
+    <tr>
+	  <td align="center">
+	    <select name="date_year" class="input_sel" onChange="javascript:getCursorData();">
+<?
+$date_year=date("Y")+20;
+for($i=2005;$i<=$date_year;$i++) {
+	echo "
+		  <option value=\"$i\""; if($i==date("Y")) {echo "selected";} echo ">$i</option>";
+}
+?>
+		</select>년
+	    <select name="date_mon" class="input_sel" onChange="javascript:getCursorData();">
+<?
+for($i=1;$i<=12;$i++) {
+
+	if(strlen($i)==1) {
+		$ii="0".$i;
+	}else{
+		$ii=$i;
+	}
+	echo "
+		  <option value=\"$ii\""; if($ii==date("m")) {echo "selected";} echo ">$ii</option>";
+}
+?>
+		</select>월
+
+		<a href="javascript:clearData();">×</a>
+	  </td>
+	</tr>
+	</tbody>
+    <tr>
+	  <td align="center">
+  <table id="cursorData" bgcolor="#FFFAFA" border="0" width="100%">
+    <tbody id="cursorDataBody"></tbody>
+  </table>
+	  </td>
+	</tr>
+  </table>
+</div>

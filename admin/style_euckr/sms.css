@@ -1,0 +1,88 @@
+/* CSS Document euc-kr */
+
+/************************** sms **********************/
+body{
+	scrollbar-arrow-color: #FFFFFF;
+	scrollbar-face-color: #e9e9e9;
+	scrollbar-highlight-color: #f0eeee;
+	scrollbar-3dlight-color: #e0e0e0;
+	scrollbar-shadow-color: #c0bebe;
+	scrollbar-darkshadow-color: #ffffff;
+	scrollbar-track-color: #f2f2f2;
+}
+
+
+.list_explain_01{ border:1px solid #dbdbdb; background:#f8f8f8; margin:10px; padding:6px 13px;}
+.list_explain_01 li{background:url(../images/include/list_explain_arrow.jpg) no-repeat 0px 5px; padding:0 0 0 8px; font-size:11px; line-height:15px; color:#666666; margin:4px 0;}
+
+/*sms layout*/
+table.sms_table_01{ width:100%;}
+table.sms_table_01 td {font-size:12px; line-height:18px; color:#666666;/*word-break:break-all; word-wrap:break-word;  border:1px solid red;*/ vertical-align:top;}
+
+table.sms_table_01 .phone_left{background:url(../images/sms/phone_bg.jpg) no-repeat 0px 0px; height:426px;}
+
+
+/*¿ÞÂÊ ÆùÀÌ¹ÌÁö*/
+.sms_box_01{ position:relative;}
+.sms_box_01 .btn_01{ position:absolute; top:16px; left:183px;}
+.sms_box_01 .btn_02{ position:absolute; top:256px; left:24px;}
+.sms_box_01 .message_input_01{position:absolute; top:73px; left:26px;}
+.sms_box_01 .message_input_01 textarea{ border:none;height:166px; width:190px; padding:0 5px;overflow-y:scroll; background:#ffffff; color:#666666;}
+
+.sms_box_01 .txt_length{ color:#494949;position:absolute; top:258px; left:130px;width:100px; text-align:right;}
+
+.sms_box_01 .message_input_02{position:absolute; top:320px; *top:318px; left:26px;}
+.sms_box_01 .message_input_02 input{ width:200px; border:0px solid red;font-family:"µ¸¿ò", "sans-serif"; color:#65656d;}
+
+.sms_box_01 .message_input_03{position:absolute; top:354px; *top:352px; left:70px;}
+.sms_box_01 .message_input_03 input{ width:160px; border:0px solid red;font-family:"µ¸¿ò", "sans-serif"; color:#65656d; font-size:11px;}
+
+/*Æ¯¼ö¹®ÀÚ ÆË¾÷*/
+.sms_box_01 .pop_contents{position:absolute; z-index:2; border:1px solid #a8a9b0; background:#e1e2e3; height:171px; padding:2px 5px; width:168px; top:16px; left:241px; display:none;}
+.sms_box_01 .pop_name{ font-weight:bold; font-size:11px; margin:0px 0 0 5px; padding:3px 0 0 0;}
+.sms_box_01 .pop_close{ position:absolute; top:0px; right:0px;}
+.sms_box_01 .special_txt{ border:1px solid #c0c1c8; background:#FFFFFF; padding:8px; margin:3px 0 0 0;}
+.sms_box_01 .special_txt a{ /*border:1px solid blue;*/ display:inline-block; height:17px; width:17px; padding:0px; margin:2px; text-align:center; text-decoration:none;}
+
+
+/*¿À¸¥ÂÊ ¹øÈ£ÀÔ·Â*/
+.sms_box_02{ }
+.sms_box_02 .sms_title_01{ background:url(../images/sms/title_bg_01.jpg) no-repeat 100% 0px; height:33px;}
+.sms_box_02 .sms_title_02{ background:url(../images/sms/title_bg_02.jpg) no-repeat 100% 0px; height:33px;}
+.sms_box_02 .sms_numbers_01{ border-left:1px solid #cacaca;border-right:1px solid #cacaca;padding:14px 9px;}
+
+
+.sms_box_02 .get_number{ width:775px;}
+.sms_box_02 .get_number td{ /*border:1px solid red;*/ text-align:center;  }
+.sms_box_02 .get_number .sms_number_01 .title_01{border:1px solid #e0e0e1; border-bottom:none; font-weight:bold; font-size:11px; padding:3px 0 1px 0; background:#f9f9f9; }
+.sms_box_02 .get_number .sms_number_01 .sms_input_01{border:1px solid #e0e0e1; padding:8px;}
+.sms_box_02 .get_number .sms_number_01 textarea{ width:98%;font-family:"µ¸¿ò", "sans-serif";background:#ffffff; border:0px solid red; font-size:12px;line-height:14px; color:#666666;}
+ 
+.sms_box_02 .get_number .sms_number_02{ padding-top:33px;}
+
+.sms_box_02 .get_number .sms_number_03 .title_01{border:1px solid #e0e0e1; border-bottom:none; font-weight:bold; font-size:11px; padding:3px 0 1px 0; background:#f9f9f9; }
+.sms_box_02 .get_number .sms_number_03 .sms_input_01{border:1px solid #e0e0e1; padding:8px;}
+.sms_box_02 .get_number .sms_number_03 select{width:197px; height:106px; *height:107px; background:#ffffff; font-family:"µ¸¿ò", "sans-serif";border:0px solid red; font-size:12px; line-height:14px; color:#666666;}
+
+.sms_box_02 .get_number .sms_number_03 .sms_input_btn{ text-align:left; position:relative; padding:1px 0 0 0;}
+.sms_box_02 .get_number .sms_number_03 .sms_input_btn a{ margin:0px 1px 0 0; font:0/0 arial;}
+.sms_box_02 .get_number .sms_number_03 .sms_input_btn span{ display:block; width:100px; position:absolute; top:3px; right:0px; text-align:right; font-size:11px; color:#717277;}
+.sms_box_02 .get_number .sms_number_03 .sms_input_btn span .point{ color:#fa0000;}
+
+.sms_bottom_01{background:url(../images/sms/title_bottom_left.jpg) no-repeat 0px 100%; height:85px;}
+.sms_bottom_02{background:url(../images/sms/title_bottom_right.gif) no-repeat 100% 100%; height:65px; padding:10px 0 10px 20px;}
+.sms_bottom_02 .sms_radio_group{ font-size:11px; margin:0 0 10px 0; }
+.sms_bottom_02 .sms_radio_group label{margin:0 20px 0 0;}
+.sms_bottom_02 .sms_radio_group label em{ font-style:normal;}
+
+.sms_bottom_03{width:10px;height:10px; position:relative; top:-10px; }
+
+
+
+
+
+
+
+
+
+

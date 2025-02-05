@@ -1,0 +1,108 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "1";			//대메뉴
+$mMenuNum = "3";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+
+$tit = array('1. Research areas','2. Recruitment target','3. Eligibility','4. Supports','5. Application method','6. Contact');
+$info = array(
+'<ul class="ulType1">
+	<li>3D printing online nondestructive testing</li>
+	<li>Application of statistical pattern recognition and machine learning</li>
+	<li>Laser and nonlinear ultrasonics</li>
+	<li>Active/Passive thermography</li>
+	<li>Please refer to the website for additional information. (<a href="http://ssslab.kaist.ac.kr/" target="_blank">http://ssslab.kaist.ac.kr/</a>)</li>
+</ul>',
+'<ul>
+    <li>
+        <p>A. Civil and Environmental Engineering (<a href="https://civil.kaist.ac.kr" target="_blank">https://civil.kaist.ac.kr</a>)</p>
+        <span>Master’s and Doctoral courses</span>
+		<p></p>
+    </li>
+    <li>
+        <p>B. Graduate school of AI (<a href="https://gsai.kaist.ac.kr" target="_blank">https://gsai.kaist.ac.kr</a>)</p>
+        <span>Master’s course</span>
+		<p></p>
+    </li>
+    <li>
+        <p>C. Robotics program (<a href="https://rp.kaist.ac.kr" target="_blank">https://rp.kaist.ac.kr</a>)</p>
+        <span>Master’s and Doctoral courses</span>
+		<p></p>
+    </li>
+    <li>
+        <p>* Preferred students</p>
+        <span>Students who are familiar with the engineering software. (e.g. Programming language (Python, C#, C++), LabVIEW, MATLAB, FEM (ABAQUS, ANSYS, FLOW-3D))</span>
+		<span>Students who have equipment usage experience related to Optics and Laser technology, Femtosecond laser, Ultrasonics, Thermography</span>
+    </li>
+</ul>',
+'<p>Students who satisfy the admission requirements for KAIST graduate school. (<a href="https://admission.kaist.ac.kr/graduate/" target="_blank">https://admission.kaist.ac.kr/graduate/</a>)</p>
+<p>Students who have obtained or are expected to acquire bachelor’s or master’s degree in Civil/Architect/Mechanical/Electronic/Computational engineering fields.</p>',
+'<ul class="ulType1">
+	<li>Full support for admission, tuition, and registration fees: There is no fee that students should pay</li>
+	<li>Support for Labor cost: About 1.25 ~ 2.3 million won/month depending on the Master’s/Doctoral period.</li>
+	<li>Support for domestic/international conferences</li>
+</ul>',
+'<p>Send a resume (CV) including academic background, experience, a field of interest, and reason for an application to Prof. Sohn (<a href="mailto:hoonsohn@kaist.ac.kr">hoonsohn@kaist.ac.kr</a>)</p>',
+'
+<p>Professor Hoon Sohn: <a href="mailto:hoonsohn@kaist.ac.kr">hoonsohn@kaist.ac.kr</a></p>
+<p>Doctoral student Kiyoon Yi: <a href="mailto:yikiyoon@kaist.ac.kr">yikiyoon@kaist.ac.kr</a></p>',
+);
+?>
+<!-- // header -->
+
+<script>
+
+$(function(){
+	$(".recruit-tabWrap>ul>li").eq(0).addClass("on");
+	$(".recruit-tabInner>ul>li").eq(0).addClass("on");
+	$(".recruit-tabWrap>ul>li").on("click", function(){
+		var idx = $(this).index();
+		$(".recruit-tabWrap>ul>li").removeClass("on")
+		$(this).addClass("on")
+		$(".recruit-tabInner>ul>li").removeClass("on")
+		$(".recruit-tabInner>ul>li").eq(idx).addClass("on")
+	})
+})
+
+</script>
+<section class="contents recruit h100vh">
+	<div class="contents-wrap">
+		
+		<div class="recruit-top">
+			<p>Smart Structure System Lab (Advisor: Hoon Sohn in KAIST) is now recruiting graduate students (Civil and Environmental Engineering: Master’s and Doctoral courses, Graduate school of AI: Master’s course). We have been promoting the development and commercialization of world-class Structural Health Monitoring (SHM) and Nondestructive Testing (NDT) technologies. Recently, Prof. Sohn has been selected as the “Leader researcher” and supported as the highest level by the National Research Foundation of Korea. The research topic is ‘Online nondestructive evaluation for 3D printing process control’.</p>
+			<!-- <p>KAIST AI 대학원 (석사과정) 및 건설 및 환경공학과 스마트구조시스템 연구실 (지도교수 손훈, 건설 및 환경공학과 스마트구조시스템연구실 (Smart Structures and Systems Laboratory))에서 아래 분야의 연구에 참여할 대학원생(석사과정, 박사과정)을 모집합니다. 스마트구조시스템연구실에서는 다양한 스마트 센싱 기술을 이용한 세계적 수준의 구조물 건전성 모니터링(Structural Health Monitoring, SHM) 및 비파괴검사 (Nondestructive Testing, NDT) 기술 개발 및 실용화를 추진해 오고 있습니다. 최근에는 한국연구재단에서 개인연구자에게 지원하는 최고/최대 수준인 “리더연구”과제에 선정되어서 3D 프린팅 공정 중 실시간 비파괴 검사 연구를 진행하고 있습니다.</p> -->
+			<!-- <a href="http://www.donga.com/news/article/all/20190625/96175979/1" title="새창열림" target="_blank">관련 기사 보기</a> -->
+		</div>
+		
+		<div class="recruit-inner">
+			<div class="recruit-tabWrap">
+				<ul>
+<?for($i=0; $i<6; $i++){?>
+					<li><button><?=$tit[$i]?></button></li>
+<?}?>
+				</ul>
+			</div>
+			<div class="recruit-tabInner">
+				<ul>
+<?for($i=0; $i<6; $i++){?>			
+					<li>
+						<h3><?=$tit[$i]?></h3>
+						<div class="recruit-info">
+							<?=$info{$i}?>
+						</div>
+					</li>
+<?}?>
+				</ul>
+			</div>
+		</div>
+		
+		
+	</div>
+</section>

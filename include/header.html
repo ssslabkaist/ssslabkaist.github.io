@@ -1,0 +1,186 @@
+<?@session_start();
+if($dtdType!="Y") {
+?>
+<!DOCTYPE html>
+<?
+}
+?>
+
+<?
+
+$bMenu_1 = $bMenu_2 = $bMenu_3 = $bMenu_4 = "";
+${"bMenu_".$bMenuNum} = "class=\"on\"";
+${"mMenu_".$bMenuNum.$mMenuNum} = "class=\"on\"";
+${"sMenu_".$bMenuNum.$mMenuNum.$sMenuNum} = "class=\"on\"";
+//if($mainState ==! "Y"){$mainOnClass = "on"};
+${"mainOnClass".$mainState} = "on";
+?>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<meta name="title" content="">
+	<meta name="author" content="shareplace">
+	<meta name="keywords" content="">
+	<meta name="subject" content="">
+	<meta name="Description" content="">
+	<meta name="classification" content="">
+
+
+	<!-- 카카오톡 링크 보낼 때 뜨는 이미지와 텍스트 설정 -->
+	<meta property="og:type" content="website">
+	<meta property="og:title" content=""> <!-- 제목에 뜰 내용(굵은글씨) -->
+	<meta property="og:description" content=""> <!-- 제목아래쪽에 한줄 나오는 짧은 소개글 -->
+	<meta property="og:image" content=""> <!-- 썸네일이미지 경로 -->
+	<meta property="og:url" content="">	<!-- 링크걸릴주소 -->
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="">
+	<meta name="twitter:description" content="">
+	<meta name="twitter:image" content="">
+	<meta name="twitter:domain" content="">
+
+	<title>KAIST 스마트구조시스템 연구실</title>
+
+	<!--네이버연관채널 등록하는 태그 시작-->
+	<span itemscope="" itemtype="http://schema.org/Organization">
+	  <link itemprop="url" href="">
+	  <a itemprop="sameAs" href=""></a> <!-- 인스타 -->
+	  <a itemprop="sameAs" href=""></a> <!-- 페이스북 -->
+	</span>
+	<!--네이버연관채널 등록하는 태그 끝-->
+
+	<link type="text/css" href="../style/reset.css" rel="stylesheet">
+	<link type="text/css" href="../style/response.css" rel="stylesheet">
+	<link type="text/css" href="../style/common.css" rel="stylesheet">
+	<link type="text/css" href="../style/common-ani.css" rel="stylesheet">
+	<link type="text/css" href="../style/layerpopup.css" rel="stylesheet">
+	<link type="text/css" href="../style/ebi.slider.css" rel="stylesheet">
+	<link type="text/css" href="../style/ebi.sliderV2.css" rel="stylesheet">
+	<link type="text/css" href="../style/layout.css" rel="stylesheet">
+	<link type="text/css" href="../style/program.css" rel="stylesheet">
+	<link type="text/css" href="../style/design.css" rel="stylesheet">
+
+	<!-- 구글폰트 및 아이콘 -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="../script/jquery.1.12.0.min.js"></script>
+	<script src="../script/jquery-ui.1.10.1.js"> </script>
+	<script src="../script/jquery.cookie.js"></script>
+	<script src="../script/jquery.easing.1.3.js"></script>
+	<script src="../script/ebi.default.js"></script>
+	<script src="../script/ebi.layerpopup.js"></script>
+	<script src="../script/ebi.slider.js"></script>
+	<script src="../script/ebi.sliderV2.js"></script>
+	<script src="../script/ebi.header.js"></script>
+	<script src="../script/ebi.gnb.js"></script>
+	<script src="../script/ebi.js"></script>
+	
+	<!-- Link Swiper's CSS -->
+	<link rel="stylesheet" href="../style/swiper.min.css">
+	<!-- Swiper JS -->
+	<script src="../script/swiper.min.js"></script>
+
+	<!--[if lt IE 9]>
+		<link href="../style/ie.warning.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+
+</head>
+<body class="<?if($mainState === "Y"){echo 'mainArea';}?>">
+
+
+<header>
+<?if($mainState === "Y"){?>
+	<h1 class="logo main"><a href="#void"><img src="../images/common/logo.svg" alt="" /></a></h1>
+<?}else{?>
+	<h1 class="logo"><a href="/main/main.html"><img src="../images/common/sub_logo.svg" alt="" /></a></h1>
+	<!-- <h1 class="logo main"><a href="#void"><img src="../images/common/sub_logo.svg" alt="" /></a></h1> -->
+<?}?>
+
+	<!-- 1dep 메뉴 전체 보임 -->
+	<div class="dep1Base ani0 pc"></div>
+	<!-- 1dep 선택 보임 -->
+	<div class="dep1Navi ani0 pc">
+		<button type="button" class="up" data-arrow="up">위</button>
+		<button type="button" class="down" data-arrow="down">아래</button>
+		<div class="wrap"></div>
+	</div>
+	<ul class="gnb pc">
+		<li <?=$bMenu_1?> class="ani0">
+			<a <?=$bMenu_1?> href="#void">ABOUT US</a>
+			<ul>
+				<li <?=$mMenu_11?>><a href="../about/intro.html">Introduction</a></li>
+				<li <?=$mMenu_12?>><a href="/LabTour/index.html" target="_blank">Lab Tour</a></li>
+				<li <?=$mMenu_13?>><a href="../about/recruit.html">Recruit</a></li>
+				<li <?=$mMenu_14?>><a href="../about/contact.html">Contact</a></li>
+			</ul>
+		</li>
+		<li <?=$bMenu_2?> class="ani0">
+			<a <?=$bMenu_2?> href="#void">MEMBERS</a>
+			<ul>
+				<li <?=$mMenu_20?>><a href="../member/professor.html">Professor</a></li>
+				<?
+			
+				$scTaSql = mysql_query("SELECT catecode,catename FROM staffCourse WHERE catedeg='1' AND view_state='Y' ORDER BY listorder ASC, catecode ASC",$dbconn);
+				while($scTaRow = mysql_fetch_row($scTaSql)) {
+
+					$scta_staff_course = $scTaRow[0];
+					
+					/*
+					$scTbSql = mysql_query("SELECT catecode,catename FROM staffCourse WHERE catedeg='2' AND view_state='Y' AND SUBSTRING(catecode,1,4)='".substr($scTaRow[0],0,4)."' ORDER BY listorder ASC, catecode ASC LIMIT 1",$dbconn);
+					$scTbRow = mysql_fetch_row($scTbSql);
+					if($scTbRow[0]) {
+						$scta_staff_course = $scTbRow[0];
+					}
+					*/
+
+					echo "
+										<li ".${"mMenu_2".(int)substr($scTaRow[0],0,4)}."><a href=\"../member/doctors.html?staff_course=".$scta_staff_course."\">".stripSlashNotUsed($scTaRow[1])."</a></li>";
+
+				}
+				?>
+
+			</ul>
+		</li>
+		<li <?=$bMenu_3?> class="ani0">
+			<a <?=$bMenu_3?> href="#void">RESEARCH</a>
+			<ul>
+				<li <?=$mMenu_31?>><a href="../research/areas.html">Research Areas</a></li>
+				<li <?=$mMenu_32?>><a href="../research/current_project_list.html">Current Project</a></li>
+				<li <?=$mMenu_33?>><a href="../research/past_project_list.html">Past Project</a></li>
+			</ul>
+		</li>
+		<li <?=$bMenu_4?> class="ani0">
+			<a <?=$bMenu_4?> href="#void">PUBLICATIONS</a>
+			<ul>
+				<li <?=$mMenu_41?>><a href="../publication/publication_list.html?publication_part_s=000100000000">Journal Papers</a></li>
+				<li <?=$mMenu_42?>><a href="../publication/publication_list.html?publication_part_s=000200000000">Conference Proceedings</a></li>
+				<li <?=$mMenu_43?>><a href="../publication/patent_list.html">Patents</a></li>
+				<li <?=$mMenu_44?>><a href="../publication/technology_list.html">Technology Transfers</a></li>
+				<li <?=$mMenu_45?>><a href="../publication/book_list.html">Books</a></li>
+				<li <?=$mMenu_46?>><a href="../publication/const_tech_list.html">건설신기술</a></li>
+			</ul>
+		</li>
+		<li <?=$bMenu_5?> class="ani0">
+			<a <?=$bMenu_5?> href="#void">NEWS</a>
+			<ul>
+				<li <?=$mMenu_51?>><a href="../board_notice01/list.php?tn=board_notice01&G_state=Y">Announcements</a></li>
+				<li <?=$mMenu_52?>><a href="../board_notice02/list.php?tn=board_notice02&G_state=Y">Activities &amp; Events</a></li>
+				<li <?=$mMenu_53?>><a href="../board_gallery01/list.php?tn=board_gallery01&G_state=Y">Group Photos</a></li>
+			</ul>
+		</li>
+	</ul>
+
+	<!-- 모바일 -->
+	<nav class="mobile box" data-arrow="right">
+		<div class="closeWrap">
+			<a class="gnbClose" href="javascript:;"></a>
+			<aside>
+				<a href="../main/main.html" title="HOME">HOME</a>
+			</aside>
+		</div>
+	</nav>
+	<a class="gnbView mobile" href="javascript:;"></a>
+	<div class="gnbCover mobile"></div>
+</header>
+

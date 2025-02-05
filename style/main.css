@@ -1,0 +1,94 @@
+
+/* main 스타일만 작성 */
+html, body {overflow:hidden;}
+/* ********************************* PC over : 992 ~  ********************************* */
+@media screen and (min-width: 991px) {
+	
+	/* header */
+	.logo {float:left; width:187px;}
+	.logo a {display:block;}
+	.logo a img {height:135px;}
+	
+	.dep1Base {z-index:0; position:absolute; left:240px; top:-9999px; width:calc(100% - 240px);}
+	.dep1Base.active {z-index:100; top:80px;}
+	.dep1Base a {float:left; overflow:hidden; display:block; padding:10px 0; font-weight:700; line-height:1; white-space:nowrap; opacity:0; padding:10px 0; margin-left:70px; color:#fff;}
+	.dep1Base a span {transition:all .5s ease !important; -webkit-transition:all .5s ease !important;	-moz-transition:all .5s ease !important;}
+	.dep1Base a.active {width:auto; padding:10px; opacity:1;}
+	.dep1Base a:first-child {margin:0;}
+	
+	.dep1Navi {z-index:0; float:left; position:absolute; top:-9999px; width:200px; height:80px; text-align:center;}
+	.dep1Navi.active {z-index:100; position:relative; top:58px;}
+	.dep1Navi .wrap {position:absolute; width:100%; margin-top:27px;}
+	.dep1Navi button {
+		z-index:10; display:block; width:100%; height:30px; padding:0;
+		position:absolute; left:0; text-indent:-9999px; background:center no-repeat; cursor:pointer;
+		transform:scale(1); -webkit-transform:scale(1); -moz-transform:scale(1);
+	}
+	.dep1Navi button.off {transform:scale(0); -webkit-transform:scale(0); -moz-transform:scale(0);}
+	.dep1Navi .up {top:-20px; background-image:url(../images/common/arrow_up.png);}
+	.dep1Navi .down {bottom:-20px; background-image:url(../images/common/arrow_down.png);}
+	.dep1Navi.active .up {top:-10px;}
+	.dep1Navi.active .down {bottom:-10px;}
+	.dep1Navi a {z-index:0; display:block; width:100%; padding:5px 0; color:#fff; font-weight:700; line-height:1; opacity:0; transform:scale(.8); -webkit-transform:scale(.8); -moz-transform:scale(.8);}
+	.dep1Navi a.active {opacity:1; transform:scale(1); -webkit-transform:scale(1); -moz-transform:scale(1);}
+	
+	.gnb {z-index:50; float:left; position:relative; width:calc(100% - 390px); height:80px; top:55px; overflow:hidden;}
+	
+	
+	
+	
+	.main {height:100vh;}
+	.main .cover {position:absolute; left:0; top:0; width:100%; height:40%; }
+	.main .sliderV2 {width:100%; height:100%;}
+	.main .sliderV2 h2 {position:relative; z-index:99; width:1400px; height:100%; margin:0 auto; display:table;}
+	.main .sliderV2 h2 span {display:table-cell; vertical-align:middle; font-size:60px; font-weight:900;}
+	/* .main .sliderV2 h2 span {text-shadow:-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff} */
+	.main .sliderPage {}
+	.main .sliderPage .search {vertical-align:top !important; margin-left:7.5px;}
+	
+	
+}
+	
+
+/* ************************ 1400 이하(~1400) ************************ */
+@media screen and (max-width: 1440px) {
+	
+	
+}
+
+
+/* ************************ 태블릿 이하(~991) ************************ */
+@media screen and (max-width: 991px) {
+	body {overflow:hidden;}
+	/* header */
+	header .logo a {padding-top:16px;}
+	header .logo a img {height:100px;}
+	
+	
+	.main {height:100vh; height:calc(var(--vh, 1vh) * 100);}
+	.main .cover {position:absolute; left:0; top:0; width:100%; height:40%; }
+	.main .sliderV2 {width:100%; height:100%; padding:0 20px;}
+	.main .sliderV2 h2 {position:relative; z-index:99; width:100%; height:100%; display:table; line-height:1.2; padding:0 20px;}
+	.main .sliderV2 h2 span {display:table-cell; vertical-align:middle; font-size:48px; font-weight:900;}
+	.main .sliderPage .search {display:none;}
+	
+}
+
+
+
+
+/* ************************ 모바일 (0~767) ************************ */
+@media screen and (max-width:767px) {
+	
+	.sliderV2 .pageType1 {bottom:40px;}
+	.sliderV2 .pageType1 button {width:18px; height:18px;}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

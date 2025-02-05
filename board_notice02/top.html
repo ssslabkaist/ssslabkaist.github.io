@@ -1,0 +1,70 @@
+<?
+if($tn!="board_notice02") {
+	ERROR_BACK("잘못된 경로입니다.");
+}
+//include "".$_SERVER[DOCUMENT_ROOT]."/config/functions_refresh.inc";
+
+
+$tableWidth="1300";
+
+if($_SESSION["session_admin_id"] && $_REQUEST["G_state"]!="Y") {
+
+	//접속 권한, 네비게이션 위치 START
+	adminConAuth("A");
+	$menuMcategory = "04030000";
+	//접속 권한, 네비게이션 위치 END
+
+	include "../admin/include/header.html";
+?>
+
+	<script type="text/javascript" src="/js/board_responsive_web_V02_01.js"></script>
+	<link  type="text/css" href="/style_program/board_responsive_adminweb_V02_01.css" rel="stylesheet">
+
+
+<div style="border-bottom:1px solid #d9dde2;">
+	<span class="con_title"><?=$q_subject?></span>
+	<span class="con_navi">관리자 &gt; News &gt; <?=$q_subject?></span>
+	<div style="clear:both; height:1px;"></div>
+</div>
+
+
+<div style="padding:10px;" id="adminBoardId">
+<table>
+	<tr>
+		<td bgcolor="#FFFFFF" style="width:<?=$tableWidth?>px;" class="board_ebi">
+
+<?
+}else{
+
+	/*
+	if(!preg_match("/".$boardUsrAuth."/",$list_auth) && (!$_SESSION["session_admin_id"] || $adminAuthList!="Y")) {
+		ERROR_BACK("접근 권한이 없습니다.");
+	}
+	*/
+	
+
+	//=======메뉴인식 START=========//
+	$bMenuNum = "5";			//대메뉴
+	$mMenuNum = "2";			//중메뉴
+	$sMenuNum = "";				//소메뉴
+	//=======메뉴인식 END=========//
+
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<!-- 컨텐츠 -->
+<section class="contents notice event">
+	
+	<!-- 내용 -->
+	<div class="contents-wrap inner">
+
+
+		<!-- //board -->
+		<div class="board_ebi board_chk_radio">
+
+		<script type="text/javascript" src="/js/board_responsive_web_V02_01.js"></script>
+		<link  type="text/css" href="/style_program/board_responsive_web_V02_01.css" rel="stylesheet">
+
+<?}?>

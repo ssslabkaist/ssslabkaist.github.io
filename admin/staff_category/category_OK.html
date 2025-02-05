@@ -1,0 +1,100 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+if($cateMode=="Bcode_Add"){		//1단계분류 등록
+
+	$sql = mysql_query("SELECT MAX(catecode) FROM staffCourse WHERE catedeg='1'",$dbconn);
+	$row = mysql_fetch_row($sql);
+	$Bcatecode = substr($row[0],0,4);
+
+	if (!$Bcatecode){
+		$maxBCode = "0001";
+	}else{
+		$maxBCode = $Bcatecode + 1 ;
+	}
+	if (strlen($maxBCode) <= 1){
+		$maxBCode = "000".$maxBCode;
+	}
+	$maxBcode = $maxBCode."00000000";
+
+	$lo_sql = mysql_query("SELECT COUNT(*),MAX(listorder) FROM staffCourse WHERE catedeg='1'",$dbconn);
+	$lo_row = mysql_fetch_row($lo_sql);
+
+	if(!$lo_row[0]) {
+		$listorder=0;
+	}else{
+		$listorder=$lo_row[1]+1;
+	}
+
+	$query ="INSERT INTO staffCourse SET ";
+	$query.="catecode='$maxBcode',";
+	$query.="catedeg='1',";
+	$query.="catename='$BcategoryName',";
+	$query.="listorder='$listorder',";
+	$query.="writedate=now() ";
+
+	//echo $query;
+	//exit;
+	$sql = mysql_query($query, $dbconn);
+
+	echo "<script>
+			alert('1단계 Course분류가 생성되었습니다.');
+			location.href='./reg.html?CheckBcode=$maxBCode';
+		  </script>";
+
+}else if($cateMode=="Mcode_Add"){	//2단계분류 등록
+
+	$Bcatecode = substr($Bcode,0,4);
+
+	$sql = mysql_query("SELECT MAX(catecode) FROM staffCourse WHERE catedeg='2' AND catecode LIKE BINARY('$Bcatecode%')" ,$dbconn);
+	$row = mysql_fetch_row($sql);
+
+	$Mcode = substr($row[0],4,8);
+
+	if (!$Mcode){
+		$maxMCode = "0001";
+	}else{
+		$maxMCode = $Mcode + 1 ;
+	}
+
+	if (strlen($maxMCode) <= 1){
+		$maxMCode = "000".$maxMCode;
+	}
+	$maxMCode = $Bcatecode.$maxMCode."0000";
+	
+	$lo_sql = mysql_query("SELECT COUNT(*),MAX(listorder) FROM staffCourse WHERE catedeg='2' AND catecode LIKE BINARY('$Bcatecode%')",$dbconn);
+
+	$lo_row = mysql_fetch_row($lo_sql);
+
+	if(!$lo_row[0]) {
+		$listorder=0;
+	}else{
+		$listorder=$lo_row[1]+1;
+	}
+
+	//echo "$listorder , SELECT MAX(listorder) FROM menuCategory WHERE catedeg='2' AND catecode LIKE BINARY('$Bcatecode%')";
+	//exit;
+
+	$query ="INSERT INTO staffCourse SET ";
+	$query.="catecode='$maxMCode',";
+	$query.="catedeg='2',";
+	$query.="catename='$McategoryName',";
+	$query.="listorder='$listorder',";
+	$query.="writedate=now() ";
+	$sql = mysql_query($query, $dbconn);
+
+	
+	echo "<script>
+			alert('2단계 Course분류가 생성되었습니다.');
+			location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$maxMCode';
+		  </script>";
+
+}
+
+?>

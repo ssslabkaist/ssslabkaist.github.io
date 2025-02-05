@@ -1,0 +1,260 @@
+<?	
+@session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc.php";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+
+header("Content-type: application/vnd.ms-excel"); 
+header("Content-Disposition: attachment; filename=지역코드표_".date("YmdHis").".xls");
+header("Expires: 0"); 
+header("Cache-Control: must-revalidate, post-check=0,pre-check=0"); 
+header("Pragma: public"); 
+?>
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 11">
+<link rel=File-List href="Book1.files/filelist.xml">
+<link rel=Edit-Time-Data href="Book1.files/editdata.mso">
+<link rel=OLE-Object-Data href="Book1.files/oledata.mso">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>my</o:Author>
+  <o:LastAuthor>my</o:LastAuthor>
+  <o:Created>2008-12-19T05:35:34Z</o:Created>
+  <o:LastSaved>2008-12-19T05:35:52Z</o:LastSaved>
+  <o:Company>beta</o:Company>
+  <o:Version>11.5606</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+@page
+	{margin:1.0in .75in 1.0in .75in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;}
+tr
+	{mso-height-source:auto;
+	mso-ruby-visibility:none;}
+col
+	{mso-width-source:auto;
+	mso-ruby-visibility:none;}
+br
+	{mso-data-placement:same-cell;}
+.style0
+	{mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	white-space:nowrap;
+	mso-rotate:0;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:돋움, monospace;
+	mso-font-charset:129;
+	border:none;
+	mso-protection:locked visible;
+	mso-style-name:표준;
+	mso-style-id:0;}
+td
+	{mso-style-parent:style0;
+	padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:돋움, monospace;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	mso-protection:locked visible;
+	white-space:nowrap;
+	mso-rotate:0;}
+.xl24
+	{mso-style-parent:style0;
+	color:white;
+	font-size:9.0pt;
+	font-weight:700;
+	font-family:"돋움\,verdana", monospace;
+	mso-font-charset:129;
+	text-align:center;
+	border:.5pt solid black;
+	background:#99CCFF;
+	mso-pattern:auto none;
+	white-space:normal;}
+.xl25
+	{mso-style-parent:style0;
+	color:white;
+	font-size:9.0pt;
+	font-weight:700;
+	font-family:"돋움\,verdana", monospace;
+	mso-font-charset:129;
+	mso-number-format:"\@";
+	text-align:center;
+	border:.5pt solid black;
+	background:#99CCFF;
+	mso-pattern:auto none;
+	white-space:normal;}
+.xl26
+	{mso-style-parent:style0;
+	color:#333333;
+	font-size:9.0pt;
+	font-family:"돋움\,verdana", monospace;
+	mso-font-charset:129;
+	border:.5pt solid black;
+	background:white;
+	mso-pattern:auto none;
+	white-space:normal;}
+.xl27
+	{mso-style-parent:style0;
+	color:#333333;
+	font-size:9.0pt;
+	font-family:"돋움\,verdana", monospace;
+	mso-font-charset:129;
+	mso-number-format:"\@";
+	border:.5pt solid black;
+	background:white;
+	mso-pattern:auto none;
+	white-space:normal;}
+.xl28
+	{mso-style-parent:style0;
+	mso-number-format:"\@";}
+ruby
+	{ruby-align:left;}
+rt
+	{color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:돋움, monospace;
+	mso-font-charset:129;
+	mso-char-type:none;
+	display:none;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <x:ExcelWorkbook>
+  <x:ExcelWorksheets>
+   <x:ExcelWorksheet>
+    <x:Name>Sheet1</x:Name>
+    <x:WorksheetOptions>
+     <x:DefaultRowHeight>270</x:DefaultRowHeight>
+     <x:Selected/>
+     <x:Panes>
+      <x:Pane>
+       <x:Number>3</x:Number>
+       <x:ActiveRow>13</x:ActiveRow>
+       <x:ActiveCol>2</x:ActiveCol>
+      </x:Pane>
+     </x:Panes>
+     <x:ProtectContents>False</x:ProtectContents>
+     <x:ProtectObjects>False</x:ProtectObjects>
+     <x:ProtectScenarios>False</x:ProtectScenarios>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+   <x:ExcelWorksheet>
+    <x:Name>Sheet2</x:Name>
+    <x:WorksheetOptions>
+     <x:DefaultRowHeight>270</x:DefaultRowHeight>
+     <x:ProtectContents>False</x:ProtectContents>
+     <x:ProtectObjects>False</x:ProtectObjects>
+     <x:ProtectScenarios>False</x:ProtectScenarios>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+   <x:ExcelWorksheet>
+    <x:Name>Sheet3</x:Name>
+    <x:WorksheetOptions>
+     <x:DefaultRowHeight>270</x:DefaultRowHeight>
+     <x:ProtectContents>False</x:ProtectContents>
+     <x:ProtectObjects>False</x:ProtectObjects>
+     <x:ProtectScenarios>False</x:ProtectScenarios>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+  </x:ExcelWorksheets>
+  <x:WindowHeight>11985</x:WindowHeight>
+  <x:WindowWidth>18480</x:WindowWidth>
+  <x:WindowTopX>600</x:WindowTopX>
+  <x:WindowTopY>600</x:WindowTopY>
+  <x:ProtectStructure>False</x:ProtectStructure>
+  <x:ProtectWindows>False</x:ProtectWindows>
+ </x:ExcelWorkbook>
+</xml><![endif]-->
+</head>
+
+<body link=blue vlink=purple>
+
+<table x:str border=0 cellpadding=0 cellspacing=0 width=297 style='border-collapse:
+ collapse;table-layout:fixed;width:224pt'>
+ <col width=38 style='mso-width-source:userset;mso-width-alt:1080;width:29pt'>
+ <col width=169 style='mso-width-source:userset;mso-width-alt:4807;width:127pt'>
+ <col class=xl28 width=90 style='mso-width-source:userset;mso-width-alt:2560;
+ width:68pt'>
+ <tr height=18 style='height:13.5pt'>
+  <td height=18 class=xl24 width=38 style='height:13.5pt;width:29pt'>번호</td>
+  <td class=xl24 width=169 style='border-left:none;width:127pt'>카테고리명</td>
+  <td class=xl25 width=90 style='border-left:none;width:68pt'>카테고리코드</td>
+ </tr>
+<?
+$query ="SELECT catecode,catename FROM menuCategory WHERE catedeg='1' order by catecode asc";
+$result= mysql_query($query,$dbconn);
+if (!$result) {
+	ERROR_BACK("Qeury Error");
+}
+$i=1;
+while($row = mysql_fetch_row($result)){
+	if($row[2]=="1") {
+		$BG_COLOR="#FF0000";
+	}else if($row[2]=="2") {
+		$BG_COLOR="#FFDDDD";
+	}else{
+		$BG_COLOR="#FFFFFF";
+	}
+
+	echo "
+ <tr height=18 style='height:13.5pt'>
+  <td height=18 class=xl26 align=right width=38 style='height:13.5pt;
+  border-top:none;width:29pt' x:num>$i</td>
+  <td class=xl26 width=169 style='border-top:none;border-left:none;width:127pt'>".stripslashes($row[1])."</td>
+  <td class=xl27 width=90 style='border-top:none;border-left:none;width:68pt'>$row[0]</td>
+ </tr>";
+
+	$i++;
+} 
+mysql_close($dbconn);
+?>
+ <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=38 style='width:29pt'></td>
+  <td width=169 style='width:127pt'></td>
+  <td width=90 style='width:68pt'></td>
+ </tr>
+ <![endif]>
+</table>
+
+</body>
+
+</html>

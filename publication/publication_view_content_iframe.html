@@ -1,0 +1,72 @@
+<?
+
+exit;
+
+
+
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+$Search.=" AND view_state='Y'";
+
+$sql = mysql_query("SELECT content FROM $tn WHERE uid='".$uid."' ".$Search."", $dbconn);
+$row = mysql_fetch_row($sql);
+
+//$html = remove_tag(stripSlashNotUsed($row[0]), array('script','div'));
+$viewContent = stripSlashNotUsed($row[0]);
+$viewContent = removeTag($viewContent, array('script'));
+?>
+<html>
+<head>
+
+<link href="/style_program/content_common.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+html, body{overflow-y:auto; color:#fff !important;}
+body{background:none;}
+#p_wrap P{MARGIN:2px 0;}
+</style>
+<?
+if(!$_COOKIE["mobileYorN"]) {			//PC 일때
+	echo "
+	<style type=\"text/css\">
+		html,body {font-family:\"Noto Sans KR\",\"sans-serif\";}
+	</style>";
+}else{									//PC 아닐때
+	echo "
+	<style type=\"text/css\">
+		html,body {font-family:AppleSDGothicNeo-Light,DroidSans,HelveticaNeue,sans-serif;}
+	</style>";
+}
+?>
+<script type="text/javascript" src="../script/jquery.1.12.0.min.js"></script>
+
+<script language="javascript"> 
+//window.onload = parent.vContentSize;
+</script>
+
+<script language="javascript">
+function parentOnload() {
+	bodyHeight = document.getElementById("p_wrap").scrollHeight+15;
+	parent.vContentSize(bodyHeight);
+}
+
+
+$(window).load(function () {
+	bodyHeight = document.getElementById("p_wrap").scrollHeight+15;
+	parent.vContentSize(bodyHeight);
+});
+</script>
+
+<base target="_blank" />
+
+</head>
+<?if(!$_SESSION["session_admin_id"]) {?>
+<body onContextmenu="return false;" onDragstart="return false;" onSelectstart="return false;">
+<?}else{?>
+<body>
+<?}?>
+<div id="p_wrap">
+<?=$viewContent?>
+</div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//include "../../config/functions_refresh.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+include "../include/header.html";
+?>
+
+<script language="javascript">
+<!--
+//등록
+	function Bcode_Add() {
+		if(!document.categoryForm.BcategoryName.value){
+			alert("생성하실 1단계 Course분류를 입력 하세요.");
+			document.categoryForm.BcategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_OK.html?cateMode=Bcode_Add"
+		categoryForm.submit();
+	}
+	function Mcode_Add(Bcode) {
+	    if(!document.categoryForm.Bcategory.value){
+			alert("생성된 1단계 Course분류를 선택하세요.");
+			return false;
+		}
+		if(!document.categoryForm.McategoryName.value){
+			alert("생성하실 2단계 Course분류를 입력 하세요.");
+			document.categoryForm.McategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_OK.html?cateMode=Mcode_Add" + "&Bcode="+ Bcode ;
+		categoryForm.submit();
+	}
+	
+//수정
+	function Bcode_Mod(Bcode) {
+		if(!document.categoryForm.Bcategory.value){
+			alert("수정하실 1단계 Course분류를 선택 하세요.");
+			return false;
+		}
+		if(!document.categoryForm.BcategoryName.value){
+			alert("수정하실 1단계 Course분류명을 입력 하세요.");
+			document.categoryForm.BcategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_MODIOK.html?cateMode=Bcode_Mod"+"&Bcode="+ Bcode;
+		categoryForm.submit();
+	}
+	function Mcode_Mod(Bcode, Mcode) {
+		if(!document.categoryForm.Mcategory.value){
+			alert("수정하실 2단계 Course분류를 선택 하세요.");
+			return false;
+		}
+		if(!document.categoryForm.McategoryName.value){
+			alert("수정하실 2단계 Course분류명을 입력 하세요.");
+			document.categoryForm.McategoryName.focus();
+			return false;
+		}
+		categoryForm.action="category_MODIOK.html?cateMode=Mcode_Mod"+"&Bcode="+ Bcode+"&Mcode=" + Mcode ;
+		categoryForm.submit();
+	}
+	
+//삭제
+	function Bcode_Del(Bcode) {
+		if(!document.categoryForm.Bcategory.value){
+			alert("삭제하실 1단계 Course분류를 선택 하세요.");
+			return false;
+		}
+		if (confirm('1단계 Course분류를 복구 하실수 없습니다. \n 그래도 삭제 하시겠습니까?') ) 
+		{
+			location.href="category_DELOK.html?cateMode=Bcode_Del"+"&Bcode="+ Bcode ;
+		}
+	}
+	function Mcode_Del(Bcode,Mcode) {
+		if(!document.categoryForm.Mcategory.value){
+			alert("삭제하실 2단계 Course분류를 선택 하세요.");
+			return false;
+		}
+		if (confirm("2단계 Course분류 복구 하실수 없습니다. \n 그래도 삭제 하시겠습니까?") ) 
+		{
+			location.href="category_DELOK.html?cateMode=Mcode_Del"+"&Bcode="+ Bcode +"&Mcode=" + Mcode ;
+		}
+	}
+	
+//onchange	
+	function Bmenu(CheckBcode){
+		if(CheckBcode)
+		{
+			location.href="./reg.html?CheckBcode="+CheckBcode;
+		}
+	}
+	function Mmenu(CheckBcode,CheckMcode){
+		if(CheckMcode)
+		{
+			location.href="./reg.html?CheckBcode="+CheckBcode+"&CheckMcode="+CheckMcode;
+		}
+	}
+//-->
+</script>
+
+
+<script language="javascript">
+function Code_BList() {
+	var url = "./listorder_bcode.html";
+	window.open(url,'Code_BList','top=0,left=0,width=400,height=500,scrollbars=yes');
+}
+</script>
+
+<script language="javascript">
+function Code_MList(CheckCode) {
+	if(!CheckCode) {
+		window.alert("1단계 분류를 선택하세요");
+		return false;
+	}
+	var url = "./listorder_mcode.html?CheckCode="+CheckCode;
+	window.open(url,'Code_MList','top=0,left=0,width=400,height=500,scrollbars=yes');
+}
+</script>
+
+<script language="javascript">
+function Code_SList(CheckCode) {
+	if(!CheckCode) {
+		window.alert("2단계 분류를 선택하세요");
+		return false;
+	}
+	var url = "./listorder_scode.html?CheckCode="+CheckCode;
+	window.open(url,'Code_SList','top=0,left=0,width=400,height=500,scrollbars=yes');
+}
+</script>
+<script language="javascript">
+function category_List_Pop(CheckCode) {
+	if(!CheckCode) {
+		window.alert("카테고리를 선택하세요");
+		return false;
+	}
+	var url = "./category_top_manager.html?CheckCode="+CheckCode;
+	window.open(url,'Brand_List','top=0,left=0,width=600,height=500,scrollbars=yes');
+}
+</script>
+
+
+<div style="border-bottom:1px solid #d9dde2;">
+	<span class="con_title">Member Course 관리</span>
+	<span class="con_navi">관리자 &gt; Member &gt; Member Course 관리</span>
+	<div style="clear:both; height:1px;"></div>
+</div>
+
+
+
+<form name="categoryForm" method="post">
+
+<div style="padding:10px;">
+
+<table class="category_01">
+	<colgroup>
+		<col width="50%" />
+		<col width="50%" />
+	</colgroup>
+	<tr>
+		<th>1단계 Course 분류</th>
+		<th>2단계 Course 분류 </th>
+	</tr>
+	<tr>
+		<td>
+		
+			<select name="Bcategory" size="20" style="width:100%; height:200px;" onchange="Bmenu(this.value);" class="select_M">
+<?
+		$query = "SELECT catecode, catename FROM staffCourse WHERE catedeg='1' ORDER BY listorder ASC,catecode ASC";
+
+		$sql=mysql_query($query,$dbconn);
+
+		$num = mysql_num_rows($sql);
+
+		if (!$num){
+			
+		}else{
+
+			while ($row = mysql_fetch_row($sql))
+			{
+?>
+				<option value=<?=$row[0]?> <? if ($CheckBcode==$row[0]){ echo(' selected');}?>><?=$row[1]?> (<?=$row[0]?>)</option>
+<?			
+			}
+		}
+?>
+			</select>
+		</td>
+		<td>
+								
+			<select name="Mcategory" size="20" style="width:100%; height:200px;" onchange="Mmenu('<?=$CheckBcode?>',this.value);" class="select_M">
+<?
+		$CBcode = substr($CheckBcode,0,4);
+		$query = "SELECT catecode, catename FROM staffCourse WHERE catedeg='2' AND catecode LIKE BINARY('$CBcode%') ORDER BY listorder ASC,catecode ASC";
+
+		$sql=mysql_query($query,$dbconn);
+
+		$num = mysql_num_rows($sql);
+
+		if (!$num || !$CheckBcode) {
+
+		}else{
+			while ($row = mysql_fetch_row($sql))
+			{
+?>
+				<option value=<?=$row[0]?> <? if ($CheckMcode==$row[0]){ echo(' selected');}?> ><?=$row[1]?> (<?=$row[0]?>)</option>
+<?			
+			}	
+		}
+?>
+
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="category_write">
+			<div>
+				<div style="width:100%;">
+					<strong class="category_name" style="width:10%;display:inline-block; vertical-align:top;">분류명</strong>
+					<span style="width:85%;display:inline-block;">
+						<input type="text" style="width:100%;" name="BcategoryName" class="input_M">
+						
+					</span>
+				</div>
+				<div style="height:8px;"></div>
+				<div style="text-align:center; width:100%">
+					<span class="s_btn_02"><a href="#viod" onClick="Bcode_Add();"><strong>추가</strong></a></span>
+					<span class="s_btn_02"><a href="#viod" onClick="Bcode_Mod('<?=$CheckBcode?>');"><strong>수정</strong></a></span>
+					<span class="s_btn_02"><a href="#viod" onClick="Bcode_Del('<?=$CheckBcode?>');"><strong>삭제</strong></a></span>
+					<span class="s_btn_02"><a href="#viod" onClick="Code_BList();"><strong>출력순서</strong></a></span>
+				</div>
+			</div>
+		</td>
+		<td class="category_write">
+			<div>
+				<div style="width:100%;">
+					<strong class="category_name" style="width:10%;display:inline-block; vertical-align:top;">분류명</strong>
+					<span style="width:85%;display:inline-block;">
+						<input type="text" style="width:100%;" name="McategoryName" class="input_M">
+						
+					</span>
+				</div>
+				<div style="height:8px;"></div>
+				<div style="text-align:center; width:100%;">
+					<span class="s_btn_02"><a href="#viod" onClick="Mcode_Add('<?=$CheckBcode?>');"><strong>추가</strong></a></span>
+					<span class="s_btn_02"><a href="#viod" onClick="Mcode_Mod('<?=$CheckBcode?>','<?=$CheckMcode?>');"><strong>수정</strong></a></span>
+					<span class="s_btn_02"><a href="#viod" onClick="Mcode_Del('<?=$CheckBcode?>','<?=$CheckMcode?>');"><strong>삭제</strong></a></span>
+					<span class="s_btn_02"><a href="#viod" onClick="Code_MList('<?=$CheckBcode?>');"><strong>출력순서</strong></a></span>
+				</div>
+			</div>
+		</td>
+	</tr>
+
+</table>
+
+</div>
+
+
+</form>
+
+
+
+<?include "../include/footer.html";?>

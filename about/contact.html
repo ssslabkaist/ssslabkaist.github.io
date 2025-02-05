@@ -1,0 +1,90 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "1";			//대메뉴
+$mMenuNum = "4";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<section class="contents contact h100vh">
+<!-- <div class="mobile bg contact"></div> -->
+	<div class="contents-wrap">
+		
+		<div class="contactWrap">
+			<div class="mapImg">
+				<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAZu1tJ_ciKA2fKQs4Wlf8BOdcwFBodE6I&language=ko&region=KR"></script> 
+				<script>
+					var myCenter=new google.maps.LatLng(36.3656351,127.3612957);
+					function initialize(){
+						var mapProp = {
+						center:myCenter,
+						zoom:15,
+						mapTypeId:google.maps.MapTypeId.ROADMAP
+						};
+					
+						var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+					
+						var marker=new google.maps.Marker({
+						position:myCenter,
+						});
+					
+						marker.setMap(map);
+					
+						var infowindow = new google.maps.InfoWindow({
+						content:"한국과학기술원 응용공학동"
+						});
+					
+						google.maps.event.addListener(marker, 'click', function() {
+							infowindow.open(map,marker);
+						});
+					}
+				
+					google.maps.event.addDomListener(window, 'load', initialize);
+				</script>
+				<div id="googleMap"></div>
+			</div><!-- //지도 -->
+			
+			<div class="textBox">
+				<ul>
+					<li>
+						<h3>Address</h3>
+						<!--<p>
+							SSS Lab., Department of Civil &amp; Environmental Engineering,<br>
+							Korea Advanced Institute Science &amp; Technology(KAIST),<br>
+							291 Daehak-ro, Yuseong-gu, Daejeon, Republic of Korea 34141<br>
+							대전광역시 유성구 대학로 291, KAIST 건설환경공학과 스마트 구조 시스템 연구실
+						</p>-->
+						<p>	
+							W1-2 Room 4222, Department of Civil &amp; Environmental Engineering,<br>
+							Korea Advanced Institute Science and Technology (KAIST),<br>
+							291 Daehak-ro, Yuseong-gu, Daejeon, Republic of Korea (34141)<br>
+							대전광역시 유성구 대학로 291, KAIST 건설및환경공학과 W1-2 4222호 (우: 34141)
+
+						</p>
+					</li>
+					<li>
+						<h3>Number</h3>
+						<p><a href="tel:042-350-3665">TEL : 042-350-3665/3625</a></p>
+						<p>FAX : 042-350-8480</p>
+					</li>
+					<li>
+						<h3>Email</h3>
+						<p>Professor (Hoon Sohn) : <a href="mailto:hoonsohn@kaist.ac.kr">hoonsohn@kaist.ac.kr</a></p>
+						<p>Lab. Leader (Kiyoon Yi) : <a href="mailto:yikiyoon@kaist.ac.kr">yikiyoon@kaist.ac.kr</a></p>
+						<p>Webmaster (Ohjun Kwon) : <a href="mailto:koj9464@kaist.ac.kr">koj9464@kaist.ac.kr</a></p>
+						<p>Administrator (Hyunmi Kim) : <a href="mailto:balck016@kaist.ac.kr">balck016@kaist.ac.kr</a></p>
+						
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+</section>

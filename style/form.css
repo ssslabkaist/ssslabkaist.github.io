@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+/* ******************* bootstrap modify ******************* */
+ul,ol,li,dl,dt,dd {list-style:none; padding:0; margin:0;}
+
+
+/* ******************** 공용 ******************** */
+/* table style */
+.tableMode {display:table; clear:both; float:none; width:100%; max-width:100%; padding:0; margin:0; border-bottom:0;}
+.tableMode>* {display:table-cell; float:none; padding:10px;}
+.tableMode>*:first-child {border-left:0;}
+.tableMode .middle {vertical-align:middle;}
+
+/* 격자형 구조 - 테이블 스타일 */
+.typeCube {clear:both;}
+.typeCube .tableWrap {display:table; width:100%; margin:0; padding:0;}
+.typeCube .tableWrap > * {display:table-cell; float:none; margin:0; padding:0;}
+
+.c_acc {color:#c19763 !important;} /* 강조색상 - 갈색 */
+.c_sub {color:#7d9a18 !important;} /* 보조색상1 - 초록  */
+
+/* ******************** 데스크탑 (992~) ******************** */
+@media screen and (min-width: 992px), print{
+	
+	
+	
+	
+}
+
+/* ******************** 태블릿 (~991) ******************** */
+@media screen and (max-width: 991px), print{
+	
+	
+	
+}
+
+/* ******************** 모바일 (~768) ******************** */
+@media screen and (max-width: 768px), print{
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

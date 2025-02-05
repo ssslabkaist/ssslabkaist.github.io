@@ -1,0 +1,239 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "3";			//대메뉴
+$mMenuNum = "2";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+//subquery="keyword_s=".urlencode($keyword_s)."&keyfield_s=".urlencode($keyfield_s)."";
+
+//--------------환경설정 시작-------------------------------//
+if(!$list_count) {
+	$list_count = 5;
+}
+$page_count = 10;
+
+if ($cpage == "" ){	$cpage = 1; }
+if ($spage == "" ){ $spage = 1; }
+//---------------환경설정 끝-------------------------------//
+
+$Search.=" AND view_state='Y' AND project_state = 'CU' ";
+
+/*
+if($keyfield_s) {
+	$Search.=" AND INSTR(`".$keyword_s."`,'".$keyfield_s."') ";
+}
+*/
+
+$que ="SELECT COUNT(uid) ";
+$que.="FROM project ";
+$que.="WHERE 1 $Search";
+
+$sql = mysql_query($que,$dbconn);
+
+$row = mysql_fetch_row($sql);
+
+if (($row[0] % $list_count) == 0) {
+	$max_page = intval($row[0] / $list_count);
+}else{
+	$max_page = intval($row[0] / $list_count + 1);
+}
+$set_num = intval(($cpage - 1) * $list_count);
+$sid = $row[0]-($cpage-1)*$list_count;
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<script language="javascript">
+function Search(frm){
+	frm.submit();
+}
+</script>
+
+<section class="contents current board_ebi">
+	<div class="contents-wrap">
+		
+		<div class="tableWrap type1">
+			<table>
+				<tr class="pc">
+					<th>Project</th>
+					<th>Research Period</th>
+					<th>Funding Agency</th>
+				</tr>
+<?
+$query = "SELECT * FROM project WHERE 1 ".$Search." ORDER BY listorder ASC,uid DESC LIMIT $set_num, $list_count";
+$sql = mysql_query($query,$dbconn);
+$s = 0;
+while($row = mysql_fetch_array($sql)){
+
+/* -사용안함-
+	$imgView="<img src=\"../images/list_noimg2.png\" alt=\"\">";
+	if($row["img1"]) {
+		$imgView="<img src=\"/program_file/project/img1/".$row["img1"]."\" alt=\"\">";
+	}
+*/
+?>
+				<tr>
+					<td><span class="mobile">Project</span><?=stripSlashNotUsed($row["project_name"])?></td>
+					<td><span class="mobile">Research Period</span><?=stripSlashNotUsed($row["research_period"])?></td>
+					<td><span class="mobile">Funding Agency</span><?=stripSlashNotUsed($row["financial_support"])?></td>
+				</tr>
+<?}?>
+			</table>
+		</div>
+		
+		<!-- 페이징 -->
+		<div class="page_box">	
+			<ul class="mobile">
+<?
+$page_count_mobile = 1;
+if ($cpage>1) {
+
+	$spagePrev = $spage;
+	if(($cpage-1)%$page_count==0 && 1<($cpage-1)) {
+		$spagePrev = (intval(($cpage-1)/$page_count)*$page_count)-$page_count+1;
+	}
+	if($spagePrev<=$page_count) {
+		$spagePrev = 1;
+	}
+
+	echo "
+				<li><a class=\"btn prev\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".($cpage-$page_count_mobile)."&spage=".$spagePrev."\" alt=\"이전\" title=\"이전\"></a></li>";
+}else{
+	echo "
+				<li><a class=\"btn prev\" href=\"#void\" onclick=\"window.alert('처음입니다.');\" alt=\"이전\" title=\"이전\"></a></li>";
+}
+
+
+if ($cpage<$max_page) {
+
+	$spageNext = $spage;
+	if($cpage%$page_count==0 && $cpage<=$max_page) {
+		$spageNext = (intval($cpage/$page_count)*$page_count)+1;
+	}
+
+	echo "
+				<li><a class=\"btn next\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".($cpage+$page_count_mobile)."&spage=".$spageNext."\" alt=\"다음\" title=\"다음\"></a></li>";
+}else{
+	echo "
+				<li><a class=\"btn next\" href=\"#void\" onclick=\"window.alert('마지막입니다.');\" alt=\"다음\" title=\"다음\"></a></li>";
+}
+
+echo "
+				<li>
+					<label for=\"page\" class=\"col-lg-2 control-label\">페이징</label>
+					<select id=\"page\" onChange=\"pageGo(this.value);\">";
+
+$spageGo = 1;
+for($pageGo=1; $pageGo<=$max_page; $pageGo++) {
+
+/*	
+	if ($spage+$page_count<=$max_page){
+		$spageNext = $spage+$page_count;
+	}else{
+		$spageNext = $spage;
+	}
+*/
+	
+	if(($pageGo-1)%$page_count==0 && 0<($pageGo-1)) {
+		$spageGo = (intval($pageGo/$page_count)*$page_count)+1;
+	}
+
+
+
+	echo "
+						<option value=\"".$_SERVER["SCRIPT_NAME"]."?cpage=".$pageGo."&spage=".$spageGo."&$subquery\""; if($cpage==$pageGo) { echo " selected"; } echo ">".$pageGo."</option>";
+}
+
+echo "
+					</select>
+				</li>";
+?>
+			</ul>
+
+
+			<!-- PC 페이징 -->
+			<ul class="pagination pc">
+<?
+echo "
+				<li><a class=\"first\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=1&spage=1\"><img src=\"/img/common_responsive/first.png\" alt=\"처음\"></a></li>";
+if ($spage>1) {
+
+	if($spage-$page_count<1 || $spage-$page_count<1) {
+		echo "
+				<li><a class=\"prev\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=1&spage=1\"><img src=\"/img/common_responsive/prev.png\" alt=\"이전\"></a></li>";		
+	}else{
+		echo "
+				<li><a class=\"prev\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".($spage-$page_count)."&spage=".($spage-$page_count)."\"><img src=\"/img/common_responsive/prev.png\" alt=\"이전\"></a></li>";
+	}
+}else{
+	echo "
+				<li><a class=\"prev\" href=\"#void\" onclick=\"window.alert('처음입니다.');\"><img src=\"/img/common_responsive/prev.png\" alt=\"이전\"></a></li>";
+}
+
+
+$a=0;
+for ($i=$spage; $i<$spage+$page_count; $i++) {
+	if ($i<=$max_page){
+/*
+		if ($a!=0) {
+			echo " | ";
+		}
+*/
+		if ($cpage==intval($i)) {
+			echo "
+				<li><a href=\"#void\" class=\"active\">".$i."</a></li>";
+		}else{
+			echo "
+				<li><a href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=$i&spage=$spage\">".$i."</a></li>";
+		}
+		$a++;
+	}
+}
+
+if($max_page/$page_count<=1) {
+	$last_spage="1";
+}else{
+	$last_spage=(intval($max_page/$page_count)*$page_count) + 1;
+}
+
+
+if ($cpage < $max_page) {
+	
+	// 마지막
+	if($max_page < intval($spage*$page_count)){
+		$next_cpage = ($cpage+1);
+		$next_spage = $spage;
+	}else{
+		$next_cpage = ($spage+$page_count);
+		$next_spage = $next_cpage;
+	}
+
+	echo "
+				<li><a class=\"next\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".$next_cpage."&spage=".$next_spage."\"><img src=\"/img/common_responsive/next.png\" alt=\"다음\"></a></li>";
+}else{
+	echo "
+				<li><a class=\"next\" href=\"#void\" onclick=\"window.alert('마지막입니다.');\"><img src=\"/img/common_responsive/next.png\" alt=\"다음\"></a></li>";
+}
+
+
+
+if($max_page<1) {
+	$max_page=1;
+}
+
+echo "
+				<li><a class=\"last\" href=\"".$_SERVER["SCRIPT_NAME"]."?$subquery&cpage=".$max_page."&spage=".$last_spage."\"><img src=\"/img/common_responsive/last.png\" alt=\"마지막\"></a></li>";
+
+?>
+
+			</ul>
+		</div>
+		
+	</div>
+</section>

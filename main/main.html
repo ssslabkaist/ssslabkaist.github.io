@@ -1,0 +1,83 @@
+<?session_start();
+@ob_start();
+
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+
+$mainState = "Y"; //메인 체크
+
+include "../include/header.html";
+?>
+<!-- //end header -->
+<link type="text/css" href="../style/main.css" rel="stylesheet">
+<!-- ************************** 레이어팝업 ***********************  -->
+<!-- ************************** /script/jquery-ui.js 필요 ******************  -->
+<!-- ************************** /script/jquery.cookie.js 필요 ******************  -->
+<!-- ************************** 레이어명은 반드시 pop+숫자 ******************  -->
+<script type="text/javascript" src="../script/jquery-ui.1.10.1.js"> </script>
+<script type="text/javascript" src="../script/jquery.cookie.js"></script>
+<script type="text/javascript" src="../script/ebi.layerpopup.js"></script>
+
+<!-- 레이어명은 반드시 pop + 숫자  / data-close : 팝업닫는 날짜 시간. 총 12자리 숫자( 201803121800 )로 만들어야 함 / 닫는 시간이 없으면 비워두기 -->
+<div id="layerPopup">
+	
+	<!-- 추석연휴 -->
+	<div class="pop1 pc" data-zIndex="" data-top="30" data-left="30" data-width="500" data-open="" data-close="202010022359">	
+		<div>
+			<a href="#void" class="alinknone">
+				<img src="http://www.ebiweb.co.kr/popup/popup_chusuk_2020.jpg" alt="추석연휴안내">
+			</a>
+		</div>
+		<div class="bottom">
+			<a class="layerClose">&times;</a>
+			<a class="layerToday">오늘 하루 안보기</a>
+		</div>
+	</div>
+</div> 
+<!-- ************************** //end 레이어팝업 V1 ***********************  -->
+
+
+<!-- contents -->
+<section class="main">
+	<div class="cover"></div>
+	<div class="sliderV2" data-type="fade" data-speed="500" data-time="4000" data-page="pageType1">
+		<ul class="sliderObj">
+			<li>
+				<h2><span class="c_yellow">Making Smarter Structures</span></h2>
+				<img src="../images/main/main_bridgeconstruction.jpg" alt="" />
+			</li>
+			<li>
+				<h2><span class="c_yellow">Making Safer Structures</span></h2>
+				<img src="../images/main/main_dam.jpg" alt="" />
+			</li>
+			<li>
+				<h2><span class="c_yellow">Making Smarter Technologies</span></h2>
+				<img src="../images/main/main_offshorewind.jpg" alt="" />
+			</li>
+			<li>
+				<h2><span class="c_yellow">Making Better Decision</span></h2>
+				<img src="../images/main/main_offshoreplant.jpg" alt="" />
+			</li>
+			<li>
+				<h2><span class="c_yellow">Making Brighter Future</span></h2>
+				<img src="../images/main/main_nuclearpower.jpg" alt="" />
+			</li>
+			
+			<!-- <li><img src="../images/main/main_bg1.jpg" alt="" /></li> -->
+			<!-- <li><img src="../images/main/main_bg2.jpg" alt="" /></li> -->
+			<!-- <li><img src="../images/main/main_bg3.jpg" alt="" /></li> -->
+		</ul>
+		<div class="sliderPage">
+			<div></div>
+			<a href="javascript:;" class="search"><img src="../images/main/i-search.png" alt="" /></a>
+		</div>
+	</div>
+</section>
+
+
+<!-- footer -->
+<?include "../include/oldie.html";?>
+
+<!-- footer -->
+<?include "../include/footer.html";?>

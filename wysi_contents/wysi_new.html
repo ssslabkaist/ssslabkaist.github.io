@@ -1,0 +1,915 @@
+<?session_start();
+include "../admin/common/loginchk.html";
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+?>
+
+<?
+/*<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">*/
+?>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link type="text/css" href="../style/reset.css" rel="stylesheet">
+	<link type="text/css" href="../style/response.css" rel="stylesheet">
+	<link type="text/css" href="../style/common.css" rel="stylesheet">
+	<link type="text/css" href="../style/common-ani.css" rel="stylesheet">
+	<link type="text/css" href="../style/layerpopup.css" rel="stylesheet">
+	<link type="text/css" href="../style/ebi.slider.css" rel="stylesheet">
+	<link type="text/css" href="../style/layout.css" rel="stylesheet">
+	<link type="text/css" href="../style/design.css" rel="stylesheet">
+	<link type="text/css" href="../style/main.css" rel="stylesheet">
+	<link type="text/css" href="../style/program.css" rel="stylesheet">
+
+<script language="javascript">
+
+
+//이미지 롤오버아웃
+//ex)initImgRoll("id_name").... book.gif(오프), book_on.gif(온) 형식
+function menuOver(){//ex) imgEl.onmouseover = menuOver; aEl.onfocus = menuOver;
+	var imgEl = (this.src)? this: this.getElementsByTagName("img")[0];
+	if(imgEl) {
+		_imgtype = imgEl.src.substr(imgEl.src.length-3,imgEl.src.length-1);
+		var where = imgEl.src.indexOf("_on."+_imgtype,0);
+		if(where==-1) imgEl.src = imgEl.src.replace("."+_imgtype,"_on."+_imgtype);
+	}
+}
+function menuOut(){//ex) imgEl.onmouseout = menuOver; aEl.onblur = menuOut;
+	var imgEl = (this.src)? this: this.getElementsByTagName("img")[0];
+	if(imgEl) {
+		_imgtype = imgEl.src.substr(imgEl.src.length-3,imgEl.src.length-1);
+		var where = imgEl.src.indexOf("_on."+_imgtype,0);
+		if(where!=-1) imgEl.src = imgEl.src.replace("_on."+_imgtype,"."+_imgtype);
+	}
+}
+
+
+function initImgRoll(containerId) { 
+ 	var imgEl = document.getElementById(containerId).getElementsByTagName("img");
+	if(imgEl){
+		for(var i=0; i<imgEl.length; i++){
+			var objImg = imgEl[i];
+			_imgtype = objImg.src.substr(objImg.src.length-3,objImg.src.length-1);
+			var where = objImg.src.indexOf("_on."+_imgtype,0);
+			if (where==-1){//함수필요(myshin.js)
+				objImg.onmouseover = objImg.onfocus = menuOver;
+				objImg.onmouseout = objImg.onblur = menuOut;
+			}
+		}
+	}
+}
+</script>
+
+<style type="text/css">
+body{background:none; font-family:"NotoSansKR","sans-serif" !important;}
+</style>
+<style>
+table.wysi_btns{ width:100%;}
+table.wysi_btns td{ /*border:1px solid red;*/ padding:3px 0px; vertical-align:middle;  background:#efefef; }
+table.wysi_btns td.font_0{font:0/0 arial;}
+table.wysi_btns td.font_0 a{ margin:0 1px; display:inline-block;font:0/0 arial;}
+table.wysi_btns td span{ margin:0 5px;}
+
+
+.wysi_pop_layer{ position:absolute; z-index:10; display:none; background:#FBFBFB;border:1px solid #d1d1d1;list-style:none; margin: 0; padding:0;}
+
+.wysi_pop_layer li{ margin: 0; padding:0; border:0; }
+.wysi_pop_layer li{ padding:1px; font-size:12px;line-height:7px; }
+.wysi_pop_layer li a{ }
+
+.wysi_pop_layer li a:link, .wysi_pop_layer li a:visited {color:#333333; text-decoration:none;}
+.wysi_pop_layer li a:hover, .wysi_pop_layer li a:active {color:#3781ce; text-decoration:none;}
+
+table.color_BB{margin: 0; padding:0; border:0; border-collapse:collapse; border-spacing:0;}
+table.color_BB td.color_l{padding:0px;background:#FFFFFF; }
+table.color_BB td.color_l a{ display:inline-block;}
+
+#screenFull{ z-index:0; overflow:hidden; position:absolute; display:none; height:420px; }
+.iframe_style{ width:938px; /*width:630px;*/ height:400px; overflow-y:scroll; border:1px solid #d1d1d1; padding:10px; }
+</style>
+
+
+<script language="javascript">
+var selObj = "";
+var focusNodeProp = "";
+var myEditor2 = "";
+var selType = "text";
+
+if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
+{
+
+    var SIDEVIEW_JS = true;
+	var nameContextMenu;
+
+	function showSideView(curObj)
+	{
+		if(!nameContextMenu) {
+			nameContextMenu = curObj;
+		}
+
+		var sideView = new SideView(curObj);
+		//window.alert(sideView.targetObj);
+		sideView.showLayer();
+	}
+
+
+	function SideView(curObj)
+	{
+		this.curObj = curObj;
+		this.showLayer = showLayer;
+	}
+
+
+	function showLayer()
+	{
+		
+		if(nameContextMenu!=this.curObj) {
+			if (document.getElementById(nameContextMenu)) {
+				document.getElementById(nameContextMenu).style.display="none";
+				document.getElementById("screenFull").style.display="none";
+			}
+			nameContextMenu = this.curObj;
+		}
+
+		document.getElementById("myEditor").focus();
+
+		if(document.getSelection){
+			selObj = window.getSelection();
+			//focusNodeProp = selObj.focusNode;
+		}else if(document.selection){
+			selObj = document.selection.createRange();
+			if(document.selection.type == 'Control') {
+				selObj.execCommand("SelectAll");
+				selObj = document.selection.createRange();
+				selType = "control";
+			}
+		}else{
+			window.alert("사용할 수 없습니다.");
+		}
+
+		clickAreaCheck = true;
+
+		var oSideViewLayer = document.getElementById(this.curObj);
+		var oBody = document.body;
+
+		oSideViewLayer.style.display="block";
+
+		//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 START
+		if(document.getSelection && myEditor2){
+			document.getElementById("myEditor").focus();
+			selObj.addRange(myEditor2);
+		}
+		//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 END
+
+
+
+		if(nameContextMenu=="hyperLink") {
+			oSideViewLayer.innerHTML="<iframe src=\"./hyperlink_frame.html\" name=\"hyperlink_frame\" id=\"hyperlink_frame\" width=\"350\" height=\"113\" frameborder=\"no\" scrolling=\"no\" style=\"z-index:100;\"></iframe>";
+		}else if(nameContextMenu=="tableEmbed") {
+			oSideViewLayer.innerHTML="<iframe src=\"./tableemded_frame.html\" name=\"tableemded_frame\" id=\"tableemded_frame\" width=\"200\" height=\"90\" frameborder=\"no\" scrolling=\"no\" style=\"z-index:100;\"></iframe>";
+		}else if(nameContextMenu=="photoEmbed") {
+			oSideViewLayer.innerHTML="<iframe src=\"./photoembed_frame.html?tableWidth=<?=$tableWidth?>\" name=\"photoembed_frame\" id=\"photoembed_frame\" width=\"370\" height=\"110\" frameborder=\"no\" scrolling=\"no\" style=\"z-index:100;\"></iframe>";
+		}
+
+
+
+
+		document.getElementById("screenFull").style.display="block";
+		//window.alert(document.getElementById("myEditor").scrollWidth);
+		//window.alert(document.getElementById("myEditor").scrollHeight);
+		document.getElementById("screenFull").style.width=eval(document.getElementById("myEditor").scrollWidth)+20+"px";
+		//document.getElementById("screenFull").style.height=eval(document.getElementById("myEditor").scrollHeight)+20+"px";
+		//window.alert(document.body.clientWidth);
+		//window.alert(document.body.clientHeight);
+	}
+
+
+	function hideSideView()
+	{
+		if (document.getElementById(nameContextMenu)) {
+			document.getElementById(nameContextMenu).style.display="none";
+			document.getElementById("screenFull").style.display="none";
+		}
+		myEditor2 = "";
+	}
+	var clickAreaCheck = false;
+	document.onclick = function()
+	{
+		//window.alert(clickAreaCheck);
+		if (!clickAreaCheck) {
+			hideSideView();
+		}else{
+			clickAreaCheck = false;
+		}
+	}
+}
+</script>
+</head>
+<body>
+
+
+<table class="wysi_btns">
+<colgroup>
+	<col width="" />
+	<col width="95px" />
+</colgroup>
+	<tr>
+		<td class="font_0" id="change_img_01">
+			<a href="#void" onClick="showSideView('fontFamily');" title="글꼴"><img src="/img/wysi_imgs/btn_17.gif" alt="글꼴" /></a>
+			<a href="#void" onClick="showSideView('fontSize');" title="크기"><img src="/img/wysi_imgs/btn_18.gif" alt="크기" /></a>
+			<a href="#void" onClick="showSideView('foreColor');" title="글자색"><img src="/img/wysi_imgs/btn_19.gif" alt="글자색" /></a>
+			<a href="#void" onClick="showSideView('fontBackColor');" title="배경색"><img src="/img/wysi_imgs/btn_20.gif" alt="배경색" /></a>
+			
+			<a href="#void" onClick="makeBold('Bold');" title="굵게"><img src="/img/wysi_imgs/btn_01.gif" alt="굵게" /></a>
+			<a href="#void" onClick="makeBold('italic');" title="이탤릭체"><img src="/img/wysi_imgs/btn_02.gif" alt="이탤릭체" /></a>
+			<a href="#void" onClick="makeBold('Underline');" title="언더라인"><img src="/img/wysi_imgs/btn_03.gif" alt="언더라인" /></a>
+			
+			<a href="#void" onClick="makeBold('justifyleft');" title="왼쪽정렬"><img src="/img/wysi_imgs/btn_07.gif" alt="왼쪽정렬" /></a>
+			<a href="#void" onClick="makeBold('justifycenter');" title="가운데정렬"><img src="/img/wysi_imgs/btn_08.gif" alt="가운데정렬" /></a>
+			<a href="#void" onClick="makeBold('justifyright');" title="오른쪽정렬"><img src="/img/wysi_imgs/btn_09.gif" alt="오른쪽정렬" /></a>
+			
+			<a href="#void" onClick="makeBold('insertorderedlist');" title="번호붙이기"><img src="/img/wysi_imgs/btn_10.gif" alt="번호붙이기" /></a>
+			<a href="#void" onClick="makeBold('insertunorderedlist');" title="점붙이기"><img src="/img/wysi_imgs/btn_11.gif" alt="점붙이기" /></a>
+			
+			<a href="#void" onClick="makeBold('indent');" title="오른쪽이동"><img src="/img/wysi_imgs/btn_12.gif" alt="오른쪽이동" /></a>
+			<a href="#void" onClick="makeBold('outdent');" title="왼쪽이동"><img src="/img/wysi_imgs/btn_13.gif" alt="왼쪽이동" /></a>
+			
+			<a href="#void" onClick="showSideView('hyperLink');" title="하이퍼링크"><img src="/img/wysi_imgs/btn_14.gif" alt="하이퍼링크" /></a>
+			<a href="#void" onClick="showSideView('tableEmbed');" title="표 넣기"><img src="/img/wysi_imgs/btn_15.gif" alt="표 넣기" /></a>
+			
+		
+			<a href="#void" onClick="showSideView('photoEmbed');" title="그림 삽입"><img src="/img/wysi_imgs/btn_16.gif" alt="그림 삽입" /></a>
+			
+			<!--
+			<a href="#void" onClick="makeBold('cut');"><img src="/img/wysi_imgs/btn_04.gif" alt="잘라내기" /></a>
+			<a href="#void" onClick="makeBold('copy');"><img src="/img/wysi_imgs/btn_05.gif" alt="복사" /></a>
+			<a href="#void" onClick="makeBold('paste');"><img src="/img/wysi_imgs/btn_06.gif" alt="붙여넣기" /></a>
+			<a href="#void" onClick="hideSideView(); Editor_setCreateLink(this);"><img src="/img/wysi_imgs/btn_14.gif" alt="하이퍼링크" /></a>
+			<a href="#void" onClick="hideSideView(); Editor_FindTable(this);" title="표 넣기"><img src="/img/wysi_imgs/btn_15.gif" alt="표 넣기" /></a>
+			<a href="#void" onClick="hideSideView(); Editor_FindImage(this);" title="그림 삽입"><img src="/img/wysi_imgs/btn_16.gif" alt="그림 삽입" /></a>
+			-->
+		</td>
+		<td class="font_0" id="change_img_01_hidden" style="display:none;"></td>
+		<td>
+			<input type="checkbox" name="switchMode" id="switchModeId" class="checkbox_wysi" onClick="setMode()" value="Y" style="vertical-align:middle;">
+			<label for="switchModeId" style="color:#818181; font-size:12px;">HTML 소스</label>
+			<input type="hidden" value="edit" id="changeMode">
+		</td>
+	</tr>
+</table>
+
+
+
+<div style="position:relative; top:1px; z-index:20;">
+	<div id="hyperLink" class="wysi_pop_layer" style="width:352px; margin:0px 0 0 161px; ">
+		<!--<iframe src="./wysi/hyperlink_frame.html" name="hyperlink_frame" id="hyperlink_frame" width="350" height="113" frameborder="no" scrolling="no"></iframe>-->
+	</div>
+
+	<div id="tableEmbed" class="wysi_pop_layer" style=" width:202px; margin:0px 0 0 331px;">
+		<!--<iframe src="./wysi/tableemded_frame.html" name="tableemded_frame" id="tableemded_frame" width="200" height="90" frameborder="no" scrolling="no"></iframe>-->
+	</div>
+
+	<div id="photoEmbed" class="wysi_pop_layer" style="width:372px; margin:0px 0 0 161px;">
+		<!--<iframe src="./wysi/photoembed_frame.html" name="photoembed_frame" id="photoembed_frame" width="370" height="90" frameborder="no" scrolling="no"></iframe>-->
+	</div>
+
+
+
+
+	<ul id="fontFamily" class="wysi_pop_layer" style="width:120px;margin:0px 0 0 1px;">
+		<li><a href="#void" onClick="makeBold3('fontname','Tahoma');" style="font-family:Tahoma;">Tahoma</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','돋움');" style="font-family:돋움;">돋움</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','굴림');" style="font-family:굴림;">굴림</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','바탕');" style="font-family:바탕;">바탕</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','궁서');" style="font-family:궁서;">궁서</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','Comic Sans MS');" style="font-family:Comic Sans MS;">Comic Sans MS</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','Courier New');" style="font-family:Courier New;">Courier New</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','System');" style="font-family:System;">System</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','Times New Roman');" style="font-family:Times New Roman;">Times New Roman</a></li>
+		<li><a href="#void" onClick="makeBold3('fontname','Verdana');" style="font-family:Verdana;">Verdana</a></li>
+	</ul>
+
+	<ul id="fontSize" class="wysi_pop_layer" style=" width:350px; margin:0 0 0 32px;">
+		<li class="fontsize" style="line-height:15px;"><a href="#void" onClick="makeBold3('fontsize','1');"><font size="1">가나다라마바사 (8pt)</font></a></li>
+		<li class="fontsize" style="line-height:20px;"><a href="#void" onClick="makeBold3('fontsize','2');"><font size="2">가나다라마바사 (10pt)</font></a></li>
+		<li class="fontsize" style="line-height:25px;"><a href="#void" onClick="makeBold3('fontsize','3');"><font size="3">가나다라마바사 (12pt)</font></a></li>
+		<li class="fontsize" style="line-height:30px;"><a href="#void" onClick="makeBold3('fontsize','4');"><font size="4">가나다라마바사 (14pt)</font></a></li>
+		<li class="fontsize" style="line-height:35px;"><a href="#void" onClick="makeBold3('fontsize','5');"><font size="5">가나다라마바사 (18pt)</font></a></li>
+		<li class="fontsize" style="line-height:40px;"><a href="#void" onClick="makeBold3('fontsize','6');"><font size="6">가나다라마 (24pt)</font></a></li>
+		<li class="fontsize" style="line-height:45px;"><a href="#void" onClick="makeBold3('fontsize','7');"><font size="7">가나다 (36pt)</font></a></li>
+	</ul>
+<script language="javascript">
+window.onload = function() {
+	document.getElementById("myEditor").innerHTML = parent.document.getElementsByName("<?=$myEditorId?>")[0].value;
+
+	color();
+	colorBgc();
+}
+</script>
+	<ul id="foreColor" class="wysi_pop_layer" style="width:132px; margin:0 0 0 63px; ">
+		<li id="color_layer"></li>
+		<li id="pick_color" style="line-height:15px;"><font style='font:12px;' color='#000000'><strong>123ABC가나다</strong></font></li>
+	</ul>
+
+	<ul id="fontBackColor" class="wysi_pop_layer" style="width:132px; margin:0 0 0 105px;">
+		<li id="color_layerBgc"></li>
+		<li id="pick_colorBgc" style="line-height:15px;"><font style='font:12px;' color='#000000'>123ABC가나다</font></li>
+	</ul>
+</div>
+
+
+		
+<div id="screenFull"></div>
+
+
+<div id="myEditor" contenteditable="true" style="border:1px solid #c5c5c5; height:500px; overflow-y:auto; overflow-x:auto; padding:2px;"></div>
+<div id="myEditor2"></div>
+
+
+<script language=javascript>
+	//initEditor();
+	initImgRoll("change_img_01");
+	//initImgRoll("change_img_02");
+</script>
+
+
+<script language=javascript>
+var  myEditor = document.getElementById("myEditor");
+var isEditable = myEditor.isContentEditable;
+
+function ButtonUp(param) {
+	param.style.border="1px outset";
+}
+function ButtonDown(param) {
+	param.style.border = "1px inset";
+}
+function ButtonOut(param) {
+	param.style.border="";
+}
+
+function cancelButton() {
+	//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 START
+	//myEditor.focus();
+	if(document.getSelection && myEditor2){
+		document.getElementById("myEditor").focus();
+		selObj.addRange(myEditor2);
+		myEditor2 = "";
+	}
+	//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 END
+
+	if(document.getSelection){
+	}else if(document.selection){
+		selObj.select();
+	}
+	hideSideView();
+}
+
+//============================================테이블 생성 START();===================================================//
+function insertTable(tbl_cols,tbl_rows){
+	myEditor.focus();
+
+
+
+	if (tbl_cols > 30 ||tbl_cols < 1) tbl_cols = 2;
+	if (tbl_rows > 30 ||tbl_rows < 1) tbl_rows = 2;
+	
+	if(document.getSelection){
+		var newObjDe = document.createElement("div");
+		var newObj = document.createElement("div");
+		var newObjTable = document.createElement("table");
+
+
+		newObjTable.setAttribute('border', '#000000');
+		newObjTable.setAttribute('style', 'text-align:left; width:90%; border-collapse:collapse; border-spacing:0; margin: 0; padding:0; border:0; border:1px solid #000000;');
+
+
+		
+		for (i = 1; i <= tbl_cols; i++) {
+			var newObjTableTr = document.createElement("tr");
+			for (j = 1; j <= tbl_rows; j++)  {
+				var newObjTableTd = document.createElement("td");
+				newObjTableTd.setAttribute('border', '#ffffff');
+				newObjTableTd.setAttribute('style', 'height:20px; text-align:left; vertical-align:middle; margin: 0; padding:0; border:0; border:1px solid #000000; color:#000000;');
+				newObjTableTr.appendChild(newObjTableTd);
+			}
+			newObjTable.appendChild(newObjTableTr);
+		}
+
+
+/*크롬에서 지대로 되는것 START*/
+		//http://blog.storymate.net/225		참고사이트
+		newObj.appendChild(newObjTable);
+		selObj.getRangeAt(0).deleteContents();
+		//selObj.getRangeAt(0).selectNode(document.getElementById("myEditor").item(0));
+		selObj.getRangeAt(0).insertNode(newObj);
+		selObj.selectAllChildren(myEditor);
+		selObj.collapseToEnd();
+
+		var textPrint = document.createTextNode("\u00A0");     // 공백 추가
+		newObjDe.appendChild(textPrint);
+		selObj.getRangeAt(0).insertNode(newObjDe);			//<div> 하나 추가해서 포커서를 이동하게끔 이거 없으면 익스플로러 표안에 찍힘
+/*크롬에서 지대로 되는것 END*/
+
+
+	}else if(document.selection){
+
+		str = '<div><table '
+			+ ' border="#000000"'
+			+ ' style="text-align:left; width:90%; border-collapse:collapse; border-spacing:0; margin: 0; padding:0; border:0; border:1px solid #000000;"'
+			+ '>';
+
+		for (i = 1; i <= tbl_cols; i++){
+			str += '<tr>';
+			for (j = 1; j <= tbl_rows; j++){
+				str += '<td bgcolor="#ffffff" style="height:20px; text-align:left; vertical-align:middle; margin: 0; padding:0; border:0; border:1px solid #000000; color:#000000;"></td>';
+			}
+		}
+		str += '</table></div>';
+		
+
+
+		selObj.pasteHTML(str);
+		selObj.select();
+		str2 = '<div></div>';
+		selObj.pasteHTML(str2);
+		selObj.select();
+		//parent.document.body.innerHTML += str;
+	}else{
+		window.alert("사용할 수 없습니다.");
+	}
+	//parent.hideSideView();
+}
+//============================================테이블 생성 END();===================================================//
+
+
+
+
+
+
+//============================================하이퍼링크 생성 START();===================================================//
+function Editor_getCreateLink(hrefUrl,target) {
+	myEditor.focus();
+	Editor_getRemoveLink();
+
+	if(document.getSelection){
+		range = selObj.getRangeAt(0);
+		hrefUrl = "http://"+hrefUrl;
+		document.execCommand("CreateLink", false, hrefUrl);
+		node = range.commonAncestorContainer;
+		
+		if(node.nodeType==3) {
+			document.execCommand("UnLink");
+			var content = selObj.getRangeAt(0).cloneContents();
+
+			if(selObj.type=="Caret") {
+				content = "http://"+hrefUrl;
+				content = document.createTextNode(content);
+
+			}
+
+			var newObj = document.createElement("A");
+			newObj.setAttribute("href", hrefUrl);
+			if(target) {
+				newObj.setAttribute("target", "_blank");
+			}
+			
+			newObj.appendChild(content);
+
+			selObj.getRangeAt(0).deleteContents();
+			selObj.getRangeAt(0).insertNode(newObj);
+			selObj.selectAllChildren(newObj);
+			selObj.collapseToEnd();
+		}else{
+/*
+			for(var i=0; i<node.getElementsByTagName("a").length; i++) {
+				var link_text = node.getElementsByTagName("a")[i];
+				if(target) {
+					node.getElementsByTagName("a")[i].setAttribute("target","_blank")//.pasteHTML('<A href="' + hrefUrl + '" target="_blank">' + link_text + '</A>');
+				}
+			}
+			var newObj = document.createElement("div");		
+			newObj.appendChild(node);
+			selObj.getRangeAt(0).deleteContents();
+			selObj.getRangeAt(0).insertNode(node);
+*/
+			selObj.selectAllChildren(node);
+			selObj.collapseToEnd();
+		}
+	}else if(document.selection){
+		hrefUrl = "http://"+hrefUrl;
+		selObj.execCommand("CreateLink", false, hrefUrl);
+
+		//aLink = selObj.parentElement();
+		aLink = document.getElementById("myEditor");
+		aLinkLen = aLink.getElementsByTagName("a").length;
+
+		//window.alert(selType)
+		if(0<aLinkLen) {
+			//window.alert(aLink.getElementsByTagName("a").length);
+			for(var i=0; i<aLink.getElementsByTagName("a").length; i++) {
+				//window.alert(aLink.getElementsByTagName("a")[i].innerText);
+				if(target) {
+					aLink.getElementsByTagName("a")[i].setAttribute("target","_blank");//.pasteHTML('<A href="' + hrefUrl + '" target="_blank">' + link_text + '</A>');
+				}
+				//window.alert(aLink.getElementsByTagName("a")[i].innerText);
+				if(aLink.getElementsByTagName("a")[i].firstChild) {
+					if(aLink.getElementsByTagName("a")[i].firstChild.nodeName.toLowerCase()=="img") {
+						textOk="no";
+					}else{
+						textOk="yes";
+					}
+				}else{
+					textOk="yes";
+				}
+				if(!aLink.getElementsByTagName("a")[i].innerText && textOk=="yes") {
+					content = document.createTextNode(hrefUrl);
+					aLink.getElementsByTagName("a")[i].appendChild(content);
+				}
+			}
+		}else{
+			selObj.execCommand("UnLink");
+			if(selType=="text") {
+				var data=selObj.text;
+			}else{
+				var data=selObj.htmlText;
+			}
+			if(!data) {
+				data = hrefUrl;
+			}
+
+			if(target) {
+				str = "<a href=\""+hrefUrl+"\" target=\"_blank\">"+data+"</a>";
+			}else{
+				str = "<a href=\""+hrefUrl+"\">"+data+"</a>";
+			}
+			selObj.pasteHTML(str);
+		}
+		selObj.select();
+	}else{
+		window.alert("사용할 수 없습니다.");
+	}
+	hideSideView();
+}
+
+//링크제거
+function Editor_getRemoveLink() {
+	myEditor.focus();
+	
+	if(document.getSelection){
+		//window.alert(selObj.focusNode);
+		document.execCommand('UnLink');
+	}else if(document.selection){
+		selObj.execCommand("UnLink");
+	}else{
+		window.alert("사용할 수 없습니다.");
+	}
+}
+
+//링크제거
+function deleteHyper(){
+	myEditor.focus();
+	Editor_getRemoveLink();
+	hideSideView();
+}
+//============================================하이퍼링크 생성 END();===================================================//
+
+
+
+function Editor_LoadImage(imgname,width,height,border,vspace,hspace,alignment,description,true_width,true_height,true_imgname) {
+	myEditor.focus();
+	var img = document.createElement('IMG');
+	img.id="imgid";
+	img.src = imgname;
+
+	img.width = width;
+	img.height = height;
+	img.border = border;
+	img.vspace = vspace;
+	img.hspace = hspace;
+	img.align = alignment;
+	img.alt = description;
+	//img.onclick = "javascript:PopUp_Board('/popup/popup_board.html?img_name="+true_imgname+"','"+true_width+"','"+true_height+"');";
+	//img.onmouseover = "javascript:this.style.cursor='hand';";
+
+	if(document.getSelection){
+
+		var newObj = document.createElement("div");
+		var newObjImg = document.createElement("img");
+		newObjImg.setAttribute('src', imgname);
+		newObjImg.setAttribute('width', width);
+		newObjImg.setAttribute('height', height);
+		newObjImg.setAttribute('border', border);
+		newObjImg.setAttribute('vspace', vspace);
+		newObjImg.setAttribute('hspace', hspace);
+		newObjImg.setAttribute('align', alignment);
+		newObjImg.setAttribute('alt', description);
+		newObj.appendChild(newObjImg);
+		selObj.getRangeAt(0).deleteContents();
+		selObj.getRangeAt(0).insertNode(newObj);
+		selObj.selectAllChildren(newObj);
+		selObj.collapseToEnd(newObj);
+		
+		//window.alert(newObj.innerHTML);
+
+
+	}else if(document.selection){
+		selObj.pasteHTML(img.outerHTML);
+		selObj.select();
+		str2 = '&nbsp;';
+		selObj.pasteHTML(str2);
+		selObj.select();
+	}else{
+		window.alert("사용할 수 없습니다.");
+	}
+}
+
+function makeBold(ifont,opt) {
+	//this.myEditor.focus(); 
+
+	myEditor.focus();
+	if(document.getSelection){
+		var selObj = window.getSelection();
+		var selRange = selObj.getRangeAt(0);
+		//window.alert(selRange.toString());
+		document.execCommand(ifont,false,opt);
+	}else if(document.selection){
+		var selObj = document.selection.createRange();
+		//window.alert(selObj.text);
+		selObj.execCommand(ifont,false,opt);
+		//selObj.select();
+	}else{
+		window.alert("사용할 수 없습니다.");
+	}
+	myEditor.focus();
+}
+
+function makeBold3(ifont,opt) {
+	myEditor.focus();
+	if(document.getSelection){
+		var selObj = window.getSelection();
+		var selRange = selObj.getRangeAt(0);
+		//window.alert(selRange.toString());
+		document.execCommand(ifont,false,opt);
+	}else if(document.selection){
+		var selObj = document.selection.createRange();
+		//window.alert(selObj.text);
+		selObj.execCommand(ifont,false,opt);
+		//selObj.select();
+	}else{
+		window.alert("사용할 수 없습니다.");
+	}
+	myEditor.focus();
+}
+
+function setMode() {
+	bTextMode = document.getElementsByName('switchMode')[0].checked;
+	var cont;
+	var url = "http://"+document.domain;
+	if (bTextMode) {
+		//cleanHtml();
+		//cleanHtml();
+		//cont=myEditor.innerHTML;
+		document.getElementById("change_img_01").style.display="none";
+		document.getElementById("change_img_01_hidden").style.display="";
+
+
+		if(document.getElementById("changeMode").value=="edit") {
+			myEditor.innerHTML=myEditor.innerHTML;
+			cont=myEditor.innerHTML.replace(new RegExp(url,"g"),"");
+			myEditor.innerText=cont;
+		}
+		document.getElementById("changeMode").value="source";
+	}else{
+		document.getElementById("change_img_01").style.display="";
+		document.getElementById("change_img_01_hidden").style.display="none";
+
+
+		if(document.getElementById("changeMode").value=="source") {
+			cont=myEditor.innerText;
+			myEditor.innerHTML=cont;
+			myEditor.innerHTML.replace(new RegExp(url,"g"),"");
+		}
+		document.getElementById("changeMode").value="edit";
+	}
+	//window.alert(cont);
+	myEditor.focus();
+}
+
+function cleanHtml() {
+	var fonts = myEditor.all.tags("FONT");
+	var curr;
+	for (var i = fonts.length -1; i>=0; i--) {
+		curr = fonts[i];
+		if (curr.style.backgroundColor == "#FFFFFF") curr.outerHTML = curr.innerHTML;
+	}
+	//window.alert(curr.innerHTML);
+}
+
+
+
+function Editor_FindTable(opener) {
+	var objDlg;
+	showModalDialog('./wysi/instable.html',this,'dialogHeight=320px;dialogWidth=350px;status=no');
+}
+
+
+function Editor_LoadTable(str) {
+	myEditor.focus();
+	myEditor.innerHTML += str;
+}
+
+
+
+/****************************************글자색, 배경색 색상관련 START********************************************/
+var hexChars = "0123456789ABCDEF0"; //10진수>16진수 변환에 쓸 문자열 
+var red = ''; 
+var green = ''; 
+var blue = ''; 
+
+function getHex(dec) //10진수 16진수 변환 
+{ 
+	var temp1 = dec % 16; //16으로 나눈 나머지 저장 
+
+	//if(temp1==0) {
+	//	var temp2 = 0; 
+	//}else{
+	var temp2 = (dec - temp1) / 16; 
+	//}
+
+	//window.alert(temp2+" + "+temp1);
+	var temp3 = hexChars.charAt(temp2) + hexChars.charAt(temp1); //각 위치의 문자열 결합 
+	return temp3; //16진수 반환 
+} 
+
+
+//=======================================글자색 START===========================================//
+function print(color) { 
+	document.getElementById("pick_color").innerHTML = "<font style='font:9pt;' color='"+color+"'><strong>123ABC가나다</strong></font>"; 
+}
+function color() { 
+	var color_table = "<table class=\"color_BB\">"; 
+	for(color_x=1; color_x < 256/16; color_x++) 
+	{ 
+		color_table += '<tr>'; 
+		for(color_y=1; color_y < 256/16; color_y++) 
+		{ 
+			red = getHex(color_x*16);
+			green = getHex(color_y*16);
+			blue = getHex(256-(color_x*16));
+
+			color = "#"+red+green+blue;
+
+			var aHref="";
+			aHref = "<a href=\"#void\" onClick=\"javascript:makeBold3('forecolor','"+color+"');\" style=\"background-color:"+color+";\"><img src=\"/img/trans.gif\" /></a>"
+
+			color_table += "<td width='8' height='8' bgcolor="+color+" onClick=\"javascript:makeBold3('forecolor','"+color+"');\" onMouseOver=\"javascript:print('"+color+"');\" class=\"color_l\">"+aHref+"</td>";
+		}
+		
+		red = getHex((color_x-1)*16);
+		green = getHex((color_x-1)*16);
+		blue = getHex((color_x-1)*16);
+
+		if(color_x==15 && color_y==16) {		//흰색
+			color = "#ffffff";
+		}else{
+			color = "#"+red+green+blue;
+		}
+
+		var aHref="";
+		aHref = "<a href=\"#void\" onClick=\"javascript:makeBold3('forecolor','"+color+"');\" style=\"background-color:"+color+"; \"><img src=\"/img/trans.gif\" /></a>"
+
+
+		color_table += "<td width='8' height='8' bgcolor="+color+" onClick=\"javascript:makeBold3('forecolor','"+color+"');\" onMouseOver=\"javascript:print('"+color+"');\" class=\"color_l\">"+aHref+"</td>";
+
+		color_table += '</tr>'; 
+	} 
+
+	color_table += '</table>'; 
+	
+	document.getElementById("color_layer").innerHTML = color_table; 
+}
+//=======================================글자색 END===========================================//
+
+
+//=======================================배경색 START===========================================//
+function printBgc(color) { 
+	pick_colorBgc.innerHTML = "<font style=\"font:9pt; background-color:"+color+";\">123ABC가나다</font>"; 
+}
+function colorBgc() { 
+	var color_table = '<table class=\"color_BB\">'; 
+	for(color_x=1; color_x < 256/16; color_x++) 
+	{ 
+		color_table += '<tr>'; 
+		for(color_y=1; color_y < 256/16; color_y++) 
+		{ 
+			red = getHex(color_x*16);
+			green = getHex(color_y*16);
+			blue = getHex(256-(color_x*16));
+
+			color = "#"+red+green+blue;
+
+			var aHref="";
+			aHref = "<a href=\"#void\" onClick=\"makeBold3('backcolor','"+color+"');\" style=\"background-color:"+color+";\"><img src=\"/img/trans.gif\" /></a>"
+
+			color_table += "<td width=8 height=8 bgcolor="+color+" onMouseOver=\"printBgc('"+color+"');\" class=\"color_l\">"+aHref+"</td>";
+		}
+		
+		red = getHex((color_x-1)*16);
+		green = getHex((color_x-1)*16);
+		blue = getHex((color_x-1)*16);
+
+		if(color_x==15 && color_y==16) {		//흰색
+			color = "#ffffff";
+		}else{
+			color = "#"+red+green+blue;
+		}
+
+		var aHref="";
+		aHref = "<a href=\"#void\" onClick=\"makeBold3('backcolor','"+color+"');\" style=\"background-color:"+color+"; \"><img src=\"/img/trans.gif\" /></a>"
+
+
+		color_table += "<td width=8 height=8 bgcolor="+color+" onMouseOver=\"printBgc('"+color+"');\" class=\"color_l\">"+aHref+"</td>";
+
+		color_table += '</tr>'; 
+	} 
+
+	color_table += '</table>'; 
+	document.getElementById("color_layerBgc").innerHTML = color_table; 
+}
+//=======================================배경색 END===========================================//
+/****************************************글자색, 배경색 색상관련 START********************************************/
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<script>
+var  editor = document.getElementById("editor");
+var isEditable = editor.isContentEditable;
+
+function makeBold(ifont,opt) {
+	//this.editor.document.body.focus(); 
+	
+
+	editor.focus();
+	if(document.getSelection){
+		var selObj = window.getSelection();
+		//alert(selObj);
+		var selRange = selObj.getRangeAt(0);
+		//window.alert(selRange);
+
+		//window.alert(selRange.toString());
+		document.execCommand(ifont,false,opt);
+
+	}else if(document.selection){
+
+		var selObj = document.selection.createRange();
+		//window.alert(tr.text);
+		selObj.execCommand(ifont,false,opt);
+		//selObj.select();
+	}else{
+		window.alert("사용할 수 없습니다.");
+	}
+
+	//selRange.select();
+
+	//selRange.select();
+	editor.focus();
+
+/*
+	var tr = document.selection.createRange();
+	//var tr = document.getSelection;
+	//window.alert(tr.text);
+	tr.execCommand(ifont,false,opt);
+	tr.select();
+
+	editor.focus();
+*/
+
+	/*
+	editor.focus();
+	if (opt=null) tr.execCommand(ifont);
+	else tr.execCommand(ifont,false,opt);
+	tr.select()
+	editor.focus();
+	*/
+}
+</script>
+
+-->
+</body>
+</html>

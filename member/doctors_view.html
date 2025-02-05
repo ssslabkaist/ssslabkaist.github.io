@@ -1,0 +1,177 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+$subquery="staff_course=".$staff_course."";
+
+$sql = mysql_query("SELECT a.*, b.catecode, b.catename FROM staffList a left outer join staffCourse b ON a.staff_course = b.catecode WHERE a.view_state='Y' AND a.uid='".$uid."'",$dbconn);
+$row = mysql_fetch_array($sql);
+
+
+if(!$row["uid"]) {
+	ERROR_BACK_URL("잘못된 접속입니다.","./list.html");
+}
+
+
+$imgView="<img src=\"../images/list_noimg.png\" alt=\"".stripSlashNotUsed($row["name_kor"])."\">";
+if($row["img1"]) {
+	$imgView="<img src=\"/program_file/staff_list/img1/".$row["img1"]."\" alt=\"".stripSlashNotUsed($row["name_kor"])."\">";
+}
+
+$admission = explode("-",$row["admission"]);
+
+$admissionView = "";
+if($admission[0]) {
+	$admissionView = $admission[0]."년 ";
+}
+if($admission[1]) {
+	$admissionView.= $admission[1]."월";
+}
+
+
+
+$aCategory = substr($row["catecode"],0,4);
+$bCategory = substr($row["catecode"],0,8);
+
+
+//=======메뉴인식 START=========//
+$bMenuNum = "2";			//대메뉴
+$mMenuNum = (int)$aCategory;			//중메뉴
+$sMenuNum = (int)substr($row["catecode"],4,4);				//소메뉴
+//=======메뉴인식 END=========//
+
+
+
+
+$bcaRow = mysql_fetch_row(mysql_query("SELECT catecode,catename FROM staffCourse WHERE SUBSTRING(catecode,1,4)='".$aCategory."' AND catedeg='1'",$dbconn));
+$mcaRow = mysql_fetch_row(mysql_query("SELECT catecode,catename FROM staffCourse WHERE SUBSTRING(catecode,1,8)='".$bCategory."' AND catedeg='2'",$dbconn));
+
+if($bcaRow[0]) {
+	//$Location.= " <span><a href=\"".$homeDir."/shop/list.html?category=".$Bcategory."000000\">$bcaRow[1]</a></span>";
+	$Location.= stripSlashNotUsed($bcaRow[1]);
+
+	$Page_Title = $bcaRow[1];
+}
+if($mcaRow[0]) {
+	//$Location.= " <span><a href=\"".$homeDir."/shop/list.html?category=".$Mcategory."0000\">$mcaRow[1]</a></span>";
+	$Location.= " - ".stripSlashNotUsed($mcaRow[1]);
+	
+	$Page_Title = $mcaRow[1];
+}
+
+?>
+
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+	<link type="text/css" href="../style/reset.css" rel="stylesheet">
+	<link type="text/css" href="../style/response.css" rel="stylesheet">
+	<link type="text/css" href="../style/common.css" rel="stylesheet">
+	<link type="text/css" href="../style/common-ani.css" rel="stylesheet">
+	<link type="text/css" href="../style/layerpopup.css" rel="stylesheet">
+	<link type="text/css" href="../style/ebi.slider.css" rel="stylesheet">
+	<link type="text/css" href="../style/ebi.sliderV2.css" rel="stylesheet">
+	<link type="text/css" href="../style/layout.css" rel="stylesheet">
+	<link type="text/css" href="../style/program.css" rel="stylesheet">
+	<link type="text/css" href="../style/design.css" rel="stylesheet">
+
+	<!-- 구글폰트 및 아이콘 -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="../script/jquery.1.12.0.min.js"></script>
+	<script src="../script/jquery-ui.1.10.1.js"> </script>
+	<script src="../script/jquery.cookie.js"></script>
+	<script src="../script/jquery.easing.1.3.js"></script>
+	<script src="../script/ebi.default.js"></script>
+	<script src="../script/ebi.layerpopup.js"></script>
+	<script src="../script/ebi.js"></script>
+	
+
+	<!--[if lt IE 9]>
+		<link href="../style/ie.warning.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+
+</head>
+
+<!-- // header -->
+
+<div class="layerInfo insertBg">
+	<span class="img"><?=$imgView?></span>
+	<div class="layerInfo-text">
+		<h3><?=stripSlashNotUsed($row["name_kor"])?></h3>
+		<dl>
+			<dt>Course</dt>
+			<dd><?=$row["catename"]?></dd>
+			<?
+			if($aCategory == '0007'){
+			?>
+			<dt>Current Affiliation</dt>
+			<dd>
+			<?if($row["belong"]){?>
+				<?=nl2br(stripSlashNotUsed($row["belong"]))?>
+			<?}else{?>
+				<span>-</span>
+			<?}?>
+			</dd>
+			<?
+			}else{
+			?>
+			<dt>Email</dt>
+			<dd>
+			<?if($row["email"]){?>
+				<a href="mailto:<?=$row["email"]?>"><?=$row["email"]?></a>
+			<?}else{?>
+				<span>-</span>
+			<?}?>
+			</dd>
+			<?
+			}?>
+		</dl>
+	</div>
+</div>
+<div class="layerDetail">
+	<ul>
+	<?
+	for($z=1; $z<=5; $z++) {
+		echo "<li>";
+		// 비고 N번 내용 가져오기
+		$etcInfo = stripSlashNotUsed($row["etc_".$z.""]);
+		if(onlyBlankSpaceChk($etcInfo)){
+
+			// 비고내용 구분자 배열 만들기
+			$etcInfoArry = explode("\n",$etcInfo);
+			for($x=0; $x < count($etcInfoArry); $x++){
+				
+				if(onlyBlankSpaceChk($etcInfoArry[$x])){
+
+					if($x == 0){
+
+						if(strpos($etcInfoArry[$x],"{") !== false || strpos($etcInfoArry[$x],"}") !== false){
+							
+							$tit = str_replace("{","",$etcInfoArry[$x]);
+							$tit = str_replace("}","",$tit);
+
+			echo "<span>".$tit."</span>";
+
+						}else{
+
+			echo "<p>".$etcInfoArry[$x]."</p>";
+						
+						}
+					}else if($x > 0){
+
+			echo "<p>".$etcInfoArry[$x]."</p>";
+
+					} //end($zz == 0)
+				} //end(onlyBlankSpaceChk($etcInfoArry[$zz]))
+			}		
+		}
+		echo "</li>";
+	}
+	?>
+		
+	</ul>
+</div>

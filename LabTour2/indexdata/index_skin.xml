@@ -1,0 +1,4406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano version="1.20.9">
+
+    
+
+
+  <style name="Iconspot_inside"
+         url="%FIRSTXML%/spots/arrows-buttons-round-orange-up_user_defaultpoint2.png"
+         visible="false"
+         edge="center"
+         alpha="0.8"
+         onloaded="showPermanentTooltip(all);"
+         onover="onoverIconspot_inside"
+         onout="onoutIconspot_inside"
+
+
+         />
+  <action name="onoverIconspot_inside">
+tween(scale, 1.2);
+tween(alpha, 1);
+
+  </action>
+  <action name="onoutIconspot_inside">
+    tween(scale, 1);
+    tween(alpha, 0.8);
+
+  </action>
+
+
+
+    
+
+
+  <style name="Icontooltip_hotspot"
+         url="%FIRSTXML%/spots/info_bw01_user_defaultpoint6.png"
+         visible="false"
+         edge="bottom" ox="0" oy="0"
+         onhover="onhoverIcontooltip_hotspot"
+         onout="onoutIcontooltip_hotspot"
+
+
+         />
+  <action name="onhoverIcontooltip_hotspot">
+    showtooltip('hotspot');
+  </action>
+  <action name="onoutIcontooltip_hotspot">
+    hideTooltip();
+
+
+
+  </action>
+
+
+
+    
+
+
+  <style name="Icontooltip_hotspot_long"
+         url="%FIRSTXML%/spots/info_bw01_user_defaultpoint17.png"
+         visible="false"
+         edge="bottom" ox="0" oy="0"
+         onhover="onhoverIcontooltip_hotspot_long"
+         onout="onoutIcontooltip_hotspot_long"
+
+
+         />
+  <action name="onhoverIcontooltip_hotspot_long">
+    showtooltip('hotspot');
+  </action>
+  <action name="onoutIcontooltip_hotspot_long">
+    hideTooltip();
+
+
+
+  </action>
+
+
+
+    
+
+
+  <style name="Icontooltip_hotspot_big"
+         url="%FIRSTXML%/spots/info_bw01_user_defaultpoint23.png"
+         visible="false"
+         edge="bottom" ox="0" oy="0"
+         onhover="onhoverIcontooltip_hotspot_big"
+         onout="onoutIcontooltip_hotspot_big"
+
+
+         />
+  <action name="onhoverIcontooltip_hotspot_big">
+    showtooltip('hotspot');
+  </action>
+  <action name="onoutIcontooltip_hotspot_big">
+    hideTooltip();
+
+
+
+  </action>
+
+
+
+  <contextmenu fullscreen="false">
+    <item name="website1" onclick="getmessage(urltoopen,contextmenudreamvrwebsiteurl1);openurl(get(urltoopen),_blank);" />
+    <item name="fullscreenentry" onclick="enterFullscreen();
+" separator="true"/>
+  </contextmenu>
+
+  <events name="contextmenuevents" keep="true" onenterfullscreen="updateContextMenu" onexitfullscreen="updateContextMenu" onxmlcomplete="updateContextMenu"/>
+  <action name="updateContextMenu">
+    getmessage(contextmenu.item[website1].caption, contextmenudreamvropenwebsitelabel1);
+    if(tour_fullscreen,
+      getmessage(contextmenu.item[fullscreenentry].caption, contextmenudreamvrcloseFsLabel);
+      set(contextmenu.item[fullscreenentry].onclick, exitFullscreen();
+);
+     ,
+      getmessage(contextmenu.item[fullscreenentry].caption, contextmenudreamvropenFsLabel);
+      set(contextmenu.item[fullscreenentry].onclick, enterFullscreen();
+);
+    );
+  </action>
+
+
+
+<ptplugin name="description" canStart="false" newPano="false" openatstart="false" mode="panorama" startMethod="showDescription_description" engine="kolorArea">
+	<settings>
+		<option name="position" value="bottomright" type="string" />
+		<option name="start_position" value="right" type="string" />
+		<option name="margin_x" value="50" type="int" />
+		<option name="margin_y" value="40" type="int" />
+		<option name="background_color" value="000000" type="string" />
+		<option name="background_alpha" value="0.90000762951094837" type="float" />
+		<option name="topleft_radius" value="5" type="int" />
+		<option name="topright_radius" value="5" type="int" />
+		<option name="bottomleft_radius" value="5" type="int" />
+		<option name="bottomright_radius" value="5" type="int" />
+		<option name="area_border_width" value="0" type="int" />
+		<option name="area_border_color" value="f2f2f2" type="string" />
+		<option name="area_border_alpha" value="1" type="float" />
+		<option name="padding" value="15" type="int" />
+		<option name="display_title" value="true" type="bool" />
+		<option name="title" value="" type="string" />
+		<option name="title_font" value="Verdana" type="string" />
+		<option name="title_size" value="16" type="int" />
+		<option name="title_weight" value="bold" type="string" />
+		<option name="title_decoration" value="normal" type="string" />
+		<option name="title_color" value="ffffff" type="string" />
+		<option name="close_displayed" value="true" type="bool" />
+		<option name="close_text" value="descriptiondisplay_close_text" type="string" />
+
+		<option name="overlay_displayed" value="false" type="bool" />
+		<option name="overlay_color" value="000000" type="string" />
+		<option name="overlay_alpha" value="0.50000762951094835" type="float" />
+
+		<option name="area_width" value="400" type="int" />
+		<option name="area_height" value="500" type="int" />
+		<option name="area_width_unit" value="pixel" type="string" />
+		<option name="area_height_unit" value="pixel" type="string" />
+		<option name="animation" value="true" type="bool" />
+		<option name="animation_duration" value="500" type="int" />
+		<option name="refresh_content" value="true" type="bool" />
+		<option name="close_callback" value="invokeKrFunction('closeKolorAreaCallback_description')" type="string" />
+		<option name="close_on_click" value="true" type="bool" />
+		<option name="close_onclick_callback" value="invokeKrFunction('closeKolorAreaCallbackClick_description')" type="string" />
+		<option name="open_callback" value="invokeKrFunction('openKolorAreaCallback_description')" type="string" />
+		<option name="zorder" value="2" type="int" />
+		<option name="use_i18n" value="true" type="bool" />
+	</settings>
+</ptplugin>
+
+<action name="kolorAreaJsReady_description">
+	set(ptplugin[description].jsready, true);
+
+</action>
+
+<action name="updateTitle_description">
+	js(invokePluginFunction(description, changeTitle, get(scene[get(xml.scene)].titleid)));
+</action>
+
+<action name="openKolorArea_description">
+	ifnot(ptplugin[description].isOpen,
+		set(ptplugin[description].isOpen, true);
+		
+		js(showKolorArea(description, get(ptplugin[description].descID)));
+		events.dispatch(onremovedisplayedobject);
+	);
+</action>
+
+<action name="closeKolorArea_description">
+	if(ptplugin[description].isOpen,
+		js(invokePluginFunction(description, closeKolorArea));
+	);
+</action>
+
+<action name="toggleKolorArea_description">
+	if(ptplugin[description].isOpen,
+		closeKolorArea_description();
+	,
+		openKolorArea_description();
+	);
+</action>
+
+<action name="closeKolorAreaCallback_description">
+	set(ptplugin[description].isOpen, false);
+	if(tour_displayinfo,hideTourInfo();
+
+	);
+</action>
+
+<action name="closeKolorAreaCallbackClick_description">
+
+
+	if(tour_displayinfo,hideTourInfo();
+
+	);
+</action>
+
+<action name="openKolorAreaCallback_description">
+	updateTitle_description();
+</action>
+
+<action name="showKolorArea_description">
+	ifnot(ptplugin[description].startMethod == "",
+		delayedcall(0,get(ptplugin[description].startMethod));
+	,
+		set(ptplugin[description].isOpen, true);
+		
+		js(invokePluginFunction(description, showKolorArea, %1));
+		events.dispatch(onremovedisplayedobject);
+	);
+</action>
+	
+<action name="hideKolorArea_description">
+	
+	set(ptplugin[description].isOpen, false);
+	js(invokePluginFunction(description, hideKolorArea, %1));
+</action>
+
+<action name="openDescription_description">
+	openKolorArea_description();
+</action>
+
+<action name="openSpotDescription_description">
+	set(ptplugin[description].descID, %1);
+	openKolorArea_description();
+</action>
+
+<action name="closeDescription_description">
+	set(ptplugin[description].currentGroup, false);
+	if(%1,
+		set(restore_description, true);
+	,
+		set(restore_description, false);
+	);
+	closeKolorArea_description();
+</action> 
+
+<action name="showDescription_description">
+	if(ptplugin[description].canStart,
+		set(ptplugin[description].descID, get(scene[get(xml.scene)].descriptionid));
+		if(ptplugin[description].descID == null,
+			set(ptplugin[description].descID, "");
+		);
+		if(ptplugin[description].descID != "",
+			openDescription_description();
+		,
+			hideKolorArea_description(false);
+		);
+		set(ptplugin[description].startMethod, "");
+	);
+</action>
+
+
+<action name="refreshPanoDescription_description">
+	set(ptplugin[description].descID, get(scene[get(xml.scene)].descriptionid));
+	if(ptplugin[description].descID == null,
+		set(ptplugin[description].descID, "");
+	);
+	if(ptplugin[description].descID != "",
+		if(ptplugin[description].isOpen,
+			js(invokePluginFunction(description, updateKolorArea, get(ptplugin[description].descID)));
+			updateTitle_description();
+		,
+			if(restore_description,
+				showDescription_description();
+			);
+		);
+	,
+		if(tour_displayinfo,
+			delayedcall(0.1,showTourInfo();
+);
+		);
+		closeDescription_description(get(ptplugin[description].isOpen));
+	);
+</action>
+
+<action name="onNewPano_description">
+	if(ptplugin[description].newPano,
+		if(ptplugin[description].startMethod == "",
+			if(ptplugin[description].isOpen,
+				refreshPanoDescription_description();
+			,
+				if(tour_displaycontrols,
+				if(tour_displayinfo,
+				showDescription_description();
+				,
+				refreshPanoDescription_description();
+				);
+				);
+			);
+		);
+	);
+	set(ptplugin[description].newPano, true);
+</action>
+
+<action name="changeLanguage_description">
+	if(ptplugin[description].jsready,
+		stopdelayedcall(delay_description);
+		js(invokePluginFunction(description, changeLanguage, true));
+	,
+		delayedcall(delay_description, 0.1, changeLanguage_description(););
+	);
+</action>
+
+<events name="kolorAreaEvents_description" 
+	keep="true"
+	onTourStart="set(ptplugin[description].canStart, true);if(ptplugin[description].openatstart,if(tour_displaycontrols,showTourInfo();
+););"
+	onshowtourinfo="if(tour_displayinfo,showDescription_description(););"
+	onhidetourinfo="if(ptplugin[description].isOpen,closeDescription_description(false););"
+	onnewpano="onNewPano_description();"
+	hidetourcontrols="if(ptplugin[description].isOpen,hideKolorArea_description(false););"
+	showtourcontrols="if(tour_displayinfo,if(ptplugin[description].isOpen,showKolorArea_description(false);,showDescription_description();););"
+	changetourlanguage="changeLanguage_description();"
+/>
+
+
+ 
+<include url="%FIRSTXML%/graphics/skinplus/core.xml" />
+<action name="check_normal_hs">
+  if(%1,
+  for(set(hs_m,0), hs_m LT hotspot.count, inc(hs_m), if(hotspot[get(hs_m)].style == "IconHotspot_mark_1" || hotspot[get(hs_m)].style == "IconHotspot_mark_2" || hotspot[get(hs_m)].style == "IconHotspot_mark_3" || hotspot[get(hs_m)].style == "IconHotspot_mark_4" || hotspot[get(hs_m)].style == "IconHotspot_mark_5" || hotspot[get(hs_m)].style == "IconHotspot_mark_6" || hotspot[get(hs_m)].style == "IconHotspot_mark_7" || hotspot[get(hs_m)].style == "IconHotspot_mark_8" || hotspot[get(hs_m)].style == "IconHotspot_mark_8" || hotspot[get(hs_m)].style == "IconHotspot_mark_10", set(scenet_alt, get(hotspot[get(hs_m)].linktarget)); set(visit_alt, get(scene[get(scenet_alt)].seen));
+      create_check_alt(get(hs_m));
+      if(visit_alt,
+      txtadd(nos_alt, checkicon_alt,get(hs_m) );
+      set(layer[get(nos_alt)].visible,true);
+      set(layer[get(nos_alt)].alpha,1);
+        ););););
+  </action>
+
+
+<events name="langstart"
+keep="true"
+onxmlcomplete="if(lang !== null,
+set(tour_language, get(lang));
+events.dispatch(changetourlanguage);,
+set(tour_language, get(tour_language)););"
+/>
+
+
+<action name="create_check">
+addlayer(checkicon%1);
+set(layer[checkicon%1].width,45);
+set(layer[checkicon%1].height,prop);
+set(layer[checkicon%1].type,image);
+set(layer[checkicon%1].url, '%FIRSTXML%/graphics/skinplus/');
+set(layer[checkicon%1].enable,true);
+set(layer[checkicon%1].align,bottomright);
+set(layer[checkicon%1].edge,bottomright);
+set(layer[checkicon%1].visible,false);
+set(layer[checkicon%1].children,true);
+set(layer[checkicon%1].scalechildren,true);
+set(layer[checkicon%1].alpha,0);
+set(layer[checkicon%1].capture, false);
+set(layer[checkicon%1].x, -10);
+set(layer[checkicon%1].y, -10);
+set(layer[checkicon%1].parent, hotspot[%1]);
+</action>
+
+<action name="create_check_alt">
+addlayer(checkicon_alt%1);
+set(layer[checkicon_alt%1].width,45);
+set(layer[checkicon_alt%1].height,prop);
+set(layer[checkicon_alt%1].type,image);
+set(layer[checkicon_alt%1].url, '%FIRSTXML%/graphics/skinplus/');
+set(layer[checkicon_alt%1].enable,true);
+set(layer[checkicon_alt%1].align,bottomright);
+set(layer[checkicon_alt%1].edge,bottomright);
+set(layer[checkicon_alt%1].visible,false);
+set(layer[checkicon_alt%1].children,true);
+set(layer[checkicon_alt%1].scalechildren,true);
+set(layer[checkicon_alt%1].alpha,0);
+set(layer[checkicon_alt%1].capture, false);
+set(layer[checkicon_alt%1].x, -10);
+set(layer[checkicon_alt%1].y, -10);
+set(layer[checkicon_alt%1].parent, hotspot[%1]);
+</action>
+
+
+
+<events name="SkinPlushotspot_mark" keep="true"
+onxmlcomplete="check_normal_hs();"
+onnewpano="check_normal_hs();"
+/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<krpano SkinPlusbarbuilt="false" SkinPlusbackgroundwidthwhenclosed="0" SkinPlusbackgroundwidthwhenopened="0" SkinPlusIsOpened="false" />
+
+<k_setting
+    speed="0.5"
+    button_offset=""
+    margin_flag_ico="100"
+    flag_lang_1="kr"
+    flag_lang_2="en"
+    flag_lang_3=""
+    flag_lang_4=""
+    flag_lang_5=""
+    flag_lang_6=""
+    flag_lang_7=""
+    flag_lang_8=""
+    flag_lang_9=""
+    flag_lang_10=""
+    context_menu_bool="false"
+    plugname="SkinPlus"
+    pluginDirectory="graphics/skinplus"
+    contextlogofile=""
+    context_url=""
+    code=""
+    range_value="50"
+    alpharange="false"
+    full="true"
+    scalemobile="0.6"
+    scaletablet="0.8"
+/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<events name="SkinPlusevents"
+    onxmlcomplete=""   
+    keep="true"
+/>
+
+<events name="SkinPlusLanguage_event"
+    onTourStart="SkinPluslangg();"
+    changetourlanguage="SkinPluslangg();"
+    keep="true"
+/>
+
+
+
+
+
+
+<action name="SkinPluslangg">
+set(language_var, get(tour_language));
+
+
+if(device.touch,
+set(layer[SkinPlushelpScreenFg].url, '%FIRSTXML%/graphics/skinplus/help_screen_fg_mb.png');
+,
+set(layer[SkinPlushelpScreenFg].url, '%FIRSTXML%/graphics/skinplus/help_screen_fg.png');
+);
+
+</action>
+
+
+
+<action name="buildMenuBar">
+    ifnot (SkinPlusbarbuilt, SkinPlusbuildMenu(); set(SkinPlusbarbuilt, true););
+</action>
+
+
+  <style name="SkinPlus_btn_style"
+         keep="true"
+
+
+         edge="right"
+         align="right"
+
+         x="0" y="0"
+
+
+         width="40" height="40"
+
+         crop="0|0|60|60"
+         onovercrop="0|60|60|60"
+         ondowncrop="0|120|60|60"
+
+
+
+
+         onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle, bottom);"
+         onout="hideTooltip();"
+
+
+
+
+         />
+
+ <style name="SkinPlus_btn_style_icons"
+         keep="true"
+
+
+         edge="right"
+         align="right"
+
+         x="0" y="0"
+
+
+         width="40" height="40"
+
+
+
+
+
+
+         onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle, bottom);"
+         onout="tween(alpha,1,0.5);hideTooltip();"
+
+
+
+
+         />
+
+
+ <style name="SkinPlus_btnf_style"
+        keep="true"
+        edge="right"
+        align="right"
+        x="0" y="0"
+        width="40" height="prop"
+        scale="0.8"
+        onover=""
+
+        onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle, bottom);"
+        onout="hideTooltip();"
+        />
+
+  <style name="SkinPlus_style"
+             keep="true"
+             onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle);"
+             onout="hideTooltip();"
+/>
+
+<style name="SkinPlus_style_lang"
+     keep="true"
+     onover="set(alpha, 0.8);  "
+     onout="set(alpha, 1); hideTooltip();"
+     onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle);"
+/>
+
+<style name="SkinPlus_btnf_style_float"
+       keep="true"
+
+       scale="0.8"
+       onover=""
+
+
+
+       onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle, bottom);"
+       onout="hideTooltip();"
+
+
+
+
+             width="100"
+             height="prop"
+
+       />
+ <style name="SkinPlus_style"
+            keep="true"
+            onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle);"
+            onout="hideTooltip();"
+/>
+
+
+
+  <style name="SkinPlus_btn_style_off"
+         keep="true"
+         edge="right"
+         align="right"
+
+         x="0" y="0"
+         width="40" height="40"
+         onhover="showTooltip('plugin', SkinPlusmenuTooltipStyle, bottom);"
+         onout="hideTooltip();"
+         />
+
+<layer name="SkinPlus_footer"
+         keep="true"
+		 type="container"
+         bgcolor="0x1e2550"
+         bgalpha="0.80000000000000004"
+         x="0"
+         y="0"
+         enabled="false"
+		 visible="false"
+		 align="bottom"
+		 edge="bottom"
+		 zorder="2"
+         height="50"
+         width="100%"
+          />
+
+
+
+
+
+
+
+
+<events name="SkinPlus_footerevents"
+    onTourStart=""
+    keep="true" />
+
+
+<action name="SkinPlushidefooter">
+    tween(layer[SkinPlus_footer].y, -50, 0.2);
+    delayedcall(0.4 ,set(layer[SkinPlus_footer].visible, false));
+</action>
+
+<action name="setTourLanguage">
+  if (%1 == null,
+    trace("CHANGE TOUR LANGUAGE : NO LANGUAGE SET");
+   ,
+    set(tour_language, %1);
+
+    events.dispatch(changetourlanguage);
+  );
+</action>
+
+
+
+
+<action name="SkinPlusshowfooter">
+
+if (SkinPlusIsOpened,
+
+	set(layer[SkinPlus_footer].visible, true);
+
+
+    tween(layer[SkinPlus_footer].y, 0, 0.1);
+    ,
+    SkinPlushidefooter();
+
+    );
+</action>
+
+<layer name="SkinPlus_menu_bg"
+          keep="true"
+          type="container"
+          zorder="3"
+          width="40"
+          height="40"
+          align="bottom"
+          x="0" y="3"
+          maskchildren="false"
+          rotate="0"
+          visible="false"
+          scalechildren="true"
+
+
+
+
+    >
+
+
+
+
+
+
+
+<layer name="SkinPlusbtn_in"
+
+
+
+url="%FIRSTXML%/graphics/skinplus/btn_zoom_in.png"
+style="SkinPlus_btn_style"
+
+
+
+
+            ondown="viewControlZoomIn(false); "
+            onup="viewControlZoomStop();
+"
+
+            visible="false"
+            devices="desktop|tablet|mobile"
+            tooltip="SkinPluszoomInTip"
+            />
+<layer name="SkinPlusbtn_out"
+
+
+
+            url="%FIRSTXML%/graphics/skinplus/btn_zoom_out.png"
+            style="SkinPlus_btn_style"
+
+
+
+            ondown="viewControlZoomOut(false);
+  "
+            onup="viewControlZoomStop();
+"
+
+
+            visible="false"
+            devices="desktop|tablet|mobile"
+            tooltip="SkinPluszoomOutTip"
+            />
+<layer name="SkinPlusbtn_share"
+
+
+
+url="%FIRSTXML%/graphics/skinplus/btn_share.png"
+style="SkinPlus_btn_style"
+
+
+
+
+            onclick="shareTour();
+"
+
+            visible="false"
+            devices="desktop|tablet|mobile"
+            tooltip="SkinPlusshareTip"
+            />
+
+
+
+
+
+
+<layer name="SkinPlusbtn_shotp"
+
+
+
+url="%FIRSTXML%/graphics/skinplus/btn_shotp.png"
+style="SkinPlus_btn_style"
+
+
+            onclick="makescreenshot_o();"
+
+            visible="false"
+            devices="desktop|tablet|mobile"
+            tooltip="SkinPlusshotpTip"
+            />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<layer name="SkinPlusbtn_hidecontrols"
+
+
+
+            url="%FIRSTXML%/graphics/skinplus/btn_hide_controls.png"
+            style="SkinPlus_btn_style"
+
+
+
+
+           onclick="stopdelayedcall(autoclose);SkinPlushideMenuControls();hideTourControls();
+"
+           visible="false"
+           tooltip="SkinPlushideControlsTip"
+           />
+<layer name="SkinPlusbtn_showcontrols"
+
+
+
+            url="%FIRSTXML%/graphics/skinplus/btn_show_controls.png"
+            style="SkinPlus_btn_style"
+
+
+
+
+           onclick="SkinPlusshowMenuControls();showTourControls();
+ "
+           tooltip="SkinPlusdisplayControlsTip"
+           visible="false"
+           />
+ </layer>
+
+
+<action name="SkinPlusbtn_home_action">
+      hideTooltip();lookto(get(panoview.h),get(panoview.v),get(panoview.fov),smooth(100,20,50));
+</action>
+
+
+
+
+
+<action name="SkinPlushideMenuControls">
+
+set(SkinPlusIsOpened, false);
+
+set(layer[SkinPlusbtn_hidecontrols].visible, false);
+set(layer[SkinPlusbtn_showcontrols].visible, true);
+set(layer[SkinPlusbtn_share].visible, false); 
+set(layer[SkinPlusbtn_shotp].visible, false); 
+set(layer[SkinPlusbtn_lang_off].visible, false);
+set(layer[SkinPlusbtn_lang].visible, false);
+set(layer[SkinPlusbtn_home].visible, false);
+set(layer[SkinPlusbtn_in].visible, false);
+set(layer[SkinPlusbtn_out].visible, false); 
+set(layer[SkinPlus_menu_bg].width, get(SkinPlusbackgroundwidthwhenclosed));
+set(layer[SkinPlus_menu_bg].visible, true);
+SkinPlushidefooter();
+</action>
+
+<action name="SkinPlusshowMenuControls">
+set(SkinPlusIsOpened, true);
+SkinPlusshowfooter();
+set(layer[SkinPlusbtn_hidecontrols].visible, true);
+set(layer[SkinPlusbtn_showcontrols].visible, false);
+set(layer[SkinPlus_menu_bg].visible, true);
+
+set(layer[SkinPlusbtn_share].visible, true);
+set(layer[SkinPlusbtn_search].visible, true);
+set(layer[SkinPlusbtn_shotp].visible, true);
+set(layer[SkinPlusbtn_menu].visible, true);
+set(layer[SkinPlusbtn_gallery].visible, true);
+set(layer[SkinPlusbtn_pdf].visible, true);
+set(layer[SkinPlusbtn_web].visible, true);
+set(layer[SkinPlusbtn_lang_off].visible, false);
+set(layer[SkinPlusbtn_lang].visible, true);
+
+set(layer[SkinPlusbtn_in].visible, true);
+set(layer[SkinPlusbtn_out].visible, true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set(layer[SkinPlus_menu_bg].width, get(SkinPlusbackgroundwidthwhenopened));
+
+
+</action>
+
+
+
+
+
+<events name="SkinPlusControlplan_pano"
+keep="true"
+onnewpano="set(little, 0);if (SkinPlusIsOpened,set(layer[SkinPlusbtn_little].visible, true);set(layer[SkinPlusbtn_little_off].visible, false););SkinPlusControlplan();"
+
+/>
+
+<action name="SkinPlusControlplan">
+if (scene[get(xml.scene)].planar,
+set(layer[SkinPlusbtn_little].alpha, 0.4);
+set(layer[SkinPlusbtn_little].onclick, "");
+set(layer[SkinPlusbtn_little].tooltip, "SkinPluslittle_disable_tip");
+,
+set(layer[SkinPlusbtn_little].alpha, 1.0);
+set(layer[SkinPlusbtn_little].tooltip, "SkinPluslittle_tip");
+set(layer[SkinPlusbtn_little].onclick, "SkinPlussetViewLittlePlanet();hideHotspots();
+pauseautorotation();
+");
+);
+</action>
+
+
+<action name="SkinPlusHideLittle_btn">
+
+	set(layer[SkinPlusbtn_little].visible, false);
+    set(layer[SkinPlusbtn_little_off].visible, false);
+
+</action>
+
+<action name="SkinPlusShowlittle_btn">
+if ( little != 1,
+	set(layer[SkinPlusbtn_little].visible, true);
+    set(layer[SkinPlusbtn_little_off].visible, false);
+
+    ,
+
+    set(layer[SkinPlusbtn_little].visible, false);
+    set(layer[SkinPlusbtn_little_off].visible, true);
+    );
+</action>
+
+<action name="SkinPlusupdateLittleButtons">
+
+    if (SkinPlusIsOpened,
+
+        SkinPlusShowlittle_btn();
+    ,
+        SkinPlusHideLittle_btn();
+    );
+</action>
+
+
+<action name="SkinPlussetViewLittlePlanet">
+
+
+	set(sceneisfull360, false);
+	if(scene[get(xml.scene)].full360,
+		sub(viewhfov, panoview.hmax, panoview.hmin);
+		if (viewhfov == 360,
+			sub(viewvfov, panoview.vmax, panoview.vmin);
+			if (viewvfov == 180,
+				set(sceneisfull360, true);
+			);
+		);
+	);
+	if (sceneisfull360 AND (device.webgl OR device.flash),
+		if(normalViewActivated,stopSetViewTweens(););
+		if(current_view_isflat === true,
+			setViewNonFlat(VFOV);
+		);
+		SkinPlussetViewLittlePlanetComplete();
+
+        
+	);
+</action>
+
+<action name="SkinPlussetViewLittlePlanetComplete">
+set(little, 1);
+SkinPlusupdateLittleButtons();
+	set(backtonormalfirst,false);
+	if(view.pannini GE 1.0, set(backtonormalfirst,true));
+	if(view.stereographic == false, set(backtonormalfirst,true));
+	if(backtonormalfirst, hideTooltip();tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeOutQuad, WAIT); );
+	set(view.stereographic, true);
+	set(view.fisheyefovlink, 1.5);
+	tween(view.architectural, 0.0, 0.25);
+	tween(view.vlookat, 90, distance(179, 1.50));
+	tween(view.pannini, 0.0, distance(1.0, 0.75), easeOutQuad, if(panniniViewActivated,restoreViewFromPannini();););
+	if(panoview.fovmax LE 150, set(view.fovmax, 150); , set(view.fovmax, get(panoview.fovmax)); );
+	tween(view.fisheye, 1.0, distance(1.0, 0.75));
+	tween(view.fov, 150, distance(179, 0.75));
+</action>
+
+<action name="SkinPlussetViewNormal">
+
+	if(current_view_isflat === true,
+		setViewNonFlat(VFOV);
+	);
+	SkinPlussetViewNormalComplete();
+</action>
+
+<action name="SkinPlussetViewNormalComplete">
+set(little, 0);
+SkinPlusupdateLittleButtons();
+	set(view.fisheyefovlink, 0.5);
+	set(view.fovmax, get(panoview.fovmax));
+	tween(view.architectural, 0.0, distance(1.0, 0.45));
+	tween(view.pannini, 0.0, distance(1.0, 0.45), easeOutQuad, if(panniniViewActivated,restoreViewFromPannini();););
+	tween(view.vlookat, get(panoview.v), distance(90, 0.45));
+	tween(view.fov, get(panoview.fov), distance(50, 0.45));
+	tween(view.fisheye, 0.0, distance(1.0, 0.45),
+	set(view.stereographic,false);
+	);
+
+</action>
+
+
+
+
+<action name="SkinPlusshow_language_box">
+set(layer[SkinPlusbtn_lang].visible, true);
+set(layer[SkinPlusbtn_lang_off].visible, false);
+</action>
+
+<action name="SkinPlushide_language_box">
+set(layer[SkinPlusbtn_lang_off].visible, true);
+set(layer[SkinPlusbtn_lang].visible, false);
+</action>
+
+
+
+
+
+
+
+
+
+
+<layer name="SkinPlusmenuTooltipStyle"
+	keep="true"
+	enabled="false"
+	capture="false"
+	url="%FIRSTXML%/graphics/textfield.swf"
+	align="center"
+	roundedge="5"
+	background="true"
+	backgroundcolor="0x020103"
+	backgroundalpha="0.90000762951094837"
+	border="false"
+	css="color:#ffffff;font-family:Helvetica;font-size:13px;text-align:left;"
+	height="20"
+	autoheight="true"
+	autowidth="auto"
+	padding="10"
+	selectable="false"
+	zorder="0"
+	visible="false"
+	html=""
+	edge="bottom"
+	xoffset="-10"
+	yoffset="-10"
+/>  
+
+
+
+
+
+
+
+
+<layer name="SkinPlusspotTooltipStyle"
+	keep="true"
+	enabled="false"
+	capture="false"
+	url="%FIRSTXML%/graphics/textfield.swf"
+	align="center"
+	roundedge="5"
+     
+	background="true"
+	backgroundcolor="0xa63fd0"
+	backgroundalpha="1"  
+	border="false"  
+	css="color:#ffffff;font-family:Helvetica;font-size:13px;text-align:left;"
+	height="20"
+	autoheight="true"
+	autowidth="auto"
+	padding="10"
+	selectable="false"
+	zorder="0"
+	visible="false"
+	html=""
+
+    edge="top"
+	xoffset="0"
+	yoffset="10"
+
+
+/>
+ 
+
+
+
+
+<action name="SkinPlusbuildMenu">
+    
+    set(SkinPlusbutton_pos, 0);
+    set(nnn,0);
+
+
+	set(SkinPlusbackgroundwidthwhenclosed, 40);
+
+inc(nnn, 1);
+
+
+    set(layer[SkinPlusbtn_hidecontrols].x, get(SkinPlusbutton_pos));
+
+    set(layer[SkinPlusbtn_showcontrols].x, -get(SkinPlusbutton_pos));
+
+
+    inc(SkinPlusbutton_pos, 45);
+
+
+
+
+
+
+
+
+
+if (device.desktop || device.tablet || device.mobile,
+inc(nnn, 1);
+      set(layer[SkinPlusbtn_share].x, get(SkinPlusbutton_pos));
+      inc(SkinPlusbutton_pos, 45); ); 
+
+
+
+
+
+
+if (device.desktop || device.tablet || device.mobile,
+inc(nnn, 1);
+      set(layer[SkinPlusbtn_shotp].x, get(SkinPlusbutton_pos));
+      inc(SkinPlusbutton_pos, 45); ); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (device.desktop || device.tablet || device.mobile,
+inc(nnn, 2);
+        set(layer[SkinPlusbtn_out].x, get(SkinPlusbutton_pos));
+        inc(SkinPlusbutton_pos, 45);
+        set(layer[SkinPlusbtn_in].x, get(SkinPlusbutton_pos));
+        inc(SkinPlusbutton_pos, 45);
+);
+
+if (device.desktop || device.tablet || device.mobile,
+
+      dec(SkinPlusbutton_pos, 5);
+      set(SkinPlusbackgroundwidthwhenopened, get(SkinPlusbutton_pos));
+      set(layer[SkinPlus_menu_bg].width, get(SkinPlusbackgroundwidthwhenopened));
+	 
+);
+</action>
+
+
+
+
+<events name="SkinPlusStartTourEvents" onTourStart="SkinPlusCallOnStartTour();" keep="true" />
+<action name="SkinPlusCallOnStartTour">
+
+		
+		SkinPlusshowMenuControls();
+
+</action>
+
+
+<action name="SkinPlusbluron" type="Javascript" >
+myname = 'blur(10px)'
+$("canvas")
+  .css('filter',myname),
+  ('-webkitFilter',myname),
+  ('-mozFilter',myname),
+  ('-oFilter',myname),
+  ('-msFilter',myname);
+</action>
+
+<action name="SkinPlusbluroff" type="Javascript" >
+$( "canvas" ).css({"-webkit-filter": "blur(0px)","filter": "blur(0px)" });
+</action>
+<style name="button" type="text"
+	       css="text-align:center;"
+	       padding="4 8"
+	       mergedalpha="false"
+	       bgborder="4 0xFFFFFF 1"
+	       bgroundedge="5"
+	       bgshadow="0 1 4 0x000000 1.0"
+	       onover="set(bgcolor, 0xC7E4FC);"
+	       onout="calc(bgcolor, pressed ? 0x90CAF9 : 0xFFFFFF);"
+	       ondown="set(bgcolor, 0x90CAF9);"
+	       onup="calc(bgcolor, hovering ? 0xC7E4FC : 0xFFFFFF);"
+	       />
+
+
+<events name = "SkinPlustrace_title"
+keep="true"
+onnewpano="SkinPlusloggo();"
+onclick="SkinPlusbluroff();set(enabled,false);tween(alpha,0,0,default,removelayer(screenshot,true));"
+/>
+
+<action name = "SkinPlusloggo">
+getmessage(namepanok, get(scene[get(xml.scene)].titleid));
+escape(namepanok.html);
+</action>
+
+<action name="SkinPlusmakescreenshot_init" type="Javascript" autorun="onstart"> <![CDATA[
+
+        krpano.loadFile("%FIRSTXML%/graphics/skinplus/filesaver.js", function(file)
+        {eval(file.data.replace("export ",""));
+        krpano.screenshotSaveAs = saveAs;});
+        krpano.makescreenshot_count = 1;
+        var imageObj = new Image();
+        krpano.makescreenshot_o = function()
+        {krpano.call("removelayer(screenshot,true);bluroff();");
+        krpano.makeScreenshotCache = {};
+        var sizeinfo = {w:0, h:0};
+        var screenshotcanvas = krpano.webGL.makeScreenshot(0, 0, false, "canvas", 0, null, sizeinfo, krpano.makeScreenshotCache);
+        var ctx = screenshotcanvas.getContext("2d");
+
+
+        ctx.font = "100px Arial";
+        ctx.fillStyle = "#ffffff";
+        var namepanoko = String( krpano.get("namepanok"));
+        ctx.textAlign = "end";
+        ctx.fillText("KAIST EE", screenshotcanvas.width-30,screenshotcanvas.height-30);
+        //ctx.fillText(namepanoko, screenshotcanvas.width-30, screenshotcanvas.height-66);
+        if (screenshotcanvas){
+        krpano.call("SkinPlusbluron();");
+        var container = krpano.addlayer("screenshot");
+        container.type = "container";
+        container.align="center";
+        container.registercontentsize(sizeinfo.w, sizeinfo.h);
+        container.width  = sizeinfo.w > sizeinfo.h ? "45%" : "prop";
+        container.height = sizeinfo.w > sizeinfo.h ? "prop" : "45%";
+        container.bgcolor = 0x000000;
+        container.bgalpha = 1.0;
+        container.bgshadow = "0 5 40 0x000000 1.0";
+        container.bgroundedge = 5;
+        container.bgcapture = true;
+        container.zorder = 99;
+        container.onloaded = "tween(layer[screenshotsaveasbutton].alpha,1,0.2);tween(layer[screenshotclosebutton].alpha,1,0.2)";
+        var image = krpano.addlayer("screenshotimage");
+        image.url = screenshotcanvas.toDataURL();
+        image.parent = "screenshot";
+        image.align = "center";
+        image.width = -5;
+        image.height = -5;
+        image.zorder = 1;
+        image.enabled = false;
+        }
+
+if (screenshotcanvas.toBlob)
+	{
+		var saveasbutton = krpano.addlayer("screenshotsaveasbutton");
+		saveasbutton.loadstyle("button");
+		saveasbutton.parent = "screenshot";
+		saveasbutton.align = "bottom";
+		saveasbutton.y = 20;
+		saveasbutton.zorder = 2;
+		saveasbutton.autoalpha = true;
+		saveasbutton.alpha = 0;
+		saveasbutton.html = "Save";
+		saveasbutton.onclick = function()
+		{
+			// save as JPEG with 92% quality
+			screenshotcanvas.toBlob(function(blob){ krpano.screenshotSaveAs(blob,"KAIST SSSLAB" + (krpano.makescreenshot_count++) + ".jpg"); }, "image/jpg", 0.8);
+            krpano.call("removelayer(screenshot,true);SkinPlusbluroff();set(enabled,false);");
+		};
+
+        var closebutton = krpano.addlayer("screenshotclosebutton");
+		closebutton.loadstyle("button");
+		closebutton.parent = "screenshot";
+		closebutton.align = "topright";
+		closebutton.y = 20;
+		closebutton.x = 20;
+		closebutton.zorder = 2;
+		closebutton.autoalpha = true;
+		closebutton.alpha = 0;
+		closebutton.html = "x";
+		closebutton.onclick="SkinPlusbluroff();set(enabled,false);tween(alpha,0,0,default,removelayer(screenshot,true));"
+	}
+}
+
+]]>
+</action>
+
+
+       <include url="%FIRSTXML%/graphics/coolhotspots.xml"/>   <style 	cooltype="bubble" 	name="spot_inside" 	type="container"  	width="50"  	height="50"  	bgalpha="0" 	bgcapture="true"   	accuracy="1" 	bubble_width="50"  	bubble_width_onover="150" 	alwayson="true" 	ttalign="top" 	ttedge="bottom" 	 	onover=" 	hidebbhs(); 	set(zorder,20); 	tween(width|height,get(bubble_width_onover)); 	tween(layer[get(mybubble)].width,get(bubble_width_onover)); 	tween(layer[get(mybubble)].height,get(bubble_width_onover)); 	tween(layer[get(mybubble_shadow)].width,get(bubble_width_onover)); 	tween(layer[get(mybubble_shadow)].height,get(bubble_width_onover)); 	tween(layer[get(mypreview)].alpha,1); 	set(layer[get(mypreview)].enabled,true); 	"     	onout=" 	set(zorder,2);  	tween(width|height,get(bubble_width)); 	tween(layer[get(mybubble)].width,get(bubble_width)); 	tween(layer[get(mybubble)].height,get(bubble_width)); 	tween(layer[get(mybubble_shadow)].width,get(bubble_width)); 	tween(layer[get(mybubble_shadow)].height,get(bubble_width)); 	ifnot(alwayson,tween(layer[get(mypreview)].alpha,0));  	set(layer[get(mypreview)].enabled,false);  	" 	 	onloaded=" 	txtadd(hotspot[get(name)].permanentTooltipForSpot, get(tooltip), '_permanent'); 	delayedcall(0.1, 	if(layer[get(permanentTooltipForSpot)].html, 		set(layer[get(permanentTooltipForSpot)].ox,0); 		set(layer[get(permanentTooltipForSpot)].oy,-10); 		); 	); 	 	txtadd(mybubble,'bubble',get(name)); 	addlayer(get(mybubble)); 	copy(hotspot[get(name)].mybubble,mybubble); 	layer[get(mybubble)].loadstyle(cool_hotspotbubblelayer); 	txtadd(mybubble_shadow,'bubble_shadow',get(name)); 	addlayer(get(mybubble_shadow)); 	copy(hotspot[get(name)].mybubble_shadow,mybubble_shadow); 	layer[get(mybubble_shadow)].loadstyle(cool_hotspotbubblelayer_shadow); 			 	txtadd(mypreview,'preview_',get(name)); 	addlayer(get(mypreview)); 	copy(hotspot[get(name)].mypreview,mypreview); 	 	 	if(linkedscene, 		set(layer[get(mypreview)].url,get(scene[get(linkedscene)].thumburl)); 	); 	if(linkedgroup, 		set(layer[get(mypreview)].url,get(panoramagroup[get(linkedgroup)].thumburl)); 	); 	if(photourl, 		set(layer[get(mypreview)].url,get(photourl)); 	); 	 	 	layer[get(mypreview)].loadstyle(cool_hotspotbubble_previewlayer); 	 	txtadd(parentlayer,'hotspot[',get(name),']'); 	copy(layer[get(mybubble)].parent,parentlayer); 	copy(layer[get(mybubble_shadow)].parent,parentlayer); 		 	txtadd(parentlayer2,'layer[',get(mybubble),']'); 	copy(layer[get(mypreview)].parent,parentlayer2); 		 	txtadd(clickaction,'callwith(hotspot[',get(name),'],onclick)'); 	copy(layer[get(mypreview)].onclick,clickaction);  	" /> <style  	name="cool_hotspotbubblelayer"  	type="container"  	width="50"  	height="50"  	bgalpha="0"  	bgborder="3 0xffffff 1.00"  	bgroundedge="150"   	bgcapture="true"  	maskchildren="true"  	accuracy="1" 	 	ondown.touch="callwith(get(parent),onover);" 	  	align="center" 	 /> <style  	name="cool_hotspotbubblelayer_shadow"  	type="container"  	width="50"  	height="50"  	bgalpha="0"  	bgborder="0 0xffffff 0"  	bgroundedge="150"   	bgcapture="false"  	accuracy="1"  	align="center" 	 		bgshadow="5 5 10 0 0x000000 0.5 inset" 	 /> <style  	name="cool_hotspotbubble_previewlayer"  	align="center" 	accuracy="1" 	width="prop"  	height="150"  	enabled="false" 	onloaded="if(pixelheight GT pixelwidth,copy(width,height);set(height,prop));" />       <krpano  >
+<include url="%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/sidebar.xml" /> <sidebar name="settings"  groupCount="2"      groupName0="get:data[kr_panogroup101_title].content" groupMessage0="panogroup101_title" totalPanos0="6" group0Contents="pano100|pano102|pano104|pano106|pano107|pano108|" group0MainPano="pano100" isRealGroup_0="true"  SceneName_0_0="pano100"  SceneName_0_1="pano102"  SceneName_0_2="pano104"  SceneName_0_3="pano106"  SceneName_0_4="pano107"  SceneName_0_5="pano108"       groupName1="get:data[kr_panogroup121_title].content" groupMessage1="panogroup121_title" totalPanos1="5" group1Contents="pano120|pano116|pano117|pano112|pano114|" group1MainPano="pano120" isRealGroup_1="true"  SceneName_1_0="pano120"  SceneName_1_1="pano116"  SceneName_1_2="pano117"  SceneName_1_3="pano112"  SceneName_1_4="pano114"    sbColor="2e3879" sbColorAlpha="0.80" sbWidth="245" sbAlign="left" startOpened="true" startOpenedMob="true" sbCloseIfnew="true" sbCloseIfnewMob="true" sbIconPosition="top" sbIconAlpha="80" sbIconAlphaSep="false" sbIconAlphaSepVal="90" sbIconOverState="false" sbIconOpenedState="false" sbIconOpenedOverState="false" sbIconPositionX="-5" sbIconPositionY="100" sbIconPositionOpenUse="false" sbIconPositionOpen="top" sbIconPositionOpenX="0" sbIconPositionOpenY="0" sbIconHideShowDelay="false" sbIconDelay="6" sbOpenActions="0" sbCloseActions="0" sbMenuType="hierarchical"  sbIconUrl="%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/graphics/sb_menu.png"     textFieldUrl="%FIRSTXML%/graphics/textfield.swf"   scrollAltUrl="%FIRSTXML%/graphics/scrollarea.js"  sbcurrent_PanoTxt="alpo_sidebar_fullsbcurrent_PanoTxt" sbcurrent_PanoTxtFont="verdana" sbcurrent_PanoTxtFontSize="14" sbcurrent_PanoTxtColor="e6e6e6" sbcurrent_PanoTxtAlpha="0.90" sbcurrent_PanoTxtAlign="center"  sbcurrent_PanoTxtFontItalic=""   sbcurrent_PanoTxtFontBold="font-weight:bold;"   sbcurrent_PanoTxtFontTD=""  sbcurrent_PanoNameTxtColor="eeeeee" sbcurrent_PanoNameTxtSize="16"  sbcurrent_PanoNameTxtDecorU1="" sbcurrent_PanoNameTxtDecorU2=""   sbcurrent_PanoNameTxtDecorB1="" sbcurrent_PanoNameTxtDecorB2=""   sbcurrent_PanoNameTxtDecorI1="" sbcurrent_PanoNameTxtDecorI2=""  sbOpenCloseUseOpener="true" sbOpenCloseUseButton="true" sbContextMenuItem="false" sbZorder="98" /> <style name="sbBlocks" keep="true" type="container" bgcapture="false" bgalpha="0.0" width="100%" accuracy="1" />  <style name="sbOpenerST" keep="true" align="left" />  <style name="sbIconST" visible="true" /> <style name="scrollareaDescr" keep="true" devices="html5" url="get:sidebar[settings].scrollAltUrl" direction="v" draggable="true" mwheel="true" onhover_autoscrolling="false" overscroll="0.5" friction="0.95" acceleration="0.08" returnacceleration="0.15" momentum="0.06" accuracy= "1" align="top" width="100%" /> <events name="sbBlocksHEv" keep="true" onxmlcomplete="delayedcall(0, sbBlocksHEvAct());" /><action name="sbBlocksHEvAct">    calcBlock1H();    calcBlock2H();      setBlockAutoHeight( 2, 2 );  if(layer[backBtn].visible, calc(layer[scrolLayer].height, layer[calc(layer[scrolLayer].parent)].height - layer[backBtn].height - (layer[scrolLayer].y - layer[backBtn].height) ); , set(layer[scrolLayer].height, 100%); ); set(events[sbBlocksHEv].onresize, sbBlocksHEvAct()); </action>  <style name="sbBlock1ST" parent="sb" align="top" minheight="200" maxheight="200" y="10"  /> <layer name="sbBlock1" style="sbBlocks|sbBlock1ST" /> <action name="calcBlock1H"> calc(layer[sbBlock1].height, 10 * stageheight * 0.01); if(layer[sbBlock1].height LT layer[sbBlock1].minheight AND layer[sbBlock1].minheight != 0, copy(layer[sbBlock1].height, layer[sbBlock1].minheight); ); if(layer[sbBlock1].height GT layer[sbBlock1].maxheight AND layer[sbBlock1].maxheight != 0, copy(layer[sbBlock1].height, layer[sbBlock1].maxheight); ); calc(layer[sbBlock1].realBlockY, 0 + 10); </action>   <style name="sbBlock2ST" parent="sbBlock1" align="bottom" edge="top" minheight="0" maxheight="0" y="-10"  /> <layer name="sbBlock2" style="sbBlocks|sbBlock2ST" /> <action name="calcBlock2H"> calc(layer[sbBlock2].height, 80 * stageheight * 0.01); if(layer[sbBlock2].height LT layer[sbBlock2].minheight AND layer[sbBlock2].minheight != 0, copy(layer[sbBlock2].height, layer[sbBlock2].minheight); ); if(layer[sbBlock2].height GT layer[sbBlock2].maxheight AND layer[sbBlock2].maxheight != 0, copy(layer[sbBlock2].height, layer[sbBlock2].maxheight); ); calc(layer[sbBlock2].realBlockY, layer[sbBlock1].realBlockY + layer[sbBlock1].height + 10); </action>               <style name="sbLogoST" keep="true" url="%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/logo245.png" align="top" alpha="0" width="100%" height="prop" handcursor="true" accuracy="1" parent="sbBlock1" onclick="sbOnClickLogo()" />  <action name="sbOnClickLogo"> getmessage(urltoopen,alpo_sidebar_fullsb_onclick_logo102264openurlwebsiteurl);openurl(get(urltoopen),_blank);
+
+  </action>                       <style name="current_PanoNameUseST" url="" keep="false" />              <include url="%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/menutype/hierarchical.xml" /> <style name="scrolLayerST" keep="true" type="container" align="top" parent="sbBlock2" accuracy="1" width="0" height="100%"/>             <!-- ////////////// Description (PANO) usage block--> <!--Description (PROJECT) usage block-->                       <sidebar name="settings" sbUseMainMenu="true" /> <sidebar name="settings" sbUseLogo="true"  /> <sidebar name="settings" sbUseLogo2="false"  /> <sidebar name="settings" current_PanoNameUse="false" /> <sidebar name="settings" useButtons="false" /> <!-- *********************** --> <events devices="html5" name="alpoSBinitEV" keep="true" onxmlcomplete="alpoSBinit" /> <plugin devices="html5" name="alpoSB" keep="true" url="%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/js/alpo.sidebar.js" /> <action devices="html5" name="alpoSBinit" type="Javascript"><![CDATA[ window.alpoSB = { plugID : 'alpo_sidebar_full', plugDir : 'indexdata/graphics/alpo.sidebar-v1.1.0', flags : {}, font : 'Noto Sans KR', jsonData : '{ "project" : { "data" : { "dataDir" : "indexdata", "bgClr" : "#ffffff", "fgClr" : "#000000", "groupsCount" : 2 }, "groups" : [  { "id" : "panogroup101", "title" : "panogroup101_title", "description" : "panogroup101_description", "url" : "%FIRSTXML%/pano_100/thumbnail.jpg", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/panogroup101.png", "color" : "#a0a0a0", "real" : true, "panoCount" : 6, "mainPano" : "pano100", "panoramas" : [  { "id" : "pano100", "parentID" : "panogroup101", "title" : "pano100_title", "description" : "pano100_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano100.png", "url" : "%FIRSTXML%/pano_100/thumbnail.jpg" },  { "id" : "pano102", "parentID" : "panogroup101", "title" : "pano102_title", "description" : "pano102_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano102.png", "url" : "%FIRSTXML%/pano_102/thumbnail.jpg" },  { "id" : "pano104", "parentID" : "panogroup101", "title" : "pano104_title", "description" : "pano104_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano104.png", "url" : "%FIRSTXML%/pano_104/thumbnail.jpg" },  { "id" : "pano106", "parentID" : "panogroup101", "title" : "pano106_title", "description" : "pano106_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano106.png", "url" : "%FIRSTXML%/pano_106/thumbnail.jpg" },  { "id" : "pano107", "parentID" : "panogroup101", "title" : "pano107_title", "description" : "pano107_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano107.png", "url" : "%FIRSTXML%/pano_107/thumbnail.jpg" },  { "id" : "pano108", "parentID" : "panogroup101", "title" : "pano108_title", "description" : "pano108_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano108.png", "url" : "%FIRSTXML%/pano_108/thumbnail.jpg" }  ] },  { "id" : "panogroup121", "title" : "panogroup121_title", "description" : "panogroup121_description", "url" : "%FIRSTXML%/pano_120/thumbnail.jpg", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/panogroup121.png", "color" : "#787878", "real" : true, "panoCount" : 5, "mainPano" : "pano120", "panoramas" : [  { "id" : "pano120", "parentID" : "panogroup121", "title" : "pano120_title", "description" : "pano120_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano120.png", "url" : "%FIRSTXML%/pano_120/thumbnail.jpg" },  { "id" : "pano116", "parentID" : "panogroup121", "title" : "pano116_title", "description" : "pano116_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano116.png", "url" : "%FIRSTXML%/pano_116/thumbnail.jpg" },  { "id" : "pano117", "parentID" : "panogroup121", "title" : "pano117_title", "description" : "pano117_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano117.png", "url" : "%FIRSTXML%/pano_117/thumbnail.jpg" },  { "id" : "pano112", "parentID" : "panogroup121", "title" : "pano112_title", "description" : "pano112_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano112.png", "url" : "%FIRSTXML%/pano_112/thumbnail.jpg" },  { "id" : "pano114", "parentID" : "panogroup121", "title" : "pano114_title", "description" : "pano114_description", "urlAlt" : "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/assets/--/pano114.png", "url" : "%FIRSTXML%/pano_114/thumbnail.jpg" }  ] }  ] }, "plugin" : { "includes" : { "textfield" : "%FIRSTXML%/graphics/textfield.swf", "scrollarea" : "%FIRSTXML%/graphics/scrollarea.js" }, "settings" : { "sb" : { "width" : 245, "specifyWidth" : false,  "color" : "2e3879", "alpha" : 0.00, "align" : "left", "zorder" : 98, "startOpened" : true, "startOpenedMob" : true, "closeIfnew" : true, "closeIfnewMob" : true, "menuType" : "hierarchical", "openerUse" : true, "sbCloseOnClick" : true, "contextMenuUse" : false }, "btn" : { "use" : true, "position" : "top", "alpha" : 80, "alphaOpenUse" : false, "alphaOpen" : 90, "overStateUse" : false, "openStateUse" : false, "openOverStateUse": false, "posX" : "-5", "posY" : "100", "posOpenUse" : false, "posOpen" : "top", "posXOpen" : "0", "posYOpen" : "0", "showHideDelayUse": false, "showHideDelay" : 6, "sbOpenActions" : 0, "sbCloseActions" : 0, "url" :  "%FIRSTXML%/graphics/alpo.sidebar-v1.1.0/graphics/sb_menu.png" , "urlOver" : "", "urlOpen" : "", "urlOpenOver" : "" }, "currentPano" : { "text" : "alpo_sidebar_fullsbcurrent_PanoTxt", "font" : "verdana", "fontSize" : 14, "color" : "e6e6e6", "alpha" : "0.90", "align" : "center", "italic" : "", "bold" : "font-weight:bold;", "underline" : "", "colorName" : "eeeeee", "fontSizeName" : "16", "italicNameUse" : "false", "boldNameUse" : "false", "underlineNameUse" : "false" }, "menu" : [ { "menuType" : "thumbscont", "thumbsContMargin" : 5, "tcScrollHeight" : 56, "tcScrollVSpace" : 5, "tcScrollXOffset": 0, "tcScrollMenuW" : 243   }, { "menuType" : "hierarchical", "activeMenuHr" : true,  "activeMenuOnstart" : false, "closeSbOnExcluded" : true, "returnOnExcluded" : true, "HLOptions": { "bgborder": "0,0,1,0 0x558fc9 0.60", "bgcolor": "0x4474b7", "bgalpha": 0.60 },  "excludePano" : "", "orderItems" : " ", "groupAsText" : true, "panoAsText" : true, "custAsText" : true, "width" : 240, "height" : 50, "vSpace" : 5, "xOffset" : 5,   "loadMainPano" : true, "loadMainOpen" : true, "bgrColor" : "0x262e65", "bgrAlpha" : 0.80, "txtOffsetL" : 10, "txtOffsetR" : 15, "txtAlign" : "left", "font" : "custom", "fontSize" : 13, "color" : "eeeeee", "italic" : " font-style:normal; ", "bold" : " font-weight:normal; ", "underline" : " text-decoration:none; ", "overStateUse" : false, "overColorUse" : true, "overColor" : "0x000000", "overAlpha" : 0.30, "itemIconUse" : true, "itemIconDflt" : true, "itemIcon" : "", "itemIconOffsetX" : "0", "itemIconOffsetY" : "0", "itemIconScale" : 100, "itemIconAlign" : "right", "itemIconSpecify" : false,  "itemBorderUse" : false, "itemBorder" : "0,0,1,0 0xeeeeee 0.60", "itemBorderT" : 0, "itemBorderR" : 0, "itemBorderB" : 1, "itemBorderL" : 0, "hrBgroundedge" : "0 0 0 0", "thumbPos" : "top", "thumbTxtPadT" : 15, "thumbTxtPadB" : 15, "thumbHeight" : 50, "thumbVStxtMarg" : 5, "thumbAlign" : "left", "thumbHorizOff" : 10,   "backBtn" : { "height" : 32, "width" : 245,   "bottomMarg" : 0, "align" : "lefttop", "bgrUse" : true, "bgrColor" : "0x0b0b0b", "bgrAlpha" : 0.40, "bgrChange" : true, "bgrChangeColor" : "0x181c4e", "bgrChangeAlpha" : 0.50, "txtUse" : true, "txtSrc" : "group", "font" : "custom", "fontSize" : 14, "fontColor" : "eeeeee", "txtAlign" : "left", "txtVcenter" : true, "paddingT" :  0 , "paddingB" :  0 , "paddingR" : 8, "paddingL" : 30, "iconUse" : true, "iconWidth" : 24, "iconHeight" : 24, "iconUrl" : "  %FIRSTXML%/graphics/alpo.sidebar-v1.1.0/graphics/arr_back_left.png  ", "italic" : "  font-style:normal;  ", "bold" : "  font-weight:normal;  ", "underline" : "  text-decoration:none;  " }, "scrollInd" : { "use" : true, "color" : "0x686868", "alpha" : 1.00, "width" : 8, "zorder" : 98, "barUse" : false, "barColor" : "0x353526", "barAlpha" : 0.50 }, "scrollBtns" : { "use" : false, "width" : "20", "height" : "18", "scale" : 100, "bgcolor" : "0x505050", "bgalpha" : 1.00, "align" : "left", "zorder" : 98, "overStateUse" : true, "bgrOverColor" : "0x1a1a1a", "bgrOverAlpha" : 0.90, "iconOverAlpha" : 30, "iconDflt" : true, "iconFileT" : "", "iconFileB" : "", "iconAlpha" : 50 } } ], "customItemsSet" : { "menuOrganize" : "custom", "ignoreRest" : true, "panoAttachedByAct" : false } }, "customSet" : [  { "title" : "alpo_sidebar_fullitemName0", "image" : "", "elemIndex" : 0, "custom" : true, "isChild" : false, "subItemsInd" : "", "subGroupsColor" : "808080", "subPanoIDs" : "", "itemActions" :  "itemClick0();"  },  { "title" : "alpo_sidebar_fullitemName1", "image" : "", "elemIndex" : 1, "custom" : true, "isChild" : false, "subItemsInd" : "", "subGroupsColor" : "808080", "subPanoIDs" : "", "itemActions" :  "itemClick1();"  }  ] } }' }; krpano.set('events[alpoSBinitEV].onxmlcomplete', null); ]]></action>   <action name="itemClick0">  
+          mainloadscene(pano100);
+
+			tween(view.fov,     90, 3.0, easeInOutQuad );
+			tween(view.fisheye, 0.0, 0.0, easeInOutQuad );
+			set(display.flash10,on);
+
+      lookat(get(panoview.h), get(panoview.v), get(panoview.fov));
+    
+
+  </action>    <action name="itemClick1">  
+          mainloadscene(pano120);
+
+			tween(view.fov,     90, 3.0, easeInOutQuad );
+			tween(view.fisheye, 0.0, 0.0, easeInOutQuad );
+			set(display.flash10,on);
+
+      lookat(get(panoview.h), get(panoview.v), get(panoview.fov));
+    
+
+  </action>      </krpano>
+
+	<action name="blendmode_prepareblendmode" autorun="preinit">
+
+		if(device.html5 AND device.webgl,
+
+			set(ptblendmode, 'ZOOMBLEND(1, 2.0, easeInOutSine)');
+
+		,
+			set(ptblendmode, 'BLEND(1.0, easeInCubic)');
+		);
+
+	</action>
+
+
+<!-- DEBUG PLUGIN - PANORAMA LIST -->
+<!-- There are 11 panoramas in the tour -->
+<!-- PANORAMA - ID 
+Laboratory 1;pano100
+Laboratory 2;pano102
+Laboratory 3;pano104
+Laboratory 4;pano106
+Laboratory 5;pano107
+Laboratory 6;pano108
+Professor Office;pano120
+Student Office 1;pano116
+Student Office 2;pano117
+Student Office 3;pano112
+Student Office 4;pano114
+-->
+
+<!-- DEBUG PLUGIN - GROUP LIST -->
+<!-- GROUP - ID 
+
+Laboratory;panogroup101
+Office;panogroup121
+-->
+
+
+          <style 	cooltype="text"  	name="tooltip_hotspot" 	type="container"  	width="1"  	height="40"  	bgcolor="0xffffff" 	bgalpha="1.00"  	bgcapture="true"  	accuracy="1"  	edge="bottom" 	 	onover="hidebbhs();set(zorder,20); 	"  	  	onout="set(zorder,2); 	"  	ondown.touch="onover();" 	onloaded=" 	txtadd(mybubble,'bubble',get(name)); 	addlayer(get(mybubble)); 	copy(hotspot[get(name)].mybubble,mybubble); 	layer[get(mybubble)].loadstyle(cool_hotspot1textlayer); 	ifnot(onclick,set(layer[get(mybubble)].handcursor,false)); 	txtadd(parentlayer,'hotspot[',get(name),']'); 	copy(layer[get(mybubble)].parent,parentlayer); 	if(linkedscene, 	getmessage(montitre, get(scene[get(linkedscene)].titleid)); 	); 	if(linkedgroup, 	getmessage(montitre, get(panoramagroup[get(linkedgroup)].titleid)); 	); 	if(!linkedscene AND !linkedgroup, 	getmessage(montitre, get(tooltip)); 	set(onhover,); 	); 	set(layer[get(mybubble)].html, get(montitre)); 	txtadd(clickaction,'callwith(hotspot[',get(name),'],onclick)'); 	copy(layer[get(mybubble)].onclick,clickaction);  " /> <style  	name="cool_hotspot1textlayer"  	type="text" 	 	 	roundedge="10"   	bg="true" 	bgcolor="0x41486f" 	bgalpha="0.90000762951094837"   	bgborder="false"   	css="color:#ffffff;font-family:Noto Sans CJK KR Medium;font-size:14px;text-align:center;"   	padding="5 10"  	align="top"  	edge="bottom"  	ondown.touch="callwith(get(parent),onover);" /> <style  	name="cool_hotspot1textlayer_onover"  	type="text" 	  	roundedge="5"   	bg="false"   	bgborder="false"     	shadow="1" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1"   	textshadow="1" textshadowrange="5.0" textshadowangle="45" textshadowcolor="0x000000" textshadowalpha="1"  	css="color:#ffffff;font-family:Arial;font-size:20px;text-align:center;"   	padding="5 10"  	align="top"  	edge="bottom"  />   
+
+<ptplugin name="description1" canStart="false" newPano="false" openatstart="false" mode="spot" startMethod="" engine="kolorArea">
+	<settings>
+		<option name="position" value="center" type="string" />
+		<option name="start_position" value="left" type="string" />
+		<option name="margin_x" value="0" type="int" />
+		<option name="margin_y" value="0" type="int" />
+		<option name="background_color" value="000000" type="string" />
+		<option name="background_alpha" value="0.90000762951094837" type="float" />
+		<option name="topleft_radius" value="10" type="int" />
+		<option name="topright_radius" value="10" type="int" />
+		<option name="bottomleft_radius" value="10" type="int" />
+		<option name="bottomright_radius" value="10" type="int" />
+		<option name="area_border_width" value="0" type="int" />
+		<option name="area_border_color" value="f2f2f2" type="string" />
+		<option name="area_border_alpha" value="1" type="float" />
+		<option name="padding" value="10" type="int" />
+		<option name="display_title" value="false" type="bool" />
+		<option name="close_displayed" value="true" type="bool" />
+		<option name="close_text" value="description1display_close_text" type="string" />
+
+		<option name="overlay_displayed" value="true" type="bool" />
+		<option name="overlay_color" value="000000" type="string" />
+		<option name="overlay_alpha" value="0.50000762951094835" type="float" />
+
+		<option name="area_width" value="200" type="int" />
+		<option name="area_height" value="200" type="int" />
+		<option name="area_width_unit" value="pixel" type="string" />
+		<option name="area_height_unit" value="pixel" type="string" />
+		<option name="animation" value="false" type="bool" />
+		<option name="animation_duration" value="500" type="int" />
+		<option name="refresh_content" value="true" type="bool" />
+		<option name="close_callback" value="invokeKrFunction('closeKolorAreaCallback_description1')" type="string" />
+		<option name="close_on_click" value="true" type="bool" />
+		<option name="close_onclick_callback" value="invokeKrFunction('closeKolorAreaCallbackClick_description1')" type="string" />
+		<option name="zorder" value="9" type="int" />
+		<option name="use_i18n" value="true" type="bool" />
+	</settings>
+</ptplugin>
+
+<action name="kolorAreaJsReady_description1">
+	set(ptplugin[description1].jsready, true);
+
+</action>
+
+
+<action name="openKolorArea_description1">
+	ifnot(ptplugin[description1].isOpen,
+		if(ptplugin[description1].doNotDeleteMe,
+		set(ptplugin[description1].currentCall, false);
+		set(ptplugin[description1].doNotDeleteMe, false);
+		set(ptplugin[description1].isOpen, true);
+		pauseautorotation(forceplugin);
+
+		js(showKolorArea(description1, get(ptplugin[description1].descID)));
+		,
+			set(ptplugin[description1].currentCall, true);
+			set(ptplugin[description1].doNotDeleteMe, true);
+			events.dispatch(onremovedisplayedobject);
+			delayedcall(0.3,openKolorArea_description1(););
+		);
+	);
+</action>
+
+<action name="closeKolorArea_description1">
+	if(ptplugin[description1].isOpen,
+		if(ptplugin[description1].doNotDeleteMe,
+			set(ptplugin[description1].doNotDeleteMe, false);
+		,
+		js(invokePluginFunction(description1, closeKolorArea));
+		);
+	);
+</action>
+
+<action name="toggleKolorArea_description1">
+	if(ptplugin[description1].isOpen,
+		closeKolorArea_description1();
+	,
+		openKolorArea_description1();
+	);
+</action>
+
+<action name="closeKolorAreaCallback_description1">
+	set(ptplugin[description1].doNotDeleteMe, false);
+	if(ptplugin[description1].isOpen,resumeautorotation(forceplugin);
+
+		
+	);
+	set(ptplugin[description1].isOpen, false);
+	if(tour_displayinfo,hideTourInfo();
+
+	);
+</action>
+
+<action name="closeKolorAreaCallbackClick_description1">
+
+
+	if(tour_displayinfo,hideTourInfo();
+
+	);
+</action>
+
+
+<action name="showKolorArea_description1">
+	ifnot(ptplugin[description1].startMethod == "",
+		delayedcall(0,get(ptplugin[description1].startMethod));
+	,
+		if(ptplugin[description1].doNotDeleteMe,
+			set(ptplugin[description1].currentCall, false);
+			set(ptplugin[description1].doNotDeleteMe, false);
+		set(ptplugin[description1].isOpen, true);
+		pauseautorotation(forceplugin);
+
+		js(invokePluginFunction(description1, showKolorArea, %1));
+		,
+			set(ptplugin[description1].currentCall, true);
+			set(ptplugin[description1].doNotDeleteMe, true);
+			events.dispatch(onremovedisplayedobject);
+			delayedcall(0.3,showKolorArea_description1(%1););
+		);
+	);
+</action>
+	
+<action name="hideKolorArea_description1">
+	if(ptplugin[description1].doNotDeleteMe,
+		set(ptplugin[description1].doNotDeleteMe, false);
+	,
+	resumeautorotation(forceplugin);
+
+	
+	set(ptplugin[description1].isOpen, false);
+	js(invokePluginFunction(description1, hideKolorArea, %1));
+	);
+</action>
+
+<action name="openDescription_description1">
+	openKolorArea_description1();
+</action>
+
+<action name="openSpotDescription_description1">
+	set(ptplugin[description1].descID, %1);
+	openKolorArea_description1();
+</action>
+
+<action name="closeDescription_description1">
+	set(ptplugin[description1].currentGroup, false);
+	if(%1,
+		set(restore_description1, true);
+	,
+		set(restore_description1, false);
+	);
+	closeKolorArea_description1();
+</action> 
+
+<action name="showDescription_description1">
+	if(ptplugin[description1].canStart,
+		if(ptplugin[description1].descID != "",
+			openDescription_description1();
+		,
+			hideKolorArea_description1(false);
+		);
+		set(ptplugin[description1].startMethod, "");
+	);
+</action>
+
+
+
+<action name="changeLanguage_description1">
+	if(ptplugin[description1].jsready,
+		stopdelayedcall(delay_description1);
+		js(invokePluginFunction(description1, changeLanguage, true));
+	,
+		delayedcall(delay_description1, 0.1, changeLanguage_description1(););
+	);
+</action>
+
+<events name="kolorAreaEvents_description1" 
+	keep="true"
+	onTourStart="set(ptplugin[description1].canStart, true);if(ptplugin[description1].openatstart,if(tour_displaycontrols,showTourInfo();
+););"
+	onhidetourinfo="delayedcall(0.3,if(ptplugin[description1].isOpen,closeDescription_description1(false);););"
+	onremovepano="if(ptplugin[description1].isOpen,hideTourInfo();
+);"
+	onremovedisplayedobject="ifnot(ptplugin[description1].currentCall,if(ptplugin[description1].isOpen,hideTourInfo();
+););"
+	hidetourcontrols="if(ptplugin[description1].isOpen,hideKolorArea_description1(false););"
+	showtourcontrols="if(tour_displayinfo,if(ptplugin[description1].isOpen,showKolorArea_description1(false);,););"
+	changetourlanguage="changeLanguage_description1();"
+/>
+
+<include url="%FIRSTXML%/graphics/easyhtmllightbox/easy_html_lightbox_vr.xml" />
+<plugin name="easy_html_lightbox" url="%FIRSTXML%/graphics/easyhtmllightbox/easy_html_lightbox.js" keep="true" include_reset="false"  include_jquery="false" 
+	theme="dark" 
+	background_color="#1e1e1e"
+	background_alpha="1"
+	stop_autorotate="true"
+	apply_blur="true"
+	plugin_font_name="inherit"
+	info_box_style="style_1_fixed_expanded"
+	
+	info_box_style_font_name="inherit"
+	info_box_style_btn_text="Go To"
+	info_box_style_font_size="15"
+	info_box_style_image_width="122"
+
+	info_box_style_title_color="0x000000"
+
+	info_box_style_bg_color="0xffffff"
+	info_box_style_bg_alpha="1"
+	info_box_style_text_color="0x000000"
+
+	info_box_style_btn_bg_color="0xe7cd8e"
+	info_box_style_btn_bg_alpha="1"
+	info_box_style_btn_text_color="0x"
+	
+/>
+
+
+
+
+<action name="kolorboxjsready_easyhtmllightbox"></action>
+
+
+
+<!--   Supersocial 1.4 - Copyright - Panotourplugin.com - 2020 -->
+<!-- Code Maurizio Chiocchetti    -->
+
+
+
+<include url="%FIRSTXML%/graphics/supersocial/core.xml" />
+
+<krpano Supersocialbuilt="false" Supersocialbackgroundwidthwhenclosed="0" Supersocialbackgroundwidthwhenopened="0"  SupersocialBuildable="false" />
+
+<events name="Supersocialstartstart"
+        keep="true"
+        onTourStart="set(Supersocialdepvalue,null);Supersocialstartscrollhere():"
+        onresize="Supersocialcontrolmenu();"
+
+/>
+
+<action name="Supersocialcontrolmenu">
+        set(Supersocialmenu_wh, get(layer[Supersocialbackground].height));
+        set(Supersocialstage, get(stageheight));
+
+</action>
+
+
+
+<action name="Supersocialstartscrollhere" >
+
+
+if(device.mobile,
+set(layer[Supersocialbackground].y,0);
+set(layer[Supersocialbackground].x,20);
+        set(layer[Supersocialbackground_2].height,get(Supersocialbackgroundwidthwhenopened));
+        set(Supersocialneww,calc(25 + 3 + (6 * 2)) );
+
+        set(layer[Supersocialbackground_2].width, get(Supersocialneww) );
+        set(layer[Supersocialbackground].width, get(Supersocialneww) );
+
+        );
+if(device.desktop,
+        set(layer[Supersocialbackground].y,0);
+        set(layer[Supersocialbackground].x,20);
+
+        set(layer[Supersocialbackground_2].height,get(Supersocialbackgroundwidthwhenopened));
+        set(Supersocialneww,calc(100 + 3 + (6 * 2)) );
+
+        set(layer[Supersocialbackground_2].width, get(Supersocialneww) );
+        set(layer[Supersocialbackground].width, get(Supersocialneww) );
+);
+if(device.tablet,
+        set(layer[Supersocialbackground].y,0);
+set(layer[Supersocialbackground].x,20);
+
+        set(layer[Supersocialbackground_2].height,get(Supersocialbackgroundwidthwhenopened));
+        set(Supersocialneww,calc(100 + 3 + (6 * 2)) );
+
+        set(layer[Supersocialbackground_2].width, get(Supersocialneww) );
+        set(layer[Supersocialbackground].width, get(Supersocialneww) );
+);
+
+
+
+
+
+
+</action>
+
+
+
+<events name="Supersocialevents"
+          onTourStart="Supersocialcheck_frame(); SupersocialbuildBar();"
+          hidetourcontrols="hideSupersocial();"
+          showtourcontrols="showSupersocial();"
+          keep="true"/>
+  <action name="SupersocialbuildBar">
+  ifnot (Supersocialbuilt, set(layer[Supersocialbackground].height, get(Supersocialbackgroundwidthwhenopened)); set(SupersocialBuildable, true); set(layer[Supersocialcopy].visible,true);set(layer[Supersocialclose].visible,true); set(Supersocialbuilt, true);  );
+  </action>
+
+<events name="Supersocialstartw"
+keep="true"
+
+onTourStart="Supersocialthumbbar_set_visible(false);set(SupersocialBuildable,false);"
+
+/>
+
+
+  <events name="SupersocialStartEvents" onsharetour="Supersocialthumbbar_set_visible(true);set(SupersocialBuildable,true);showSupersocial();" keep="true" />
+
+
+ <layer name="Supersocialbackground_2" type="container" keep="true"
+        alpha="1"
+        align="center"
+        edge="center"
+        visible="true"
+        enable="true"
+        parent="layer[Supersocialbackground]"
+        />
+
+  <layer name="Supersocialbackground" type="container" keep="true"
+        align.desktop="right"
+        edge.desktop="right"
+        align.mobile="right"
+        edge.mobile="right"
+        align.tablet="right"
+        edge.tablet="right"
+        visible="true"
+        scalechildren="true"
+        enable="true"
+        >
+
+
+
+
+
+
+
+
+
+
+
+
+  <layer name="Supersocialcopy"
+
+    onclick="Supersocialaction_click(copy);Supersocialshowlabel(););"
+    onover=""
+    onout=""
+    url="%FIRSTXML%/graphics/supersocial/social_copy.png"
+    tag=""
+    onhover="
+    "
+    visible= "false"
+    keep="true"
+    tooltip="Supersocialcopy_tooltips"
+    style="Supersocial_btn_style"
+
+
+/>
+
+
+<layer name="Supersocialres"
+    type="text"
+    align="center"
+
+    x="-80"
+    y="0"
+
+    html="Url Copied"
+    css="color:#ffffff;font-family:Helvetica;font-size:14px;text-align:left;"
+
+        bgcolor="0x54afdb"
+        bgroundedge="0"
+        padding="10"
+	bgborder="0.0 0xffffff 1"
+
+    vcenter="false"
+    visible="false"
+
+    wordwrap="true"
+    bg="true"
+    bgshadow=""
+    txtshadow=""
+    mergedalpha="true"
+    interactivecontent="false"
+    onautosized=""
+    autoalpha="true"
+    alpha="0"
+       />
+
+
+
+
+
+
+
+  <layer name="Supersocialclose"
+
+    onclick="hideSupersocial();Supersocialthumbbar_set_visible(false);set(SupersocialBuildable,false);"
+    onover=""
+    onout=""
+    url="%FIRSTXML%/graphics/supersocial/icon_close.png"
+    tag=""
+    onhover=""
+    visible= "false"
+    keep="true"
+
+    style="Supersocial_btn_style"
+
+
+/>
+
+
+</layer>
+
+<events name="Supersocialeve"
+keep="true"
+onTourStart="Supersocial_bb"
+/>
+
+<action name="Supersocial_bb">
+set(Supersocialbutton_pos, 6);
+if(device.mobile,
+set(Supersocialwww, 50);
+,
+set(Supersocialwww, 100);
+);
+set(Supersocialbackgroundwidthwhenclosed,get(Supersocialwww));
+
+
+  Supersocialload_icons(close);
+
+  Supersocialload_icons(copy);
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  set(Supersocialbackgroundwidthwhenopened, get(Supersocialbutton_pos)); set(layer[Supersocialbackground].height, get(Supersocialbackgroundwidthwhenopened));
+</action>
+
+
+
+<action name="Supersocialload_icons">
+
+
+
+        set(layer[Supersocial%1].y, get(Supersocialbutton_pos));
+
+        if(device.mobile,
+        inc(Supersocialbutton_pos, calc(25+ 6));
+
+add(Supersocialnewidthm,25, 6);
+set(layer[Supersocialbackground].width, get(Supersocialnewidthm));
+
+        );
+
+        if(device.desktop,
+        inc(Supersocialbutton_pos, 106);
+add(Supersocialnewidth,100, 12 );
+set(layer[Supersocialbackground].width, get(Supersocialnewidth));
+        );
+
+if(device.tablet,
+        inc(Supersocialbutton_pos, calc(30+ 6));
+
+add(Supersocialnewidthm,30, 6);
+set(layer[Supersocialbackground].width, get(Supersocialnewidthm));
+
+        );
+
+
+  </action>
+
+  <action name="hideSupersocial">
+        set(layer[Supersocialscroller].visible,false);
+        set(layer[Supersocialbackground].visible,false);
+        Supersocialthumbbar_set_visible(false);
+  </action>
+
+<action name="showSupersocial">
+set(displaythegallery_Supersocial, false); if(tour_displaycontrols, set(displaythegallery_Supersocial, true); ); if (displaythegallery_Supersocial, if(SupersocialBuildable, Supersocialthumbbar_set_visible(true); ); , hideSupersocial(); );
+  </action>
+
+
+
+<action name="Supersocialshowlabel">
+  tween(layer[Supersocialres].alpha,1,0.8);delayedcall(0.8,tween(layer[Supersocialres].alpha,0,0.8);); );
+  </action>
+
+
+  <action name="Supersocialthumbbar_set_visible">
+  tween(layer[Supersocialbackground].alpha, 1,1.5,easeOutExpo);
+  set(layer[Supersocialscroller].visible,true);
+  Supersocialstartscrollhere();
+    set(layer[Supersocialbackground].visible, %1);
+    set(layer[Supersocialscroller].visible,%1);
+  </action>
+
+<style name="Supersocial_btn_style"
+        keep="true"
+        edge="bottom"
+        align="bottom"
+        x="0" y="0"
+        width.desktop="100"
+        width.mobile="25"
+        width.tablet="30"
+         height="prop"
+
+        zorder="1"
+
+
+        crop="0|0|64|64"
+        onovercrop="0|64|64|64"
+
+
+
+       />
+
+
+
+<style name="Supersocial_style_text"
+        keep="true"
+        align=""
+        edge=""
+        y="0" x="0"
+        bgalpha=""
+        bgcolor="0x"
+        wordwrap="false"
+        css="font-size:px;text-align:left; font-family:;padding:px;color:#;"
+        zorder="20"
+       />
+
+
+
+<action name="Supersocialcheck_frame" type="javascript" >
+  <![CDATA[
+    var krpano = document.getElementById("krpanoSWFObject");
+function iniFrame() {
+    if ( window.location !== window.parent.location )
+    { krpano.set('Supersocialstart', "true");
+    } else { krpano.set('Supersocialstart', "false");
+        }}
+iniFrame();
+  ]]>
+  </action>
+
+<action name="Supersocialaction_click" type="javascript" >
+  <![CDATA[
+    var by = args[1];
+    deepval =  String(krpano.get("Supersocialdepvalue"));
+    var ok = escape(deepval);
+    var b = window.location.href.split("?")[0];
+    var deep = b + "?" + ok;
+
+    switch (by) {
+      case "fb":
+      window.open("https://www.facebook.com/sharer/sharer.php?u=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "tw":
+      window.open("https://twitter.com/share?url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "copy":
+
+      var result = decodeURIComponent(deep);
+      var copyhelper = document.createElement("input");
+      copyhelper.className = 'copyhelper'
+      document.body.appendChild(copyhelper);
+      copyhelper.value = result;
+      copyhelper.select();
+      document.execCommand("copy");
+      document.body.removeChild(copyhelper);
+
+      break;
+
+      case "ld":
+      window.open("http://www.linkedin.com/shareArticle?mini=true&ro=true&url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "whatsapp":
+
+      var whatsappUrl = "whatsapp://send?text=Write your message";
+
+      document.location.href= whatsappUrl + deep;
+      break;
+
+
+      case "pinterest":
+      window.open("http://pinterest.com/pin/create/button/?url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "viber":
+      var prtitle = document.title;
+      document.location.href="viber://pa?chatURI="+ deep +"&text=" + prtitle ;
+      break;
+
+      case "qq":
+      var prtitle = document.title;
+      window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=" + deep +"&title="+ prtitle , 'social', 'location=0,status=0,scrollbars=1,width=500,height=300');
+      break;
+
+      case "messenger":
+
+      document.location.href="fb-messenger://share?link=" + deep;
+      break;
+
+      case "weibo":
+
+      var prtitle = document.title;
+      window.open('http://service.weibo.com/share/share.php?url=' + deep + '&title=' + prtitle , 'social', 'location=0,status=0,scrollbars=1,width=500,height=300');
+
+      break;
+
+      case "digg":
+      window.open("http://digg.com/submit?url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "tumblr":
+      window.open("http://www.tumblr.com/share/link?url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "reddit":
+      window.open("http://reddit.com/submit?url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "stumbleupon":
+      window.open("http://www.stumbleupon.com/submit?url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "telegram":
+
+      document.location.href="tg://msg?text=" + deep;
+      break;
+
+      case "vkontakte":
+      window.open("http://vk.com/share.php?url=" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "line":
+      window.open("//line.me/R/msg/text/?" + deep, "social", "location=0,status=0,scrollbars=1,width=900,height=500");
+      break;
+
+      case "callt":
+      var number =  String(krpano.get("number"));
+      document.location.href="tel:"+ number;
+      break;
+
+      case "mail":
+      var textmail = String( krpano.get("testo") );
+      var subject = String( krpano.get("title") );
+
+      document.location.href = "mailto:?subject="+ subject +"&body=" +textmail + '%0D%0A%0D%0A' + deep;
+      break;
+
+
+    }
+
+  ]]>
+
+
+  </action>
+
+
+
+<action name="Supersocialdeppget">
+
+  SupersocialmycomputeDeepLinkingURL(false,false);
+  set(Supersocialdepvalue, get(Supersocialmytour_deeplinkingvars));
+
+
+  </action>
+
+
+
+  <action name="SupersocialmycomputeDeepLinkingURL">
+
+
+
+    txtadd(Supersocialmytour_deeplinkingvars, "s=", get(xml.scene));
+
+
+
+    set(Supersocialviewhlookat, get(view.hlookat));roundval(Supersocialviewhlookat, 4);
+    mod(Supersocialviewhlookat, 360);
+    if (Supersocialviewhlookat GT 180,
+      sub(Supersocialviewhlookat, 360);
+     ,
+      if (Supersocialviewhlookat LT -180, add(Supersocialviewhlookat, 360));
+    );
+    set(Supersocialviewvlookat, get(view.vlookat));roundval(Supersocialviewvlookat, 4);
+    set(Supersocialviewfov, get(view.fov));roundval(Supersocialviewfov, 4);
+
+    txtadd(Supersocialmytour_deeplinkingvars, get(Supersocialmytour_deeplinkingvars), "&amp;h=", get(Supersocialviewhlookat));
+    txtadd(Supersocialmytour_deeplinkingvars, get(Supersocialmytour_deeplinkingvars), "&amp;v=", get(Supersocialviewvlookat));
+    txtadd(Supersocialmytour_deeplinkingvars, get(Supersocialmytour_deeplinkingvars), "&amp;f=", get(Supersocialviewfov));
+
+
+
+    if (%1 !== null,if (%1, txtadd(Supersocialmytour_deeplinkingvars, get(Supersocialmytour_deeplinkingvars), "&amp;skipintro");););
+    if (%2 !== null,if (%2, txtadd(Supersocialmytour_deeplinkingvars, get(Supersocialmytour_deeplinkingvars), "&amp;norotation");););
+
+  </action>
+
+
+<action name="Supersocialupdatetext_screen">
+getmessage(testo,Supersocialtext_mail);
+getmessage(title,Supersocialtitlemail);
+getmessage(number,Supersocialnumerphone);
+</action>
+
+<events name="actionscreen"
+keep="true"
+changetourlanguage="Supersocialupdatetext_screen();"
+onTourStart="Supersocialdeppget();Supersocialupdatetext_screen();"
+onviewchange="Supersocialdeppget();"
+/>
+
+
+
+<action name="setTourLanguage">
+  if (%1 == null,
+    trace("CHANGE TOUR LANGUAGE : NO LANGUAGE SET");
+   ,
+    set(tour_language, %1);
+  js(eventTourChangeLanguage(get(tour_language)));
+    events.dispatch(changetourlanguage);
+  );
+</action>
+
+
+
+
+
+
+
+<include url="%FIRSTXML%/graphics/blowup/blowupcore.xml" />
+
+<events name="Blowupstart"
+keep="true"
+onnewpano="Blowupgo();"
+
+onremovepano="Blowupremove();"
+
+/>
+
+<events name="Blowupsta"
+keep="true"
+onxmlcomplete="Blowupremove_scrool();"
+/>
+
+<action name="Blowupremove_scrool" type="javascript" >
+        <![CDATA[
+
+            $('head').append('<style type="text/css">::-webkit-scrollbar {width: 0px;background: transparent;});</style>');
+
+        ]]>
+        </action>
+
+<blowup_setting
+    range_value="20"
+    alpharange=""
+    full=""
+    scalemobile=""
+    scaletablet=""
+/>
+
+
+
+
+<action name="Blowupconvert" type="Javascript" >
+  <![CDATA[
+var krpano = document.getElementById("krpanoSWFObject");
+
+var decodeEntities = (function() {
+
+  var element = document.createElement('div');
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+var text = decodeEntities(args[1]);
+krpano.set('Blowuphsho2', text);
+
+ ]]>
+ </action>
+
+<action name="Blowupgo">
+if (tour_displayspots,
+for(set(Blowupai,0), Blowupai LT hotspot.count, inc(Blowupai),
+
+if(hotspot[get(Blowupai)].style == "Iconspot_description150",
+set(Blowupaaname, get(hotspot[get(Blowupai)].name));
+Blowupget_thumb(get(Blowupaaname));
+);
+);
+);
+</action>
+
+<action name="Blowupremove">
+
+for(set(Blowupaai,0), Blowupaai LT hotspot.count, inc(Blowupaai),
+
+if(hotspot[get(Blowupaai)].style == "Iconspot_description150",
+set(Blowupraaname, get(hotspot[get(Blowupaai)].name));
+Blowupremove_(get(Blowupraaname));
+Blowuphide(get(Blowupraaname));
+);
+);
+</action>
+
+
+
+<action name="Blowupshow">
+if(autorotate.enabled,
+pauseautorotation(forceplugin););
+set(hotspot[BlowupHotspot_Ghost%1].visible, true);
+set(layer[Blowuptitle%1].visible, true);
+set(layer[Blowupdescription%1].visible, true);
+set(layer[Blowupbox%1].visible, true);
+set(layer[BlowupImage%1].visible, true);
+set(layer[BlowupBoxPict%1].visible, true);
+</action>
+
+<action name="Blowuphide">
+if(autorotate.enabled == false,
+resumeautorotation(forceplugin);
+);
+set(hotspot[BlowupHotspot_Ghost%1].visible, false);
+set(layer[Blowuptitle%1].visible, false);
+set(layer[Blowupdescription%1].visible, false);
+set(layer[Blowupbox%1].visible, false);
+set(layer[BlowupImage%1].visible, false);
+set(layer[BlowupBoxPict%1].visible, false);
+</action>
+
+
+
+
+
+
+<action name="Blowupget_thumb" >
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+
+
+set(hotspot[%1].onhover,
+Blowupshow(%1);
+Blowupgo2(%1);
+);
+
+
+set(hotspot[%1].onout,
+Blowuphide(%1);
+
+hideTooltip();
+tween(hotspot[%1].scale,1,0.5);
+);
+
+
+<!--set(hotspot[%1].onup,
+Blowuphide(%1);
+hideTooltip();
+
+);-->
+
+</action>
+
+<action name="Blowupgo2">
+
+
+add(BlowupmarginW, 5 , 300);
+add(BlowupmarginH, 150 , 5);
+
+set(Blowuptul,get(hotspot[%1].linktarget));
+set(Blowuptu, get(scene[get(Blowuptul)].thumburl));
+if(Blowuptu == null,
+set(Blowuptu, get(panoramagroup[get(Blowuptul)].thumburl));
+);
+
+
+set(BlowupHH_center, calc(0++200  + (5*2)));
+
+set(BlowupHH, calc(0 + 150 + (5*2)));
+
+set(Blowuplarghezza, calc(0 + 300 + (5*2)));
+
+<!--set(BlowupPOSX, calc(0 + (5*2)));-->
+
+set(BlowupPOSY, calc( 0 + 5 -10));
+
+
+
+
+
+set(layer[Blowupdescription%1].width, calc(0 +  300 + (5*2)));
+set(layer[Blowuptitle%1].width,300);
+set(layer[Blowupbox%1].height, get(BlowupHH_center));
+set(layer[Blowupbox%1].width, get(Blowuplarghezza));
+set(layer[BlowupBoxPict%1].x,0);
+set(layer[Blowupdescription%1].x,get(BlowupPOSX));
+
+set(layer[BlowupBoxPict%1].y,calc(5 + 200));
+set(layer[Blowupdescription%1].edge,center);
+set(layer[Blowupdescription%1].align,center);
+set(layer[Blowupdescription%1].y,0);
+
+set(layer[BlowupBoxPict%1].edge,bottom);
+set(layer[BlowupBoxPict%1].align,bottom);
+
+
+
+
+
+
+
+hideTooltip();
+
+set(Blowupax, get(hotspot[%1].ath));
+set(Blowupay, get(hotspot[%1].atv));
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].visible,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+set(hotspot[%1].edge,center);
+set(hotspot[%1].align,center);
+
+
+addhotspot(BlowupHotspot_Ghost%1);
+set(hotspot[BlowupHotspot_Ghost%1].visible, true);
+set(hotspot[BlowupHotspot_Ghost%1].capture, true);
+set(hotspot[BlowupHotspot_Ghost%1].zoom, false);
+set(hotspot[BlowupHotspot_Ghost%1].zorder2, 100 );
+set(hotspot[BlowupHotspot_Ghost%1].zorder, 100 );
+set(hotspot[BlowupHotspot_Ghost%1].ath,get(Blowupax));
+set(hotspot[BlowupHotspot_Ghost%1].distorted,false);
+set(hotspot[BlowupHotspot_Ghost%1].atv,get(Blowupay));
+set(hotspot[BlowupHotspot_Ghost%1].width, get(BlowupmarginW));
+set(hotspot[BlowupHotspot_Ghost%1].height, get(BlowupmarginH));
+set(hotspot[BlowupHotspot_Ghost%1].keep,true);
+set(hotspot[BlowupHotspot_Ghost%1].url, '%FIRSTXML%/graphics/blowup/white.png');
+
+set(hotspot[BlowupHotspot_Ghost%1].enable,true);
+set(hotspot[BlowupHotspot_Ghost%1].bgalpha,1);
+set(hotspot[BlowupHotspot_Ghost%1].ox,0);
+set(Blowupbobo,get(layer[Blowupbox%1].height));
+set(hotspot[BlowupHotspot_Ghost%1].oy,calc((30  + (Blowupbobo / 2 )) *-1));
+
+addlayer(Blowupbox%1);
+set(layer[Blowupbox%1].bgalpha,0.90000762951094837);
+set(layer[Blowupbox%1].bgcolor, 0x000000);
+set(layer[Blowupbox%1].visible, true);
+set(layer[Blowupbox%1].align, center);
+set(layer[Blowupbox%1].edge, center);
+<!--set(layer[Blowupbox%1].scale,get(Blowupmyscale));-->
+set(layer[Blowupbox%1].scale,1);
+set(layer[Blowupbox%1].scalechildren,true);
+
+set(layer[Blowupbox%1].bgborder, 0 0x000000 1);
+set(layer[Blowupbox%1].bgshadow, 0 0 0 0 000000 0.7000076295109483);
+set(layer[Blowupbox%1].bgroundedge, 10);
+set(layer[Blowupbox%1].capture, true);
+set(layer[Blowupbox%1].y,0);
+set(layer[Blowupbox%1].x,0);
+set(layer[Blowupbox%1].enabled, true);
+set(layer[Blowupbox%1].keep, true);
+set(layer[Blowupbox%1].type, container);
+
+set(layer[Blowupbox%1].parent,hotspot[BlowupHotspot_Ghost%1]);
+
+
+
+
+getmessage(Blowuphsho, get(hotspot[%1].descriptionID));
+
+getmessage(Blowuphshot, get(scene[get(Blowuptul)].titleid));
+set(Blowuptestyes,true);
+if(Blowuphsho !== null
+,
+set(hotspot[BlowupHotspot_Ghost%1].height,150
+);,);
+
+addlayer(Blowupdescription%1);
+
+set(layer[Blowupdescription%1].height,200);
+set(layer[Blowupdescription%1].handcursor, false);
+set(layer[Blowupdescription%1].width,300);
+set(layer[Blowupdescription%1].type,text);
+set(layer[Blowupdescription%1].vcenter,true );
+set(layer[Blowupdescription%1].zorder,1);
+set(layer[Blowupdescription%1].bgroundedge, 0);
+
+
+
+
+Blowupconvert(get(Blowuphsho));
+set(layer[Blowupdescription%1].onloaded,Blowupadd_html_code(get(Blowuphsho),20,%1));
+
+
+
+
+set(layer[Blowupdescription%1].css,padding:5px; );
+set(layer[Blowupdescription%1].parent,layer[Blowupbox%1]);
+set(layer[Blowupdescription%1].bgalpha,0);
+set(layer[Blowupdescription%1].bgcolor,0xffffff);
+
+
+
+
+</action>
+<events name="Blowupstascale"
+keep="true"
+onresize="Blowupremove();Blowuprespo();"
+
+/>
+<action name="Blowuprespo">
+
+set(BlowupstageSize, stagewidth);
+
+set(Blowupmyscale, calc(stagewidth / 1000));
+clamp(Blowupmyscale, 0.6,1);
+
+  </action>
+
+
+<action name="Blowupremove_">
+
+set(hotspot[BlowupHotspot_Ghost%1].visible, false);
+hideTooltip();
+removehotspot(BlowupHotspot_Ghost%1);
+removelayer(Blowupbox%1);
+removelayer(BlowupImage%1);
+removelayer(BlowupBoxPict%1);
+removelayer(Blowupdescription%1);
+removelayer(Blowuptitle%1);
+removelayer(Blowupclose%1);
+
+  </action>
+
+<action name="Blowupstopvideo" type="javascript" >
+  <![CDATA[
+  $("iframe").addClass("Blowupyt_player_iframe");
+    $('.Blowupyt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+<action name="Blowupautoplayvideo" type="javascript" >
+  <![CDATA[
+
+    $('.Blowupyt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+
+<action name="Blowupadd_html_code" type="Javascript"><![CDATA[
+
+        var div = document.createElement("div");
+
+        div.style.webkitUserSelect = "text"
+        div.style.MozUserSelect = "text"
+        div.style.msUserSelect = "text"
+        div.style.userSelect = "text";
+
+        var nam = "myID" + args[3];
+
+
+        div.setAttribute("id",nam);
+        div.setAttribute("style", "vertical-align: middle;  -moz-user-select: text;-webkit-user-select: text;-ms-user-select: text;user-select: text; color:#666666; font-Family:Noto Sans CJK KR Regular; overflow:auto; width:100%; height:100%; font-size:calc(12px + 0.2vw); box-sizing:border-box; padding-top:5px; padding-right:5px; padding-bottom: 5px;padding-left: 5px; text-align:left; font-weight:normal;font-style:normal;" );
+
+        div.addEventListener("mousewheel", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("DOMMouseScroll", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("touchstart", function(event){ if(krpano.device.ios && window.innerHeight == krpano.display.htmltarget.offsetHeight){ /* avoid the iOS 'overscrolling' for fullpage viewers */ var bs = document.body.parentNode.style; bs.position="fixed"; bs.top=0; bs.left=0; bs.right=0; bs.bottom=0; } krpano.control.preventTouchEvents = false; event.stopPropagation(); }, true);
+        div.addEventListener("touchend", function(event){ krpano.control.preventTouchEvents = true; event.stopPropagation(); }, true);
+        div.addEventListener("gesturestart", function(event){ event.preventDefault(); }, true);
+
+        // add some html code:
+        div.innerHTML = args[1];
+
+        // add the div to the layer element:
+        caller.sprite.appendChild(div);
+
+
+
+
+
+ ]]></action>
+
+
+
+
+
+// TODO: Bloup, create actions for open blowup external
+
+
+
+<events name="loopfx_eve_start"  keep="true"
+onnewpano="if(tour_displayspots,loopfx_start_action(););"
+onxmlcomplete="trace('Spotmove Plugin v.1.0 -- Panotourplugin.com');"
+/>
+<action name="loopfx_start_action">
+set(loopfx_counter_me,0);
+for(set(loopfx_i,0), loopfx_i LT hotspot.count, inc(loopfx_i),
+set(loopfx_hspolyname, get(hotspot[get(loopfx_i)].name));
+if(hotspot[get(loopfx_hspolyname)].style == "Iconspot_description50",
+loopfx_BlinkPoly(get(loopfx_hspolyname));
+););
+</action>
+<action name="loopfx_BlinkPoly" scope="local" args="loopfx_namepoly">
+
+
+
+
+
+	delayedcall(0,
+	tween(hotspot[get(loopfx_namepoly)].scale , 0.9, 0.5, linear,
+	tween(hotspot[get(loopfx_namepoly)].scale , 1,0.5, linear, loopfx_BlinkPoly(get(loopfx_namepoly)));
+	);
+	);
+
+
+
+</action>
+
+
+
+
+
+<include url="%FIRSTXML%/graphics/blowup1/blowupcore.xml" />
+
+<events name="Blowup1start"
+keep="true"
+onnewpano="Blowup1go();"
+
+onremovepano="Blowup1remove();"
+
+/>
+
+<events name="Blowup1sta"
+keep="true"
+onxmlcomplete="Blowup1remove_scrool();"
+/>
+
+<action name="Blowup1remove_scrool" type="javascript" >
+        <![CDATA[
+
+            $('head').append('<style type="text/css">::-webkit-scrollbar {width: 0px;background: transparent;});</style>');
+
+        ]]>
+        </action>
+
+<blowup_setting
+    range_value="10"
+    alpharange=""
+    full=""
+    scalemobile=""
+    scaletablet=""
+/>
+
+
+
+
+<action name="Blowup1convert" type="Javascript" >
+  <![CDATA[
+var krpano = document.getElementById("krpanoSWFObject");
+
+var decodeEntities = (function() {
+
+  var element = document.createElement('div');
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+var text = decodeEntities(args[1]);
+krpano.set('Blowup1hsho2', text);
+
+ ]]>
+ </action>
+
+<action name="Blowup1go">
+if (tour_displayspots,
+for(set(Blowup1ai,0), Blowup1ai LT hotspot.count, inc(Blowup1ai),
+
+if(hotspot[get(Blowup1ai)].style == "Iconspot_description50",
+set(Blowup1aaname, get(hotspot[get(Blowup1ai)].name));
+Blowup1get_thumb(get(Blowup1aaname));
+);
+);
+);
+</action>
+
+<action name="Blowup1remove">
+
+for(set(Blowup1aai,0), Blowup1aai LT hotspot.count, inc(Blowup1aai),
+
+if(hotspot[get(Blowup1aai)].style == "Iconspot_description50",
+set(Blowup1raaname, get(hotspot[get(Blowup1aai)].name));
+Blowup1remove_(get(Blowup1raaname));
+Blowup1hide(get(Blowup1raaname));
+);
+);
+</action>
+
+
+
+<action name="Blowup1show">
+if(autorotate.enabled,
+pauseautorotation(forceplugin););
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, true);
+set(layer[Blowup1title%1].visible, true);
+set(layer[Blowup1description%1].visible, true);
+set(layer[Blowup1box%1].visible, true);
+set(layer[Blowup1Image%1].visible, true);
+set(layer[Blowup1BoxPict%1].visible, true);
+</action>
+
+<action name="Blowup1hide">
+if(autorotate.enabled == false,
+resumeautorotation(forceplugin);
+);
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, false);
+set(layer[Blowup1title%1].visible, false);
+set(layer[Blowup1description%1].visible, false);
+set(layer[Blowup1box%1].visible, false);
+set(layer[Blowup1Image%1].visible, false);
+set(layer[Blowup1BoxPict%1].visible, false);
+</action>
+
+
+<events name="Blowup1checkhotspots" keep="true"
+onviewchange="if (tour_displayspots,Blowup1checkhotspots(););"
+hotspots_visibility_changed="if(tour_displayspots,,events.dispatch(onremovepano););"
+devices="mobile"/>
+
+ <events name="Blowup1hotspotsdisplayevents"
+          hotspots_visibility_changed="Blowup1updateHideShowHotspotsButtons"
+          keep="true"/>
+	<action name="Blowup1HideHideShowHotspotsButtons">
+		events.dispatch(onremovepano);
+	</action>
+	<action name="Blowup1ShowHideShowHotspotsButtons">
+		if (tour_displayspots,
+		,
+			events.dispatch(onremovepano);
+		);
+	</action>
+
+	<action name="Blowup1updateHideShowHotspotsButtons">
+		set(Blowup1DisplayHideShowHotspotsButtons, false);
+		if (Blowup1IsOpened, set(Blowup1DisplayHideShowHotspotsButtons, true););
+		if (Blowup1DisplayHideShowHotspotsButtons,
+			Blowup1ShowHideShowHotspotsButtons();
+		,
+			Blowup1HideHideShowHotspotsButtons();
+		);
+	</action>
+
+<action name="Blowup1checkhotspots">
+for(set(Blowup1x,0), Blowup1x LT hotspot.count, inc(Blowup1x),
+    if (hotspot[get(Blowup1x)].style == "Iconspot_description50",
+    copy(Blowup1hs,hotspot[get(Blowup1x)]);
+        set(Blowup1aname, get(hotspot[get(Blowup1x)].name));
+    Blowup1hs.getcenter(Blowup1hs_h, Blowup1hs_v);
+    getlooktodistance(Blowup1d, Blowup1hs_h, Blowup1hs_v);
+
+    if(Blowup1d LT 10,
+    callwith(hotspot[get(Blowup1aname)], onhover);
+    ,
+    callwith(hotspot[get(Blowup1aname)], onout);
+
+      );););
+</action>
+
+
+
+
+<action name="Blowup1get_thumb" >
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+
+
+set(hotspot[%1].onhover,
+Blowup1show(%1);
+Blowup1go2(%1);
+);
+
+
+set(hotspot[%1].onout,
+Blowup1hide(%1);
+
+hideTooltip();
+tween(hotspot[%1].scale,1,0.5);
+);
+
+
+<!--set(hotspot[%1].onup,
+Blowup1hide(%1);
+hideTooltip();
+
+);-->
+
+</action>
+
+<action name="Blowup1go2">
+
+
+add(Blowup1marginW, 10 , 240);
+add(Blowup1marginH, 50 , 10);
+
+set(Blowup1tul,get(hotspot[%1].linktarget));
+set(Blowup1tu, get(scene[get(Blowup1tul)].thumburl));
+if(Blowup1tu == null,
+set(Blowup1tu, get(panoramagroup[get(Blowup1tul)].thumburl));
+);
+
+
+set(Blowup1HH_center, calc(0++50  + (10*2)));
+
+set(Blowup1HH, calc(0 + 50 + (10*2)));
+
+set(Blowup1larghezza, calc(0 + 240 + (10*2)));
+
+<!--set(Blowup1POSX, calc(0 + (10*2)));-->
+
+set(Blowup1POSY, calc( 0 + 10 -10));
+
+
+
+
+
+set(layer[Blowup1description%1].width, calc(0 +  250 + (10*2)));
+set(layer[Blowup1title%1].width,240);
+set(layer[Blowup1box%1].height, get(Blowup1HH_center));
+set(layer[Blowup1box%1].width, get(Blowup1larghezza));
+set(layer[Blowup1BoxPict%1].x,0);
+set(layer[Blowup1description%1].x,get(Blowup1POSX));
+
+set(layer[Blowup1BoxPict%1].y,calc(10 + 50));
+set(layer[Blowup1description%1].edge,center);
+set(layer[Blowup1description%1].align,center);
+set(layer[Blowup1description%1].y,0);
+
+set(layer[Blowup1BoxPict%1].edge,bottom);
+set(layer[Blowup1BoxPict%1].align,bottom);
+
+
+
+
+
+
+
+hideTooltip();
+
+set(Blowup1ax, get(hotspot[%1].ath));
+set(Blowup1ay, get(hotspot[%1].atv));
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].visible,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+set(hotspot[%1].edge,center);
+set(hotspot[%1].align,center);
+
+
+addhotspot(Blowup1Hotspot_Ghost%1);
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, true);
+set(hotspot[Blowup1Hotspot_Ghost%1].capture, true);
+set(hotspot[Blowup1Hotspot_Ghost%1].zoom, false);
+set(hotspot[Blowup1Hotspot_Ghost%1].zorder2, 100 );
+set(hotspot[Blowup1Hotspot_Ghost%1].zorder, 100 );
+set(hotspot[Blowup1Hotspot_Ghost%1].ath,get(Blowup1ax));
+set(hotspot[Blowup1Hotspot_Ghost%1].distorted,false);
+set(hotspot[Blowup1Hotspot_Ghost%1].atv,get(Blowup1ay));
+set(hotspot[Blowup1Hotspot_Ghost%1].width, get(Blowup1marginW));
+set(hotspot[Blowup1Hotspot_Ghost%1].height, get(Blowup1marginH));
+set(hotspot[Blowup1Hotspot_Ghost%1].keep,true);
+set(hotspot[Blowup1Hotspot_Ghost%1].url, '%FIRSTXML%/graphics/blowup1/white.png');
+
+set(hotspot[Blowup1Hotspot_Ghost%1].enable,true);
+set(hotspot[Blowup1Hotspot_Ghost%1].bgalpha,1);
+set(hotspot[Blowup1Hotspot_Ghost%1].ox,0);
+set(Blowup1bobo,get(layer[Blowup1box%1].height));
+set(hotspot[Blowup1Hotspot_Ghost%1].oy,calc((30  + (Blowup1bobo / 2 )) *-1));
+
+addlayer(Blowup1box%1);
+set(layer[Blowup1box%1].bgalpha,0.90000762951094837);
+set(layer[Blowup1box%1].bgcolor, 0x000000);
+set(layer[Blowup1box%1].visible, true);
+set(layer[Blowup1box%1].align, center);
+set(layer[Blowup1box%1].edge, center);
+<!--set(layer[Blowup1box%1].scale,get(Blowup1myscale));-->
+set(layer[Blowup1box%1].scale,1);
+set(layer[Blowup1box%1].scalechildren,true);
+
+set(layer[Blowup1box%1].bgborder, 0 0x000000 1);
+set(layer[Blowup1box%1].bgshadow, 0 0 0 0 000000 0.7000076295109483);
+set(layer[Blowup1box%1].bgroundedge, 10);
+set(layer[Blowup1box%1].capture, true);
+set(layer[Blowup1box%1].y,0);
+set(layer[Blowup1box%1].x,0);
+set(layer[Blowup1box%1].enabled, true);
+set(layer[Blowup1box%1].keep, true);
+set(layer[Blowup1box%1].type, container);
+
+set(layer[Blowup1box%1].parent,hotspot[Blowup1Hotspot_Ghost%1]);
+
+
+
+
+getmessage(Blowup1hsho, get(hotspot[%1].descriptionID));
+
+getmessage(Blowup1hshot, get(scene[get(Blowup1tul)].titleid));
+set(Blowup1testyes,true);
+if(Blowup1hsho !== null
+,
+set(hotspot[Blowup1Hotspot_Ghost%1].height,50
+);,);
+
+addlayer(Blowup1description%1);
+
+set(layer[Blowup1description%1].height,50);
+set(layer[Blowup1description%1].handcursor, false);
+set(layer[Blowup1description%1].width,250);
+set(layer[Blowup1description%1].type,text);
+set(layer[Blowup1description%1].vcenter,true );
+set(layer[Blowup1description%1].zorder,1);
+set(layer[Blowup1description%1].bgroundedge, 0);
+
+
+
+
+Blowup1convert(get(Blowup1hsho));
+set(layer[Blowup1description%1].onloaded,Blowup1add_html_code(get(Blowup1hsho),20,%1));
+
+
+
+
+set(layer[Blowup1description%1].css,padding:0px; );
+set(layer[Blowup1description%1].parent,layer[Blowup1box%1]);
+set(layer[Blowup1description%1].bgalpha,0);
+set(layer[Blowup1description%1].bgcolor,0xffffff);
+
+
+
+
+</action>
+<events name="Blowup1stascale"
+keep="true"
+onresize="Blowup1remove();Blowup1respo();"
+
+/>
+<action name="Blowup1respo">
+
+set(Blowup1stageSize, stagewidth);
+
+set(Blowup1myscale, calc(stagewidth / 1000));
+clamp(Blowup1myscale, 0.6,1);
+
+  </action>
+
+
+<action name="Blowup1remove_">
+
+set(hotspot[Blowup1Hotspot_Ghost%1].visible, false);
+hideTooltip();
+removehotspot(Blowup1Hotspot_Ghost%1);
+removelayer(Blowup1box%1);
+removelayer(Blowup1Image%1);
+removelayer(Blowup1BoxPict%1);
+removelayer(Blowup1description%1);
+removelayer(Blowup1title%1);
+removelayer(Blowup1close%1);
+
+  </action>
+
+<action name="Blowup1stopvideo" type="javascript" >
+  <![CDATA[
+  $("iframe").addClass("Blowup1yt_player_iframe");
+    $('.Blowup1yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+<action name="Blowup1autoplayvideo" type="javascript" >
+  <![CDATA[
+
+    $('.Blowup1yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+
+<action name="Blowup1add_html_code" type="Javascript"><![CDATA[
+
+        var div = document.createElement("div");
+
+        div.style.webkitUserSelect = "text"
+        div.style.MozUserSelect = "text"
+        div.style.msUserSelect = "text"
+        div.style.userSelect = "text";
+
+        var nam = "myID" + args[3];
+
+
+        div.setAttribute("id",nam);
+        div.setAttribute("style", "vertical-align: middle;  -moz-user-select: text;-webkit-user-select: text;-ms-user-select: text;user-select: text; color:#666666; font-Family:Noto Sans CJK KR Regular; overflow:auto; width:100%; height:100%; font-size:calc(12px + 0.2vw); box-sizing:border-box; padding-top:0px; padding-right:0px; padding-bottom: 0px;padding-left: 0px; text-align:center; font-weight:normal;font-style:normal;" );
+
+        div.addEventListener("mousewheel", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("DOMMouseScroll", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("touchstart", function(event){ if(krpano.device.ios && window.innerHeight == krpano.display.htmltarget.offsetHeight){ /* avoid the iOS 'overscrolling' for fullpage viewers */ var bs = document.body.parentNode.style; bs.position="fixed"; bs.top=0; bs.left=0; bs.right=0; bs.bottom=0; } krpano.control.preventTouchEvents = false; event.stopPropagation(); }, true);
+        div.addEventListener("touchend", function(event){ krpano.control.preventTouchEvents = true; event.stopPropagation(); }, true);
+        div.addEventListener("gesturestart", function(event){ event.preventDefault(); }, true);
+
+        // add some html code:
+        div.innerHTML = args[1];
+
+        // add the div to the layer element:
+        caller.sprite.appendChild(div);
+
+
+
+
+
+ ]]></action>
+
+
+
+
+
+// TODO: Bloup, create actions for open blowup external
+
+
+
+<events name="loopfx_1eve_start"  keep="true"
+onnewpano="if(tour_displayspots,loopfx_1start_action(););"
+onxmlcomplete="trace('Spotmove Plugin v.1.0 -- Panotourplugin.com');"
+/>
+<action name="loopfx_1start_action">
+set(loopfx_1counter_me,0);
+for(set(loopfx_1i,0), loopfx_1i LT hotspot.count, inc(loopfx_1i),
+set(loopfx_1hspolyname, get(hotspot[get(loopfx_1i)].name));
+if(hotspot[get(loopfx_1hspolyname)].style == "Iconimage_gallery",
+loopfx_1BlinkPoly(get(loopfx_1hspolyname));
+););
+</action>
+<action name="loopfx_1BlinkPoly" scope="local" args="loopfx_1namepoly">
+
+
+
+
+
+	delayedcall(0,
+	tween(hotspot[get(loopfx_1namepoly)].scale , 0.8, 0.5, linear,
+	tween(hotspot[get(loopfx_1namepoly)].scale , 1,0.5, linear, loopfx_1BlinkPoly(get(loopfx_1namepoly)));
+	);
+	);
+
+
+
+</action>
+
+
+
+
+
+
+<events name="loopfx_2eve_start"  keep="true"
+onnewpano="if(tour_displayspots,loopfx_2start_action(););"
+onxmlcomplete="trace('Spotmove Plugin v.1.0 -- Panotourplugin.com');"
+/>
+<action name="loopfx_2start_action">
+set(loopfx_2counter_me,0);
+for(set(loopfx_2i,0), loopfx_2i LT hotspot.count, inc(loopfx_2i),
+set(loopfx_2hspolyname, get(hotspot[get(loopfx_2i)].name));
+if(hotspot[get(loopfx_2hspolyname)].style == "IconVideo_Play",
+loopfx_2BlinkPoly(get(loopfx_2hspolyname));
+););
+</action>
+<action name="loopfx_2BlinkPoly" scope="local" args="loopfx_2namepoly">
+
+
+
+
+
+	delayedcall(0,
+	tween(hotspot[get(loopfx_2namepoly)].alpha , 0.6, 0.5, linear,
+	tween(hotspot[get(loopfx_2namepoly)].alpha , 1,0.5, linear, loopfx_2BlinkPoly(get(loopfx_2namepoly)));
+	);
+	);
+
+
+
+</action>
+
+
+
+          <style 	cooltype="text"  	name="tooltip_hotspot_long" 	type="container"  	width="1"  	height="80"  	bgcolor="0xffffff" 	bgalpha="1.00"  	bgcapture="true"  	accuracy="1"  	edge="bottom" 	 	onover="hidebbhs();set(zorder,20); 	"  	  	onout="set(zorder,2); 	"  	ondown.touch="onover();" 	onloaded=" 	txtadd(mybubble,'bubble',get(name)); 	addlayer(get(mybubble)); 	copy(hotspot[get(name)].mybubble,mybubble); 	layer[get(mybubble)].loadstyle(cool_hotspot2textlayer); 	ifnot(onclick,set(layer[get(mybubble)].handcursor,false)); 	txtadd(parentlayer,'hotspot[',get(name),']'); 	copy(layer[get(mybubble)].parent,parentlayer); 	if(linkedscene, 	getmessage(montitre, get(scene[get(linkedscene)].titleid)); 	); 	if(linkedgroup, 	getmessage(montitre, get(panoramagroup[get(linkedgroup)].titleid)); 	); 	if(!linkedscene AND !linkedgroup, 	getmessage(montitre, get(tooltip)); 	set(onhover,); 	); 	set(layer[get(mybubble)].html, get(montitre)); 	txtadd(clickaction,'callwith(hotspot[',get(name),'],onclick)'); 	copy(layer[get(mybubble)].onclick,clickaction);  " /> <style  	name="cool_hotspot2textlayer"  	type="text" 	 	 	roundedge="10"   	bg="true" 	bgcolor="0x41486f" 	bgalpha="0.90000762951094837"   	bgborder="false"   	css="color:#ffffff;font-family:Noto Sans CJK KR Medium;font-size:14px;text-align:center;"   	padding="5 10"  	align="top"  	edge="bottom"  	ondown.touch="callwith(get(parent),onover);" /> <style  	name="cool_hotspot2textlayer_onover"  	type="text" 	  	roundedge="5"   	bg="false"   	bgborder="false"     	shadow="1" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1"   	textshadow="1" textshadowrange="5.0" textshadowangle="45" textshadowcolor="0x000000" textshadowalpha="1"  	css="color:#ffffff;font-family:Arial;font-size:20px;text-align:center;"   	padding="5 10"  	align="top"  	edge="bottom"  />   
+
+<include url="%FIRSTXML%/graphics/blowup2/blowupcore.xml" />
+
+<events name="Blowup2start"
+keep="true"
+onnewpano="Blowup2go();"
+
+onremovepano="Blowup2remove();"
+
+/>
+
+<events name="Blowup2sta"
+keep="true"
+onxmlcomplete="Blowup2remove_scrool();"
+/>
+
+<action name="Blowup2remove_scrool" type="javascript" >
+        <![CDATA[
+
+            $('head').append('<style type="text/css">::-webkit-scrollbar {width: 0px;background: transparent;});</style>');
+
+        ]]>
+        </action>
+
+<blowup_setting
+    range_value="20"
+    alpharange=""
+    full=""
+    scalemobile=""
+    scaletablet=""
+/>
+
+
+
+
+<action name="Blowup2convert" type="Javascript" >
+  <![CDATA[
+var krpano = document.getElementById("krpanoSWFObject");
+
+var decodeEntities = (function() {
+
+  var element = document.createElement('div');
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+var text = decodeEntities(args[1]);
+krpano.set('Blowup2hsho2', text);
+
+ ]]>
+ </action>
+
+<action name="Blowup2go">
+if (tour_displayspots,
+for(set(Blowup2ai,0), Blowup2ai LT hotspot.count, inc(Blowup2ai),
+
+if(hotspot[get(Blowup2ai)].style == "Iconspot_description_image",
+set(Blowup2aaname, get(hotspot[get(Blowup2ai)].name));
+Blowup2get_thumb(get(Blowup2aaname));
+);
+);
+);
+</action>
+
+<action name="Blowup2remove">
+
+for(set(Blowup2aai,0), Blowup2aai LT hotspot.count, inc(Blowup2aai),
+
+if(hotspot[get(Blowup2aai)].style == "Iconspot_description_image",
+set(Blowup2raaname, get(hotspot[get(Blowup2aai)].name));
+Blowup2remove_(get(Blowup2raaname));
+Blowup2hide(get(Blowup2raaname));
+);
+);
+</action>
+
+
+
+<action name="Blowup2show">
+if(autorotate.enabled,
+pauseautorotation(forceplugin););
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, true);
+set(layer[Blowup2title%1].visible, true);
+set(layer[Blowup2description%1].visible, true);
+set(layer[Blowup2box%1].visible, true);
+set(layer[Blowup2Image%1].visible, true);
+set(layer[Blowup2BoxPict%1].visible, true);
+</action>
+
+<action name="Blowup2hide">
+if(autorotate.enabled == false,
+resumeautorotation(forceplugin);
+);
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, false);
+set(layer[Blowup2title%1].visible, false);
+set(layer[Blowup2description%1].visible, false);
+set(layer[Blowup2box%1].visible, false);
+set(layer[Blowup2Image%1].visible, false);
+set(layer[Blowup2BoxPict%1].visible, false);
+</action>
+
+
+
+
+
+
+<action name="Blowup2get_thumb" >
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+
+
+set(hotspot[%1].onhover,
+Blowup2show(%1);
+Blowup2go2(%1);
+);
+
+
+set(hotspot[%1].onout,
+Blowup2hide(%1);
+
+hideTooltip();
+tween(hotspot[%1].scale,1,0.5);
+);
+
+
+<!--set(hotspot[%1].onup,
+Blowup2hide(%1);
+hideTooltip();
+
+);-->
+
+</action>
+
+<action name="Blowup2go2">
+
+
+add(Blowup2marginW, 0 , 340);
+add(Blowup2marginH, 180 , 0);
+
+set(Blowup2tul,get(hotspot[%1].linktarget));
+set(Blowup2tu, get(scene[get(Blowup2tul)].thumburl));
+if(Blowup2tu == null,
+set(Blowup2tu, get(panoramagroup[get(Blowup2tul)].thumburl));
+);
+
+
+set(Blowup2HH_center, calc(0++200  + (0*2)));
+
+set(Blowup2HH, calc(0 + 180 + (0*2)));
+
+set(Blowup2larghezza, calc(0 + 340 + (0*2)));
+
+<!--set(Blowup2POSX, calc(0 + (0*2)));-->
+
+set(Blowup2POSY, calc( 0 + 0 -10));
+
+
+
+
+
+set(layer[Blowup2description%1].width, calc(0 +  340 + (0*2)));
+set(layer[Blowup2title%1].width,340);
+set(layer[Blowup2box%1].height, get(Blowup2HH_center));
+set(layer[Blowup2box%1].width, get(Blowup2larghezza));
+set(layer[Blowup2BoxPict%1].x,0);
+set(layer[Blowup2description%1].x,get(Blowup2POSX));
+
+set(layer[Blowup2BoxPict%1].y,calc(0 + 200));
+set(layer[Blowup2description%1].edge,center);
+set(layer[Blowup2description%1].align,center);
+set(layer[Blowup2description%1].y,0);
+
+set(layer[Blowup2BoxPict%1].edge,bottom);
+set(layer[Blowup2BoxPict%1].align,bottom);
+
+
+
+
+
+
+
+hideTooltip();
+
+set(Blowup2ax, get(hotspot[%1].ath));
+set(Blowup2ay, get(hotspot[%1].atv));
+
+set(hotspot[%1].handcursor,true);
+set(hotspot[%1].visible,true);
+set(hotspot[%1].enabled,true);
+set(hotspot[%1].capture,true);
+set(hotspot[%1].edge,center);
+set(hotspot[%1].align,center);
+
+
+addhotspot(Blowup2Hotspot_Ghost%1);
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, true);
+set(hotspot[Blowup2Hotspot_Ghost%1].capture, true);
+set(hotspot[Blowup2Hotspot_Ghost%1].zoom, false);
+set(hotspot[Blowup2Hotspot_Ghost%1].zorder2, 100 );
+set(hotspot[Blowup2Hotspot_Ghost%1].zorder, 100 );
+set(hotspot[Blowup2Hotspot_Ghost%1].ath,get(Blowup2ax));
+set(hotspot[Blowup2Hotspot_Ghost%1].distorted,false);
+set(hotspot[Blowup2Hotspot_Ghost%1].atv,get(Blowup2ay));
+set(hotspot[Blowup2Hotspot_Ghost%1].width, get(Blowup2marginW));
+set(hotspot[Blowup2Hotspot_Ghost%1].height, get(Blowup2marginH));
+set(hotspot[Blowup2Hotspot_Ghost%1].keep,true);
+set(hotspot[Blowup2Hotspot_Ghost%1].url, '%FIRSTXML%/graphics/blowup2/white.png');
+
+set(hotspot[Blowup2Hotspot_Ghost%1].enable,true);
+set(hotspot[Blowup2Hotspot_Ghost%1].bgalpha,1);
+set(hotspot[Blowup2Hotspot_Ghost%1].ox,0);
+set(Blowup2bobo,get(layer[Blowup2box%1].height));
+set(hotspot[Blowup2Hotspot_Ghost%1].oy,calc((30  + (Blowup2bobo / 2 )) *-1));
+
+addlayer(Blowup2box%1);
+set(layer[Blowup2box%1].bgalpha,0);
+set(layer[Blowup2box%1].bgcolor, 0x000000);
+set(layer[Blowup2box%1].visible, true);
+set(layer[Blowup2box%1].align, center);
+set(layer[Blowup2box%1].edge, center);
+<!--set(layer[Blowup2box%1].scale,get(Blowup2myscale));-->
+set(layer[Blowup2box%1].scale,1);
+set(layer[Blowup2box%1].scalechildren,true);
+
+set(layer[Blowup2box%1].bgborder, 0 0x000000 1);
+set(layer[Blowup2box%1].bgshadow, 0 0 0 0 000000 0.7000076295109483);
+set(layer[Blowup2box%1].bgroundedge, 0);
+set(layer[Blowup2box%1].capture, true);
+set(layer[Blowup2box%1].y,0);
+set(layer[Blowup2box%1].x,0);
+set(layer[Blowup2box%1].enabled, true);
+set(layer[Blowup2box%1].keep, true);
+set(layer[Blowup2box%1].type, container);
+
+set(layer[Blowup2box%1].parent,hotspot[Blowup2Hotspot_Ghost%1]);
+
+
+
+
+getmessage(Blowup2hsho, get(hotspot[%1].descriptionID));
+
+getmessage(Blowup2hshot, get(scene[get(Blowup2tul)].titleid));
+set(Blowup2testyes,true);
+if(Blowup2hsho !== null
+,
+set(hotspot[Blowup2Hotspot_Ghost%1].height,180
+);,);
+
+addlayer(Blowup2description%1);
+
+set(layer[Blowup2description%1].height,200);
+set(layer[Blowup2description%1].handcursor, false);
+set(layer[Blowup2description%1].width,340);
+set(layer[Blowup2description%1].type,text);
+set(layer[Blowup2description%1].vcenter,true );
+set(layer[Blowup2description%1].zorder,1);
+set(layer[Blowup2description%1].bgroundedge, 0);
+
+
+
+
+Blowup2convert(get(Blowup2hsho));
+set(layer[Blowup2description%1].onloaded,Blowup2add_html_code(get(Blowup2hsho2),20,%1));
+
+
+
+
+set(layer[Blowup2description%1].css,padding:0px; );
+set(layer[Blowup2description%1].parent,layer[Blowup2box%1]);
+set(layer[Blowup2description%1].bgalpha,0);
+set(layer[Blowup2description%1].bgcolor,0xffffff);
+
+
+
+
+</action>
+<events name="Blowup2stascale"
+keep="true"
+onresize="Blowup2remove();Blowup2respo();"
+
+/>
+<action name="Blowup2respo">
+
+set(Blowup2stageSize, stagewidth);
+
+set(Blowup2myscale, calc(stagewidth / 1000));
+clamp(Blowup2myscale, 0.6,1);
+
+  </action>
+
+
+<action name="Blowup2remove_">
+
+set(hotspot[Blowup2Hotspot_Ghost%1].visible, false);
+hideTooltip();
+removehotspot(Blowup2Hotspot_Ghost%1);
+removelayer(Blowup2box%1);
+removelayer(Blowup2Image%1);
+removelayer(Blowup2BoxPict%1);
+removelayer(Blowup2description%1);
+removelayer(Blowup2title%1);
+removelayer(Blowup2close%1);
+
+  </action>
+
+<action name="Blowup2stopvideo" type="javascript" >
+  <![CDATA[
+  $("iframe").addClass("Blowup2yt_player_iframe");
+    $('.Blowup2yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+<action name="Blowup2autoplayvideo" type="javascript" >
+  <![CDATA[
+
+    $('.Blowup2yt_player_iframe').each(function(){
+  this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
+});
+  ]]>
+  </action>
+
+<action name="Blowup2add_html_code" type="Javascript"><![CDATA[
+
+        var div = document.createElement("div");
+
+        div.style.webkitUserSelect = "text"
+        div.style.MozUserSelect = "text"
+        div.style.msUserSelect = "text"
+        div.style.userSelect = "text";
+
+        var nam = "myID" + args[3];
+
+
+        div.setAttribute("id",nam);
+        div.setAttribute("style", "vertical-align: middle;  -moz-user-select: text;-webkit-user-select: text;-ms-user-select: text;user-select: text; color:#666666; font-Family:Noto Sans CJK KR Regular; overflow:auto; width:100%; height:100%; font-size:calc(12px + 0.2vw); box-sizing:border-box; padding-top:0px; padding-right:0px; padding-bottom: 0px;padding-left: 0px; text-align:center; font-weight:normal;font-style:normal;" );
+
+        div.addEventListener("mousewheel", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("DOMMouseScroll", function(event){ event.stopPropagation(); }, true);
+        div.addEventListener("touchstart", function(event){ if(krpano.device.ios && window.innerHeight == krpano.display.htmltarget.offsetHeight){ /* avoid the iOS 'overscrolling' for fullpage viewers */ var bs = document.body.parentNode.style; bs.position="fixed"; bs.top=0; bs.left=0; bs.right=0; bs.bottom=0; } krpano.control.preventTouchEvents = false; event.stopPropagation(); }, true);
+        div.addEventListener("touchend", function(event){ krpano.control.preventTouchEvents = true; event.stopPropagation(); }, true);
+        div.addEventListener("gesturestart", function(event){ event.preventDefault(); }, true);
+
+        // add some html code:
+        div.innerHTML = args[1];
+
+        // add the div to the layer element:
+        caller.sprite.appendChild(div);
+
+            $('#' + nam + ' a').css("color","#d90b0b");
+            $('#' + nam + ' a').css("text-decoration","none");
+
+
+
+
+ ]]></action>
+
+
+
+
+
+// TODO: Bloup, create actions for open blowup external
+
+
+
+
+
+
+
+
+<layer name="thumbnailsBar_thumbnailsBar"
+	keep="true"
+	type="container"
+	visible="false"
+	align="bottom"
+
+		width="100%"
+		height="0"
+		accuracy="1"
+
+	x="0"
+	y="50"
+
+	bgcolor="0xdedede"
+	bgalpha="0"
+
+	zorder="21"
+/>
+
+
+
+<layer name="thumbnailBorderSource_thumbnailsBar"
+	keep="true"
+	visible="false"
+
+	borderWidth="4"
+	borderColorDefault="0xe6e6e6" 
+	borderColorHover="0xffffff"
+	borderColorSelected="0x5e83e8"
+	borderAlphaDefault="0.50000762951094835" 
+	borderAlphaHover="1"
+	borderAlphaSelected="1"
+
+	url=""
+	offsetX="0"
+	offsetY="0"
+	quarterHeight="0"
+/>
+
+
+
+
+	
+	<krpano arrow1Loaded_thumbnailsBar="false" arrow2Loaded_thumbnailsBar="false" borderLoaded_thumbnailsBar="false" thumbnailsLoadedCounter_thumbnailsBar="0" thumbsCount_thumbnailsBar="0" thumbsCounter_thumbnailsBar="0" firstInit_thumbnailsBar="false" />
+	
+	
+	<events name="thumbnailsScrollEvents_thumbnailsBar" 
+		keep="true" 
+		
+		onxmlcomplete="ifnot(startResize_thumbnailsBar,set(isLoaded_thumbnailsBar, true);if(isStarted_thumbnailsBar,onLoadCompleteHandler_thumbnailsBar();););"
+		onTourStart="set(isStarted_thumbnailsBar, true);if(isLoaded_thumbnailsBar,onLoadCompleteHandler_thumbnailsBar(););"
+		onnewpano="if(startResize_thumbnailsBar,if(firstInit_thumbnailsBar,onLoadCompleteHandler_thumbnailsBar();););"
+		onresize="onResizeHandler_thumbnailsBar();"
+		hidetourthumbnails="hideWithThumbnailsButton_thumbnailsBar();" 
+		showtourthumbnails="showWithThumbnailsButton_thumbnailsBar();" 
+		hidetourcontrols="hideWithControlsBar_thumbnailsBar();" 
+		showtourcontrols="showWithControlsBar_thumbnailsBar();" 
+		onenterfullscreen="delayedcall(0.2,scrollToCurrentThumb_thumbnailsBar(););"
+		onexitfullscreen="delayedcall(0.2,scrollToCurrentThumb_thumbnailsBar(););"
+    changetourlanguage="updateTitles_thumbnailsBar();"	
+	/>
+	
+	
+	<layer name="scrollAreaContainer_thumbnailsBar" 
+         keep="true"
+         type="container" 
+         align="topleft" x="10" y="10"
+         marginX="10"
+         marginY="10"
+         width="0" height="0"
+         targetWidth="0"
+         targetHeight="0"
+         scrollSpeedInit="10"
+         scrollSpeed="10"
+         scrollSpeedMax="70"
+         scrollSpeedAcceleration="20"
+         parent="thumbnailsBar_thumbnailsBar"
+         thumbWidth="0"
+         thumbHeight="0"
+         itemWidth="120"
+         itemHeight="60"
+         offsetX="0" offsetY="0"
+         thumbSpacer="10"
+         currentThumbsCount="0"
+         adjustToContent="false"
+         zorder="1"
+         visible="false"
+         ready="false">
+	
+		
+    <layer name="thumbsScrollArea_thumbnailsBar"
+           url.html5="%FIRSTXML%/graphics/scrollarea.js"
+           align="bottom" x="0" y="0"
+           onhover_autoscrolling="false"
+           direction="h"/>
+	
+	</layer>
+	
+	
+	<layer name="scrollPrevArrow_thumbnailsBar" 
+         keep="true"
+         type="image"
+         visible="false"
+         parent="thumbnailsBar_thumbnailsBar"
+         targetHeight="0"
+         targetWidth="0"
+         zorder="2"
+         onloaded="loadedImages_thumbnailsBar(arrow1);"
+         url="%FIRSTXML%/graphics/thumbnailsbar/btn_scroll_left.png"
+         align="left"
+	/>
+	
+	
+	<layer name="scrollNextArrow_thumbnailsBar" 
+         keep="true"
+         type="image"
+         visible="false"
+         parent="thumbnailsBar_thumbnailsBar"
+         targetHeight="0"
+         targetWidth="0"
+         zorder="2"
+         onloaded="loadedImages_thumbnailsBar(arrow2);"
+         url="%FIRSTXML%/graphics/thumbnailsbar/btn_scroll_right.png"
+         align="right"
+	/>
+	
+	<action name="loadedImages_thumbnailsBar">
+		if(%1 == "arrow1",
+			set(arrow1Loaded_thumbnailsBar, true);
+		);
+		if(%1 == "arrow2",
+			set(arrow2Loaded_thumbnailsBar, true);
+		);
+		if(%1 == "border",
+			if(layer[thumbnailBorderSource_thumbnailsBar].url,
+				set(borderLoaded_thumbnailsBar, true);
+			);
+		);
+		if(%1 == "thumbnail",
+			inc(thumbnailsLoadedCounter_thumbnailsBar);
+		);
+	</action>
+	
+	<action name="onLoadCompleteHandler_thumbnailsBar">
+		
+		set(thumbsCount_thumbnailsBar, 0);
+		
+		
+		
+		
+			ifnot(scene[get(xml.scene)].group == layer[scrollAreaContainer_thumbnailsBar].currentGroup,
+				set(layer[scrollAreaContainer_thumbnailsBar].ready, false);
+				set(layer[scrollAreaContainer_thumbnailsBar].currentGroup, get(scene[get(xml.scene)].group));
+			);
+		
+		
+			for( set(i_thumbnailsBar, 0), i_thumbnailsBar LT scene.count, inc(i_thumbnailsBar),
+				if(scene[get(i_thumbnailsBar)].group == layer[scrollAreaContainer_thumbnailsBar].currentGroup,
+					inc(thumbsCount_thumbnailsBar);
+				);
+			);
+		
+		
+		
+		loadThumbs_thumbnailsBar();
+		
+		if(firstInit_thumbnailsBar,
+			onLoadCompleteHandlerPartThree_thumbnailsBar();
+		,
+			onLoadCompleteHandlerPartTwo_thumbnailsBar();
+		);
+	</action>
+	
+	<action name="onLoadCompleteHandlerPartTwo_thumbnailsBar">
+		set(imgCounter_thumbnailsBar, 3);
+		
+		if(arrow1Loaded_thumbnailsBar,
+			dec(imgCounter_thumbnailsBar);
+		);
+		if(arrow2Loaded_thumbnailsBar,
+			dec(imgCounter_thumbnailsBar);
+		);
+		if(thumbsCount_thumbnailsBar == thumbnailsLoadedCounter_thumbnailsBar,
+			dec(imgCounter_thumbnailsBar);
+		);
+		
+		if(imgCounter_thumbnailsBar LE 0,
+			stopdelayedcall(delayedCallOnLoadComplete_thumbnailsBar);
+			onLoadCompleteHandlerPartThree_thumbnailsBar();
+		,
+			delayedcall(delayedCallOnLoadComplete_thumbnailsBar, 0.2, onLoadCompleteHandlerPartTwo_thumbnailsBar());
+		);
+	</action>
+	
+	<action name="onLoadCompleteHandlerPartThree_thumbnailsBar">
+		resetMouseBehavior_thumbnailsBar();
+		highlightCurrentThumb_thumbnailsBar();
+		
+		
+		if(layer[scrollAreaContainer_thumbnailsBar].adjustToContent,
+			mul(adjustWidth_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].marginX), 2);
+			add(adjustWidth_thumbnailsBar, get(layer[thumbsScrollArea_thumbnailsBar].width));
+			mul(adjustHeight_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].marginY), 2);
+			add(adjustHeight_thumbnailsBar, get(layer[thumbsScrollArea_thumbnailsBar].height));
+			
+			
+			if(adjustWidth_thumbnailsBar GT stagewidth,
+				set(adjustWidth_thumbnailsBar, get(stagewidth));
+				set(layer[scrollAreaContainer_thumbnailsBar].adjustToContent, false);
+			,
+				if(adjustHeight_thumbnailsBar GT stageheight,
+					set(adjustHeight_thumbnailsBar, get(stageheight));
+					set(layer[scrollAreaContainer_thumbnailsBar].adjustToContent, false);
+				);
+			);
+			
+			setSize_thumbnailsBar(get(adjustWidth_thumbnailsBar), get(adjustHeight_thumbnailsBar));
+		);
+		
+		setupArrows_thumbnailsBar(true);
+		
+		
+		if (thumbsCounter_thumbnailsBar LE 0,
+			set(layer[thumbnailsBar_thumbnailsBar].visible, false);
+		);
+		
+		
+		set(startResize_thumbnailsBar, true);
+		set(firstInit_thumbnailsBar, true);
+	</action>
+	
+	
+	<action name="onResizeHandler_thumbnailsBar">
+		
+		delayedcall(0.1, onResizeCallback_thumbnailsBar(false); );
+	</action>
+	
+	
+	<action name="onResizeCallback_thumbnailsBar">
+		if(startResize_thumbnailsBar,
+			setSize_thumbnailsBar(get(layer[scrollAreaContainer_thumbnailsBar].targetWidth), get(layer[scrollAreaContainer_thumbnailsBar].targetHeight));
+			setupArrows_thumbnailsBar(%1);
+			
+			
+			if (thumbsCounter_thumbnailsBar LE 0,
+				set(layer[thumbnailsBar_thumbnailsBar].visible, false);
+			);
+		);
+	</action>
+	
+	
+		<action name="showWithThumbnailsButton_thumbnailsBar">
+			set(layer[thumbnailsBar_thumbnailsBar].visible, true);
+			onResizeCallback_thumbnailsBar(true);
+		</action>
+		
+		<action name="hideWithThumbnailsButton_thumbnailsBar">
+			set(layer[thumbnailsBar_thumbnailsBar].visible, false);
+		</action>
+	
+	
+		<action name="showWithControlsBar_thumbnailsBar">
+			
+				if (tour_displaythumbnails,
+					set(layer[thumbnailsBar_thumbnailsBar].visible, true);
+					onResizeCallback_thumbnailsBar(true);
+				,
+					set(layer[thumbnailsBar_thumbnailsBar].visible, false);
+				);
+		</action>
+		
+		<action name="hideWithControlsBar_thumbnailsBar">
+			set(layer[thumbnailsBar_thumbnailsBar].visible, false);
+		</action>
+	
+	
+	<action name="thumbnailBorderDrawInit_thumbnailsBar">
+		
+		set(layer[scrollAreaContainer_thumbnailsBar].offsetX, get(layer[thumbnailBorderSource_thumbnailsBar].borderWidth));
+		set(layer[scrollAreaContainer_thumbnailsBar].offsetY, get(layer[thumbnailBorderSource_thumbnailsBar].borderWidth));
+		
+		
+		mul(totalOffsetX_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].borderWidth), 2);
+		mul(totalOffsetY_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].borderWidth), 2);
+		
+		
+		if(startResize_thumbnailsBar,
+			sub(layer[scrollAreaContainer_thumbnailsBar].itemWidth, get(totalOffsetX_thumbnailsBar));
+			sub(layer[scrollAreaContainer_thumbnailsBar].itemHeight, get(totalOffsetY_thumbnailsBar));
+		);
+		
+		
+		set(layer[scrollAreaContainer_thumbnailsBar].thumbWidth, get(layer[scrollAreaContainer_thumbnailsBar].itemWidth));
+		set(layer[scrollAreaContainer_thumbnailsBar].thumbHeight, get(layer[scrollAreaContainer_thumbnailsBar].itemHeight));
+		
+		add(layer[scrollAreaContainer_thumbnailsBar].itemWidth, get(totalOffsetX_thumbnailsBar));
+		add(layer[scrollAreaContainer_thumbnailsBar].itemHeight, get(totalOffsetY_thumbnailsBar));
+	</action>
+		
+	
+	<action name="thumbnailBorderImageInit_thumbnailsBar">
+		
+		set(layer[scrollAreaContainer_thumbnailsBar].offsetX, get(layer[thumbnailBorderSource_thumbnailsBar].offsetX));
+		set(layer[scrollAreaContainer_thumbnailsBar].offsetY, get(layer[thumbnailBorderSource_thumbnailsBar].offsetY));
+		
+		
+		mul(totalOffsetX_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].offsetX), 2);
+		mul(totalOffsetY_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].offsetY), 2);
+		
+		
+		if(startResize_thumbnailsBar,
+			sub(layer[scrollAreaContainer_thumbnailsBar].itemWidth, get(totalOffsetX_thumbnailsBar));
+			sub(layer[scrollAreaContainer_thumbnailsBar].itemHeight, get(totalOffsetY_thumbnailsBar));
+		);
+		
+		
+		set(layer[scrollAreaContainer_thumbnailsBar].thumbWidth, get(layer[scrollAreaContainer_thumbnailsBar].itemWidth));
+		set(layer[scrollAreaContainer_thumbnailsBar].thumbHeight, get(layer[scrollAreaContainer_thumbnailsBar].itemHeight));
+		
+		add(layer[scrollAreaContainer_thumbnailsBar].itemWidth, get(totalOffsetX_thumbnailsBar));
+		add(layer[scrollAreaContainer_thumbnailsBar].itemHeight, get(totalOffsetY_thumbnailsBar));
+		
+		
+		div(layer[thumbnailBorderSource_thumbnailsBar].quarterHeight, get(layer[thumbnailBorderSource_thumbnailsBar].height), 4);
+		
+		
+		set(cropX_thumbnailsBar, 0);
+		set(cropY_thumbnailsBar, 0);
+		set(cropW_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].width));
+		set(cropH_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].quarterHeight));
+		txtadd(layer[thumbnailBorderSource_thumbnailsBar].cropDefault, get(cropX_thumbnailsBar), '|', get(cropY_thumbnailsBar), '|', get(cropW_thumbnailsBar), '|', get(cropH_thumbnailsBar));
+
+		
+		add(cropY_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].quarterHeight));
+		txtadd(layer[thumbnailBorderSource_thumbnailsBar].cropHover, get(cropX_thumbnailsBar), '|', get(cropY_thumbnailsBar), '|', get(cropW_thumbnailsBar), '|', get(cropH_thumbnailsBar));
+		
+		
+		add(cropY_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].quarterHeight));
+		txtadd(layer[thumbnailBorderSource_thumbnailsBar].cropSelected, get(cropX_thumbnailsBar), '|', get(cropY_thumbnailsBar), '|', get(cropW_thumbnailsBar), '|', get(cropH_thumbnailsBar));
+		
+		
+		add(cropY_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].quarterHeight));
+		txtadd(layer[thumbnailBorderSource_thumbnailsBar].cropVisited, get(cropX_thumbnailsBar), '|', get(cropY_thumbnailsBar), '|', get(cropW_thumbnailsBar), '|', get(cropH_thumbnailsBar));
+		
+		
+		set(scaleX_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].offsetX));
+		set(scaleY_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].offsetY));
+		sub(scaleW_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].width), get(totalOffsetX_thumbnailsBar));
+		sub(scaleH_thumbnailsBar, get(layer[thumbnailBorderSource_thumbnailsBar].quarterHeight), get(totalOffsetY_thumbnailsBar));
+		txtadd(layer[thumbnailBorderSource_thumbnailsBar].scale9grid, get(scaleX_thumbnailsBar), '|', get(scaleY_thumbnailsBar), '|', get(scaleW_thumbnailsBar), '|', get(scaleH_thumbnailsBar));
+	</action>
+	
+	
+	<action name="loadThumbs_thumbnailsBar">
+		if(layer[thumbnailBorderSource_thumbnailsBar].url,
+			set(imgCounter_thumbnailsBar, 1);
+		,
+			set(imgCounter_thumbnailsBar, 0);
+		);
+		
+		if(layer[thumbnailBorderSource_thumbnailsBar].url,
+			if(borderLoaded_thumbnailsBar,
+				dec(imgCounter_thumbnailsBar);
+			);
+		);
+		
+		if(imgCounter_thumbnailsBar LE 0,
+			stopdelayedcall(delayedCallOnLoadCompleteBorder_thumbnailsBar);
+			loadThumbsPartTwo_thumbnailsBar();
+		,
+			delayedcall(delayedCallOnLoadCompleteBorder_thumbnailsBar, 0.2, loadThumbs_thumbnailsBar());
+		);
+	</action>
+	
+	<action name="loadThumbsPartTwo_thumbnailsBar">
+		ifnot(layer[scrollAreaContainer_thumbnailsBar].ready,
+			
+			
+			if(layer[thumbnailBorderSource_thumbnailsBar].url,
+				thumbnailBorderImageInit_thumbnailsBar();
+			,
+				thumbnailBorderDrawInit_thumbnailsBar();
+			);
+			
+			
+			set(thumbsCounter_thumbnailsBar, 0);
+			
+			
+			
+			
+				for( set(i_thumbnailsBar, 0), i_thumbnailsBar LT scene.count, inc(i_thumbnailsBar),
+					if(scene[get(i_thumbnailsBar)].group == layer[scrollAreaContainer_thumbnailsBar].currentGroup,
+						createThumb_thumbnailsBar(get(scene[get(i_thumbnailsBar)].name), get(scene[get(i_thumbnailsBar)].thumburl), get(thumbsCounter_thumbnailsBar), get(scene[get(i_thumbnailsBar)].titleid));
+						inc(thumbsCounter_thumbnailsBar);
+					,
+						removeThumb_thumbnailsBar(get(scene[get(i_thumbnailsBar)].name));
+					);
+				);
+			
+			
+			
+			
+			set(layer[scrollAreaContainer_thumbnailsBar].currentThumbsCount, get(thumbsCounter_thumbnailsBar));
+			
+			
+			setSize_thumbnailsBar(get(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].width), get(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].height));
+			
+			
+			set(layer[scrollAreaContainer_thumbnailsBar].visible, true);
+			
+			
+				if (tour_displaycontrols,
+					showWithControlsBar_thumbnailsBar();
+				,
+					hideWithControlsBar_thumbnailsBar();
+				);
+			
+			
+			set(layer[scrollAreaContainer_thumbnailsBar].ready, true);
+		);
+	</action>
+	
+	
+	<action name="setSize_thumbnailsBar">
+		
+		
+		set(layer[scrollAreaContainer_thumbnailsBar].targetWidth, %1);
+		set(layer[scrollAreaContainer_thumbnailsBar].targetHeight, %2);
+		
+		
+		set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].width, %1);
+		set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].height, %2);
+		layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].updatepos();
+		
+		
+		mul(totalMarginX_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].marginX), 2);
+		mul(totalMarginY_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].marginY), 2);
+		
+			add(totalPluginHeight_thumbnailsBar, get(totalMarginY_thumbnailsBar), get(layer[scrollAreaContainer_thumbnailsBar].itemHeight));
+			
+			
+			
+			if(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].pixelheight LT totalPluginHeight_thumbnailsBar,
+				set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].height, get(totalPluginHeight_thumbnailsBar));
+			);
+		
+		layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].updatepos();
+		
+		
+		sub(containerWidth_thumbnailsBar, get(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].pixelwidth), get(totalMarginX_thumbnailsBar));
+		sub(containerHeight_thumbnailsBar, get(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].pixelheight), get(totalMarginY_thumbnailsBar));
+
+		
+		set(layer[scrollAreaContainer_thumbnailsBar].width, get(containerWidth_thumbnailsBar));
+		set(layer[scrollAreaContainer_thumbnailsBar].height, get(containerHeight_thumbnailsBar));
+		
+		set(scrollAreaSize_thumbnailsBar, 0);
+		
+		
+		mul(totalThumbsSpacer_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].currentThumbsCount), get(layer[scrollAreaContainer_thumbnailsBar].thumbSpacer));
+		sub(totalThumbsSpacer_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].thumbSpacer));
+		
+		set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].visible, true);
+		
+
+			mul(scrollAreaSize_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].itemWidth), get(layer[scrollAreaContainer_thumbnailsBar].currentThumbsCount));
+			add(scrollAreaSize_thumbnailsBar, get(totalThumbsSpacer_thumbnailsBar));
+			
+			set(layer[thumbsScrollArea_thumbnailsBar].width, get(scrollAreaSize_thumbnailsBar));
+			set(layer[thumbsScrollArea_thumbnailsBar].height, get(layer[scrollAreaContainer_thumbnailsBar].itemHeight));
+			
+			
+			if(layer[scrollAreaContainer_thumbnailsBar].width LT layer[scrollAreaContainer_thumbnailsBar].itemWidth,
+				set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].visible, false);
+			,
+				verifyThumbnailsBarVisibility_thumbnailsBar();
+			);
+			
+		
+		
+		if(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].width LT 0,
+			set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].visible, false);
+		);
+		
+	</action>
+	
+	
+	<action name="verifyThumbnailsBarVisibility_thumbnailsBar">
+		if(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].visible,
+			set(boolValue_thumbnailsBar, false);
+			
+			if (tour_displaythumbnails,
+				if (tour_displaycontrols,
+					set(boolValue_thumbnailsBar, true);
+				);
+			);
+			
+			set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].visible, get(boolValue_thumbnailsBar));
+		);
+	</action>
+	
+	
+	<action name="createThumb_thumbnailsBar">
+
+			add(offsetFactor_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].itemWidth), get(layer[scrollAreaContainer_thumbnailsBar].thumbSpacer));
+	
+			mul(thumbIncPos_thumbnailsBar, %3, get(offsetFactor_thumbnailsBar));
+			
+			
+			if(layer[thumbnailBorderSource_thumbnailsBar].url,
+				add(thumbIncPos_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].offsetX));
+			);
+			
+		
+		mul(negativeOffsetX_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].offsetX), -1);
+		mul(negativeOffsetY_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].offsetY), -1);
+		
+		set(thumbName, 'thumb_');
+		txtadd(thumbName, %1);
+		txtadd(thumbName, '_thumbnailsBar');
+		addlayer(get(thumbName));
+
+		
+		set(thumbTitleName, 'thumbtitle_');
+		txtadd(thumbTitleName, %1);
+		txtadd(thumbTitleName, '_thumbnailsBar');
+		addlayer(get(thumbTitleName));	
+		set(layer[get(thumbTitleName)].type              , text);
+		set(layer[get(thumbTitleName)].keep              , true);
+		set(layer[get(thumbTitleName)].parent            , get(thumbName));
+    set(layer[get(thumbTitleName)].interactivecontent, false);
+		set(layer[get(thumbTitleName)].align             , bottom);
+		set(layer[get(thumbTitleName)].x                 , 0);
+		set(layer[get(thumbTitleName)].y                 , 0);
+		set(layer[get(thumbTitleName)].css               , "text-align:center;color:#ffffff;
+                                                        font-family:Noto Sans CJK KR Regular;font-size:10px;");
+    set(layer[get(thumbTitleName)].bg                , true);
+    set(layer[get(thumbTitleName)].bgcolor           , 0x000000);
+    set(layer[get(thumbTitleName)].bgalpha           , 0.80000000000000004);
+    set(layer[get(thumbTitleName)].bgborder          , 0);
+    set(layer[get(thumbTitleName)].enabled           , false);
+    set(layer[get(thumbTitleName)].capture           , false);
+		set(layer[get(thumbTitleName)].width             , get(layer[scrollAreaContainer_thumbnailsBar].thumbWidth));
+		getmessage(layer[get(thumbTitleName)].html, %4);
+
+		set(thumbBorderName, 'thumbBorder_');
+		txtadd(thumbBorderName, %1);
+		txtadd(thumbBorderName, '_thumbnailsBar');
+		addlayer(get(thumbBorderName));
+		
+		
+		ifnot(layer[thumbnailBorderSource_thumbnailsBar].url,
+			set(layer[get(thumbBorderName)].type, container);
+			set(layer[get(thumbBorderName)].parent, thumbsScrollArea_thumbnailsBar);
+		);
+    set(layer[get(thumbBorderName)].maskchildren, true);
+
+		
+		set(layer[get(thumbName)].onloaded, loadedImages_thumbnailsBar("thumbnail"););
+		set(layer[get(thumbName)].url, %2);
+		set(layer[get(thumbName)].keep, true);
+		set(layer[get(thumbName)].width, get(layer[scrollAreaContainer_thumbnailsBar].thumbWidth));
+		set(layer[get(thumbName)].height, get(layer[scrollAreaContainer_thumbnailsBar].thumbHeight));
+		set(layer[get(thumbName)].align, topleft);
+		
+		
+			set(layer[get(thumbName)].y, get(layer[scrollAreaContainer_thumbnailsBar].offsetY));
+		
+			if(layer[thumbnailBorderSource_thumbnailsBar].url,
+				set(layer[get(thumbName)].parent, thumbsScrollArea_thumbnailsBar);
+				set(layer[get(thumbName)].x, get(thumbIncPos_thumbnailsBar));
+			,
+				set(layer[get(thumbName)].parent, get(thumbBorderName));
+				set(layer[get(thumbName)].x, get(layer[scrollAreaContainer_thumbnailsBar].offsetX));
+				set(layer[get(thumbName)].onclick, resetMouseBehavior_thumbnailsBar(); mainloadscene(%1); delayedcall(0.1,highlightThumb_thumbnailsBar(%1)));
+			);	
+			
+		
+		
+		set(layer[get(thumbBorderName)].keep, true);
+		set(layer[get(thumbBorderName)].width, get(layer[scrollAreaContainer_thumbnailsBar].itemWidth));
+		set(layer[get(thumbBorderName)].height, get(layer[scrollAreaContainer_thumbnailsBar].itemHeight));
+		set(layer[get(thumbBorderName)].align, topleft);
+		
+		if(layer[thumbnailBorderSource_thumbnailsBar].url,
+			set(layer[get(thumbBorderName)].url, get(layer[thumbnailBorderSource_thumbnailsBar].url));
+			set(layer[get(thumbBorderName)].scale9grid, get(layer[thumbnailBorderSource_thumbnailsBar].scale9grid));
+			set(layer[get(thumbBorderName)].parent, get(thumbName));
+			set(layer[get(thumbBorderName)].x, get(negativeOffsetX_thumbnailsBar));
+			set(layer[get(thumbBorderName)].y, get(negativeOffsetY_thumbnailsBar));
+			set(layer[get(thumbBorderName)].onclick, resetMouseBehavior_thumbnailsBar(); mainloadscene(%1); delayedcall(0.1,highlightThumb_thumbnailsBar(%1)));
+		,
+			
+				set(layer[get(thumbBorderName)].x, get(thumbIncPos_thumbnailsBar)); 
+				
+		);
+
+
+		
+		setupMouseBehavior_thumbnailsBar(%1, %4);
+		
+	</action>
+	
+
+  <action name="updateTitles_thumbnailsBar">
+
+
+				for( set(i_thumbnailsBar, 0), i_thumbnailsBar LT scene.count, inc(i_thumbnailsBar),
+					if(scene[get(i_thumbnailsBar)].group == layer[scrollAreaContainer_thumbnailsBar].currentGroup,
+			      set(thumbTitleName, 'thumbtitle_');
+  	  		  txtadd(thumbTitleName, get(scene[get(i_thumbnailsBar)].name));
+    	  		txtadd(thumbTitleName, '_thumbnailsBar');
+			      getmessage(layer[get(thumbTitleName)].html, get(scene[get(i_thumbnailsBar)].titleid));
+					);
+				);
+
+  </action>	
+	
+	<action name="removeThumb_thumbnailsBar">
+		set(thumbName, 'thumb_');
+		txtadd(thumbName, %1);
+		txtadd(thumbName, '_thumbnailsBar');
+		removelayer(get(thumbName));
+		
+		set(thumbBorderName, 'thumbBorder_');
+		txtadd(thumbBorderName, %1);
+		txtadd(thumbBorderName, '_thumbnailsBar');
+		removelayer(get(thumbBorderName));
+
+		set(thumbTitleName, 'thumbtitle_');
+		txtadd(thumbTitleName, %1);
+		txtadd(thumbTitleName, '_thumbnailsBar');
+		removelayer(get(thumbTitleName));
+
+	</action>
+	
+	
+	
+	<action name="setupArrows_thumbnailsBar">
+		
+		if(layer[scrollAreaContainer_thumbnailsBar].adjustToContent,
+			hideArrows_thumbnailsBar();
+		,
+			ifnot(device.touchdevice,
+				
+					if(layer[scrollAreaContainer_thumbnailsBar].width LT layer[thumbsScrollArea_thumbnailsBar].width,
+				
+					showArrows_thumbnailsBar();
+				,
+					hideArrows_thumbnailsBar();
+				);
+			,
+				hideArrows_thumbnailsBar();
+			);
+		);
+		
+		
+		if(%1,
+			scrollToCurrentThumb_thumbnailsBar();
+		);
+		
+		
+			
+			if(layer[scrollAreaContainer_thumbnailsBar].width LT layer[scrollAreaContainer_thumbnailsBar].itemWidth,
+				set(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].visible, false);
+			);
+	</action>
+	
+	
+	<action name="showArrows_thumbnailsBar">
+		
+		
+		
+		
+		set(layer[scrollPrevArrow_thumbnailsBar].visible, true);
+		set(layer[scrollNextArrow_thumbnailsBar].visible, true);
+		
+		
+		
+			
+			add(totalArrowSize_thumbnailsBar, get(layer[scrollPrevArrow_thumbnailsBar].width), get(layer[scrollNextArrow_thumbnailsBar].width));
+		
+			
+			sub(scrollAreaContainerSize_thumbnailsBar, get(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].pixelwidth), get(totalArrowSize_thumbnailsBar));
+		
+			set(layer[scrollAreaContainer_thumbnailsBar].width, get(scrollAreaContainerSize_thumbnailsBar));
+			
+			set(layer[scrollAreaContainer_thumbnailsBar].x, get(layer[scrollPrevArrow_thumbnailsBar].width));
+			
+		
+		
+		set(layer[scrollPrevArrow_thumbnailsBar].onhover, scrollPrev_thumbnailsBar(););
+		set(layer[scrollNextArrow_thumbnailsBar].onhover, scrollNext_thumbnailsBar(););
+		
+		set(layer[scrollPrevArrow_thumbnailsBar].onclick, scrollPrev_thumbnailsBar(get(layer[scrollAreaContainer_thumbnailsBar].scrollSpeedAcceleration)););
+		set(layer[scrollNextArrow_thumbnailsBar].onclick, scrollNext_thumbnailsBar(get(layer[scrollAreaContainer_thumbnailsBar].scrollSpeedAcceleration)););
+		
+		
+		
+		
+		
+		set(layer[scrollPrevArrow_thumbnailsBar].onout, set(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed, get(layer[scrollAreaContainer_thumbnailsBar].scrollSpeedInit)););
+		set(layer[scrollNextArrow_thumbnailsBar].onout, set(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed, get(layer[scrollAreaContainer_thumbnailsBar].scrollSpeedInit)););
+		
+	</action>
+	
+	
+	
+	
+	<action name="hideArrows_thumbnailsBar">
+		
+		set(layer[scrollPrevArrow_thumbnailsBar].visible, false);
+		set(layer[scrollNextArrow_thumbnailsBar].visible, false);
+		
+		
+
+			mul(totalMargin_thumbnailsBar, get(layer[scrollAreaContainer_thumbnailsBar].marginX), 2);
+			
+			sub(scrollAreaContainerSize_thumbnailsBar, get(layer[get(layer[scrollAreaContainer_thumbnailsBar].parent)].pixelwidth), get(totalMargin_thumbnailsBar));
+
+			set(layer[scrollAreaContainer_thumbnailsBar].width, get(scrollAreaContainerSize_thumbnailsBar));
+			set(layer[scrollAreaContainer_thumbnailsBar].x, get(layer[scrollAreaContainer_thumbnailsBar].marginX));
+			 
+			
+	</action>
+	
+	
+	<action name="scrollPrev_thumbnailsBar">
+		
+		
+		if(%1,
+			inc(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed, %1);
+		);
+		
+		layer[thumbsScrollArea_thumbnailsBar].stopscrolling();
+		
+		set(scrollLimit_thumbnailsBar, 0);
+		
+		
+			
+				sub(scrollLimit_thumbnailsBar, get(layer[thumbsScrollArea_thumbnailsBar].width), get(layer[scrollAreaContainer_thumbnailsBar].width));
+				div(scrollLimit_thumbnailsBar, 2);
+			
+			add(layer[thumbsScrollArea_thumbnailsBar].x, get(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed));
+			if(layer[thumbsScrollArea_thumbnailsBar].x GE scrollLimit_thumbnailsBar,
+				set(layer[thumbsScrollArea_thumbnailsBar].x, get(scrollLimit_thumbnailsBar));
+			);
+		
+		if(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed LT layer[scrollAreaContainer_thumbnailsBar].scrollSpeedMax,
+			inc(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed);
+		);
+		
+	</action>
+	
+	
+	<action name="scrollNext_thumbnailsBar">
+		
+		
+		if(%1,
+			inc(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed, %1);
+		);
+		
+		layer[thumbsScrollArea_thumbnailsBar].stopscrolling();
+		
+			
+			sub(scrollLimit_thumbnailsBar, get(layer[thumbsScrollArea_thumbnailsBar].width), get(layer[scrollAreaContainer_thumbnailsBar].width));
+			
+				div(scrollLimit_thumbnailsBar, 2);
+			mul(scrollLimit_thumbnailsBar, -1);
+			
+			sub(layer[thumbsScrollArea_thumbnailsBar].x, get(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed));
+			if(layer[thumbsScrollArea_thumbnailsBar].x LE scrollLimit_thumbnailsBar,
+				set(layer[thumbsScrollArea_thumbnailsBar].x, get(scrollLimit_thumbnailsBar));
+			);
+		
+		if(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed LT layer[scrollAreaContainer_thumbnailsBar].scrollSpeedMax,
+			inc(layer[scrollAreaContainer_thumbnailsBar].scrollSpeed);
+		);
+		
+	</action>
+	
+	
+	<action name="resetMouseBehavior_thumbnailsBar">
+	
+		
+		
+			for( set(j_thumbnailsBar, 0), j_thumbnailsBar LT scene.count, inc(j_thumbnailsBar),
+				set(thumbBorderName, 'thumbBorder_');
+				txtadd(thumbBorderName, get(scene[get(j_thumbnailsBar)].name));
+				txtadd(thumbBorderName, '_thumbnailsBar');
+				
+				setupMouseBehavior_thumbnailsBar(get(scene[get(j_thumbnailsBar)].name), get(scene[get(j_thumbnailsBar)].titleid));
+			);
+		
+	</action>
+	
+	
+	<action name="setupMouseBehavior_thumbnailsBar">
+
+		set(thumbName, 'thumb_');
+		txtadd(thumbName, %1);
+		txtadd(thumbName, '_thumbnailsBar');
+		
+		set(thumbBorderName, 'thumbBorder_');
+		txtadd(thumbBorderName, %1);
+		txtadd(thumbBorderName, '_thumbnailsBar');
+		
+		if(layer[thumbnailBorderSource_thumbnailsBar].url,
+			set(layer[get(thumbBorderName)].crop, get(layer[thumbnailBorderSource_thumbnailsBar].cropDefault));
+			set(layer[get(thumbBorderName)].onovercrop, get(layer[thumbnailBorderSource_thumbnailsBar].cropHover));
+			set(layer[get(thumbBorderName)].ondowncrop, get(layer[thumbnailBorderSource_thumbnailsBar].cropHover));
+			set(layer[get(thumbBorderName)].tooltip, %2);
+				set(layer[get(thumbBorderName)].onhover, showTooltip('plugin'));
+				set(layer[get(thumbBorderName)].onout, hideTooltip());
+		,
+			set(layer[get(thumbBorderName)].bgcolor, get(layer[thumbnailBorderSource_thumbnailsBar].borderColorDefault));
+			set(layer[get(thumbBorderName)].bgalpha, get(layer[thumbnailBorderSource_thumbnailsBar].borderAlphaDefault));
+				set(layer[get(thumbName)].tooltip, %2);
+				set(layer[get(thumbName)].onhover, showTooltip('plugin'));
+			
+			set(layer[get(thumbName)].onover, 
+				set(layer[get(parent)].bgcolor, get(layer[thumbnailBorderSource_thumbnailsBar].borderColorHover));
+				set(layer[get(parent)].bgalpha, get(layer[thumbnailBorderSource_thumbnailsBar].borderAlphaHover));
+			);
+			
+			set(layer[get(thumbName)].onout, 
+				set(layer[get(parent)].bgcolor, get(layer[thumbnailBorderSource_thumbnailsBar].borderColorDefault));
+				set(layer[get(parent)].bgalpha, get(layer[thumbnailBorderSource_thumbnailsBar].borderAlphaDefault));
+				hideTooltip();
+			);
+		);
+	
+	</action>
+	
+	
+	<action name="highlightCurrentThumb_thumbnailsBar">
+			delayedcall(0.1,highlightThumb_thumbnailsBar(get(xml.scene)));
+	</action>
+	
+	
+	<action name="highlightThumb_thumbnailsBar">
+	
+		set(thumbBorderName, 'thumbBorder_');
+		txtadd(thumbBorderName, %1);
+		txtadd(thumbBorderName, '_thumbnailsBar');
+		
+		if(layer[thumbnailBorderSource_thumbnailsBar].url,
+			set(layer[get(thumbBorderName)].crop, get(layer[thumbnailBorderSource_thumbnailsBar].cropSelected));
+			set(layer[get(thumbBorderName)].onovercrop, get(layer[thumbnailBorderSource_thumbnailsBar].cropSelected));
+			set(layer[get(thumbBorderName)].ondowncrop, get(layer[thumbnailBorderSource_thumbnailsBar].cropSelected));
+		,
+			set(thumbName, 'thumb_');
+			txtadd(thumbName, %1);
+			txtadd(thumbName, '_thumbnailsBar');
+			
+			set(layer[get(thumbBorderName)].bgcolor, get(layer[thumbnailBorderSource_thumbnailsBar].borderColorSelected));
+			set(layer[get(thumbBorderName)].bgalpha, get(layer[thumbnailBorderSource_thumbnailsBar].borderAlphaSelected));
+			
+			set(layer[get(thumbName)].onover, "");
+			set(layer[get(thumbName)].onout, hideTooltip(););
+		);
+
+		scrollToThumb_thumbnailsBar(%1);
+	</action>
+	
+	
+	<action name="scrollToCurrentThumb_thumbnailsBar">
+			scrollToThumb_thumbnailsBar(get(xml.scene));
+	</action>
+	
+	
+	<action name="scrollToThumb_thumbnailsBar">
+		
+		set(thumbName, 'thumb_');
+		set(thumbBorderName, 'thumbBorder_');
+		
+		txtadd(thumbName, %1);
+		txtadd(thumbName, '_thumbnailsBar');
+		txtadd(thumbBorderName, %1);
+		txtadd(thumbBorderName, '_thumbnailsBar');
+
+			set(posX_thumbnailsBar, 0);
+			if(layer[thumbnailBorderSource_thumbnailsBar].url,
+				div(halfThumbWidth_thumbnailsBar, get(layer[get(thumbName)].width), 2);
+				ifnot(layer[scrollAreaContainer_thumbnailsBar].adjustToContent,
+					add(posX_thumbnailsBar, get(layer[get(thumbName)].x), get(halfThumbWidth_thumbnailsBar));
+				);
+				if(layer[thumbsScrollArea_thumbnailsBar].scrolltocenter,
+					layer[thumbsScrollArea_thumbnailsBar].scrolltocenter(get(posX_thumbnailsBar), 0);
+				);
+			,
+				div(halfThumbWidth_thumbnailsBar, get(layer[get(thumbBorderName)].width), 2);
+				ifnot(layer[scrollAreaContainer_thumbnailsBar].adjustToContent,
+					add(posX_thumbnailsBar, get(layer[get(thumbBorderName)].x), get(halfThumbWidth_thumbnailsBar));
+				);
+				if(layer[thumbsScrollArea_thumbnailsBar].scrolltocenter,
+					layer[thumbsScrollArea_thumbnailsBar].scrolltocenter(get(posX_thumbnailsBar), 0);
+				);
+			);
+		
+	</action>
+	
+
+
+
+
+          <style 	cooltype="text"  	name="tooltip_hotspot_big" 	type="container"  	width="1"  	height="0"  	bgcolor="0xffffff" 	bgalpha="1.00"  	bgcapture="true"  	accuracy="1"  	edge="bottom" 	 	onover="hidebbhs();set(zorder,20); 	"  	  	onout="set(zorder,2); 	"  	ondown.touch="onover();" 	onloaded=" 	txtadd(mybubble,'bubble',get(name)); 	addlayer(get(mybubble)); 	copy(hotspot[get(name)].mybubble,mybubble); 	layer[get(mybubble)].loadstyle(cool_hotspot3textlayer); 	ifnot(onclick,set(layer[get(mybubble)].handcursor,false)); 	txtadd(parentlayer,'hotspot[',get(name),']'); 	copy(layer[get(mybubble)].parent,parentlayer); 	if(linkedscene, 	getmessage(montitre, get(scene[get(linkedscene)].titleid)); 	); 	if(linkedgroup, 	getmessage(montitre, get(panoramagroup[get(linkedgroup)].titleid)); 	); 	if(!linkedscene AND !linkedgroup, 	getmessage(montitre, get(tooltip)); 	set(onhover,); 	); 	set(layer[get(mybubble)].html, get(montitre)); 	txtadd(clickaction,'callwith(hotspot[',get(name),'],onclick)'); 	copy(layer[get(mybubble)].onclick,clickaction);  " /> <style  	name="cool_hotspot3textlayer"  	type="text" 	 	 	roundedge="10"   	bg="true" 	bgcolor="0x24283e" 	bgalpha="0.90000762951094837"   	bgborder="false"   	css="color:#ffffff;font-family:Noto Sans CJK KR Regular;font-size:16px;text-align:center;"   	padding="5 10"  	align="top"  	edge="bottom"  	ondown.touch="callwith(get(parent),onover);" /> <style  	name="cool_hotspot3textlayer_onover"  	type="text" 	  	roundedge="5"   	bg="false"   	bgborder="false"     	shadow="1" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1"   	textshadow="1" textshadowrange="5.0" textshadowangle="45" textshadowcolor="0x000000" textshadowalpha="1"  	css="color:#ffffff;font-family:Arial;font-size:20px;text-align:center;"   	padding="5 10"  	align="top"  	edge="bottom"  />   
+<action name="viewControlZoomIn">
+	if(%1,
+		if(%2,
+			if(%2 LT view.fovmin,
+				zoomto(get(view.fovmin));
+			,
+				if(%2 LT view.fov,
+					zoomto(%2);
+				);
+			);
+		,
+			set(fov_moveforce, -1);
+			delayedcall(0.1, viewControlZoomStop());
+		);
+	,
+		set(fov_moveforce, -1);
+	);
+</action>
+<action name="viewControlZoomOut">
+	if(%1,
+		if(%2,
+			if(%2 GT view.fovmax,
+				zoomto(get(view.fovmax));
+			,
+				if(%2 GT view.fov,
+					zoomto(%2);
+				);
+			);
+		,
+			set(fov_moveforce, +1);
+			delayedcall(0.1, viewControlZoomStop());
+		);
+	,
+		set(fov_moveforce, +1);
+	);
+</action>
+<action name="viewControlZoomStop">
+	set(fov_moveforce, 0);
+</action>
+
+  <action name="hideTourControls">set(tour_displaycontrols, false);events.dispatch(hidetourcontrols);</action>
+  <action name="showTourControls">set(tour_displaycontrols, true); events.dispatch(showtourcontrols);</action>
+
+
+  <action name="shareTour">events.dispatch(onsharetour);</action>
+<action name="setTourLanguage">
+  if (%1 == null,
+    showlog();
+    trace("CHANGE TOUR LANGUAGE : NO LANGUAGE SET");
+   ,
+    set(tour_language, %1);
+    js(eventTourChangeLanguage(get(tour_language)));
+    events.dispatch(changetourlanguage);
+  );
+</action>
+
+  <action name="exitFullScreen" devices="fullscreensupport">set(tour_fullscreen,false);js(setFullscreen(false));</action>
+  <action name="enterFullScreen" devices="fullscreensupport">set(tour_fullscreen,true);js(setFullscreen(true));</action>
+  <action name="switchFullScreen">if(tour_fullscreen,exitFullScreen();,enterFullScreen(););</action>
+
+  
+  <events name="krpanoExitFullscreenEvent"
+    onexitfullscreen="if(tour_fullscreen,exitFullScreenChangeEvent(););"
+    keep="true" />
+
+  <action name="exitFullScreenChangeEvent" devices="fullscreensupport">set(tour_fullscreen,false);events.dispatch(onexitfullscreen);</action>
+  <action name="enterFullScreenChangeEvent" devices="fullscreensupport">set(tour_fullscreen,true);events.dispatch(onenterfullscreen);</action>
+  <action name="exitFullScreenFallback">set(fullscreen,false);</action>
+  <action name="enterFullScreenFallback">set(fullscreen,true);</action>
+  
+  <action name="resizeFullScreenEvent">delayedcall(0,updatescreen(););</action>
+
+  <action name="hideTourInfo">set(tour_displayinfo, false);events.dispatch(onhidetourinfo);</action>
+  <action name="showTourInfo">set(tour_displayinfo, true); events.dispatch(onshowtourinfo);</action>
+
+
+</krpano>

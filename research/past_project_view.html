@@ -1,0 +1,38 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "3";			//대메뉴
+$mMenuNum = "3";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+
+<section class="contents current board_ebi">
+	<div class="contents-wrap">
+		
+		<div class="tableWrap type1">
+			<table>
+				<tr class="pc">
+					<th>Project</th>
+					<th>Research Period</th>
+					<th>Funding Agency</th>
+				</tr>
+				<tr>
+					<td><span class="mobile">Project</span><?=stripSlashNotUsed($row["project_name"])?></td>
+					<td><span class="mobile">Research Period</span><?=stripSlashNotUsed($row["research_period"])?></td>
+					<td><span class="mobile">Funding Agency</span><?=stripSlashNotUsed($row["financial_support"])?></td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		
+	</div>
+</section>

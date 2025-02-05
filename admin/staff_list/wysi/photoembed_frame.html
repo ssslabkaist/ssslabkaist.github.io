@@ -1,0 +1,258 @@
+<?session_start();
+include "../../common/loginchk.html";
+include "../../../config/dbconn.inc.php";
+include "../../../config/functions.inc";
+
+if($mode=="end") {
+
+	if(!$tableWidth) {
+		$tableWidth = "1200";
+	}
+
+	$filePath=$_SERVER["DOCUMENT_ROOT"]."/program_file/staff_list/spec_img1";		//업로드 파일 경로
+
+	//=========================================목록이미지 용량 체크 START================================//
+
+	//echo sizeof($img1);
+	for ($z=0; $z < sizeof($img1); $z++) {
+			$imgUpload = fileUploadMulti($_FILES["img1"]["name"][$z],$_FILES["img1"]["tmp_name"][$z],"img","",$filePath);
+			if($imgUpload[0]) {
+				$imgUpload[0] = imgSizeAuto($imgUpload[0],$filePath,$tableWidth);
+				$getImgSizeBoard = getImgSizeBoard($imgUpload[0],$filePath,$tableWidth);
+
+				$imgUp[] = $imgUpload[0];
+				$imgUpWidth[] = $getImgSizeBoard[0];
+				$imgUpHeight[] = $getImgSizeBoard[1];
+			}
+	}
+	//=========================================목록이미지 용량 체크 END================================//
+
+?>
+<script language="javascript">
+	//var input = document.all["AttachFile"];
+	//var width = document.tform.imageWidth.value;
+	//var height = document.tform.imageHeight.value;
+	//var border = document.tform.b.value;
+	//var vspace = document.tform.v.value;
+	//var hspace = document.tform.h.value;
+	//var alignment = document.tform.alignment.value;
+	//var description = document.tform.description.value;
+
+
+	//var input = "http://<?=$HTTP_HOST?>/p_images/notice/img1/<?=$img1[0]?>";
+	var imgView = "";
+<?for($zz=0; $zz<sizeof($imgUp); $zz++) {?>
+	var input = "/program_file/staff_list/spec_img1/<?=$imgUp[$zz]?>";
+
+	var width = "<?=$imgUpWidth[$zz]?>";
+	var height = "<?=$imgUpHeight[$zz]?>";
+	//var height = "";
+	var border = "<?=$b?>";
+	var vspace = "<?=$v?>";
+	var hspace = "<?=$h?>";
+	var alignment = "<?=$alignment?>";
+	var description = "<?=$description?>";
+
+	if(document.getSelection && parent.myEditor2){
+		parent.document.getElementById("myEditor").focus();
+		parent.selObj.addRange(parent.myEditor2);
+		parent.myEditor2 = "";
+	}
+
+	parent.Editor_LoadImage(input,width,height,border,vspace,hspace,alignment,description);
+	//imgView="<div><img src='"+input+"' width='"+width+"' height='"+height+"'></div>";
+
+<?}?>
+	
+
+	parent.hideSideView();
+</script>
+<?
+}
+?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>그림삽입</title>
+<script type="text/javascript">
+//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 START
+if(document.getSelection && !parent.myEditor2 && parent.selObj){
+	//window.alert("asafs");
+	parent.myEditor2 = parent.selObj.getRangeAt(0).cloneRange(0);
+}
+//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 END
+
+
+
+function frmChk() {		
+	form1 = document.tform;
+
+	var img1Num = 0;
+	for(var i=0; i<document.getElementsByName("img1[]").length; i++) {
+		if(document.getElementsByName("img1[]")[i].value) {
+			img1Num++;
+		}
+	}
+
+	if(img1Num<1) {
+		window.alert("이미지를 선택하세요");
+		return false;
+	}
+
+	form1.submit();
+}
+</script>
+<script language=javascript>
+
+function display_image(objNum)
+{
+    var file = document.getElementsByName("img1[]")[objNum].value;
+    var allowSubmit = false;
+    var extArray = new Array(".gif", ".jpg", ".png");
+
+    extArray.join(" ");
+
+    if (!file) return;
+
+    while (file.indexOf("\\") != -1)
+        file = file.slice(file.indexOf("\\") + 1);
+
+    var ext = file.slice(file.indexOf(".")).toLowerCase();
+
+    for (var i = 0; i < extArray.length; i++) {
+        if (extArray[i] == ext) {
+            allowSubmit = true;
+            break;
+        }
+    }
+
+    if (allowSubmit) {
+        //show_image.innerHTML = '';
+        imgComplete(objNum);
+    }
+    else {
+        imgComplete(objNum);
+//        alert("그림 삽입은 GIF, JPG, PNG 파일만 가능합니다. 다시 선택하여 주십시요.");
+    }
+}
+
+function imgComplete (objNum)
+{
+/*
+	window.alert(document.getElementsByName("img1[]")[objNum].value);
+    var img = document.createElement("img");
+    img.src = document.getElementsByName("img1[]")[objNum].value;
+
+    var w = 240;
+    var h = 180;
+    var resizeW;
+    var resizeH;
+
+    if (img.complete == true) {
+        if (img.width > w || img.height > h) {
+            if (img.width > img.height) {
+                resizeW = img.width > w ? w : img.width;
+                resizeH = Math.round((img.height * resizeW) / img.width);
+            }
+            else {
+                resizeH = img.height > h ? h : img.height;
+                resizeW = Math.round((img.width * resizeH) / img.height);
+            }
+        }
+        else {
+            resizeW = img.width;
+            resizeH = img.height;
+        }
+
+        document.tform.imageHeight.value = img.height;
+        document.tform.imageWidth.value = img.width;
+
+        img.width = resizeW;
+        img.height = resizeH;
+
+        //show_image.appendChild(img);
+    }
+    else {
+        setTimeout("imgComplete()", 100);
+    }
+*/
+}
+</script>
+</head>
+<style>
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p,
+a, address, em, img, strong,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td{margin: 0; padding:0; border:0;}
+
+hr, legend { display: none; }
+em, address, cite {font-style:normal;}
+ol, ul { list-style:none; }
+table { border-collapse:collapse; border-spacing:0; }
+fieldset, img { border:0; }
+
+
+table { border-collapse:collapse; border-spacing:0; }
+
+/*기본 링크*/
+a:link, a:visited { color:#666666; text-decoration:none; }
+a:hover, a:active { color:#000000; text-decoration:none;}
+
+
+body{color:#666666; font-size:12px; line-height:20px; font-family:"돋움", sans-serif; word-break:break-all;}
+
+
+
+.photo_embed{padding:10px;background:#FBFBFB;height:70px;}
+.photo_embed .layer_txt{ margin:5px; font-size:11px;}
+
+
+.input_wysi{border:1px solid #cccccc; background:#f5f5f5; font-size:12px; height:16px; vertical-align:middle; padding:3px 3px 0 3px;}
+.select_wysi{border:1px solid #cccccc; background:#f5f5f5; font-size:12px; height:21px; vertical-align:middle;}
+.textarea_wysi{border:1px solid #dadada; background:#ffffff; color:#666666; font-size:12px;}
+.radio_wysi{vertical-align: middle; margin:0 0 0.1em 0;}
+.checkbox_wysi{vertical-align: middle; margin:0 0 0.19em 0;} 
+.file_wysi{border:1px solid #cccccc; background:#f5f5f5; font-size:12px; height:21px; vertical-align:middle; padding:3px 3px 0 3px;}
+
+
+
+.wysi_btn{ padding:13px 0 0 0;}
+.wysi_btn_01{border:1px solid #656565; background:#797979;display:inline-block; }
+.wysi_btn_01 a{color:#ffffff; text-decoration:none;display:inline-block;padding:3px 8px 2px 8px; line-height:14px; font-size:11px; font-weight:normal;}
+
+
+
+</style>
+<body>
+
+<form action="<?=$PHP_SELF?>?mode=end" name="tform" method="post" enctype="multipart/form-data">
+<input type="hidden" name="imageWidth" id="imageWidth" size="5" value="0">
+<input type="hidden" name="imageHeight" id="imageHeight" size="5" value="0">
+<input type="hidden" name="tableWidth" id="tableWidth" value="<?=$tableWidth?>">
+	<div class="photo_embed">
+		<!--<div class="layer_txt">삽입할 그림 선택</div>-->
+		
+		<div style="height:5px;"></div>
+<?
+for($i=0; $i<1; $i++) {
+	echo "
+		<input type=\"file\" name=\"img1[]\" class=\"file_wysi\" style=\"width:99%;\" accept=\".gif, .jpg, .png\" onChange=\"display_image(".$i.");\" >";
+}
+?>
+
+		<div style="height:5px;"></div>
+		<span style="display:inline-block; width:129px;"></span>
+
+		<span class="wysi_btn_01"><a href="#void" onclick="frmChk();" title="확인">확인</a></span>
+		<span class="wysi_btn_01"><a href="#void" onclick="parent.cancelButton();" title="취소">취소</a></span>
+		
+		<div style="height:5px;"></div>
+		<div style="color:#004080;font-size:11px;">이미지 용량을 최대한 줄여주세요. 홈페이지 속도에 영향을 줍니다.</div>
+		<div style="color:#ff0000; font-size:11px;">사이즈 및 용량이 크면 프로그램에서 자동으로 수정 됩니다.</div>
+	</div>
+</form>
+
+</body>
+</html>

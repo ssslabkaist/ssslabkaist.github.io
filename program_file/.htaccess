@@ -1,0 +1,5 @@
+<Files ~ ".*\.(php|htm|inc|html|php3|php4|php5|php6)$">
+    Order allow,deny
+    Deny from all
+</Files>
+

@@ -1,0 +1,444 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+$menuMcategory = "01010000";
+//접속 권한, 네비게이션 위치 END
+
+
+
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+exit;
+
+
+
+function copy_directory($src_dir, $dest_dir)
+{
+//echo $src_dir;
+//echo "<br>";
+//echo $dest_dir;
+//	exit;
+    if($src_dir == $dest_dir)
+        return false;
+
+    if(!is_dir($src_dir))
+        return false;
+
+    if(!is_dir($dest_dir)) {
+        @mkdir($dest_dir, 0707);
+        @chmod($dest_dir, 0707);
+    }
+
+    $dir = opendir($src_dir);
+    while (false !== ($filename = readdir($dir))) {
+        if($filename == "." || $filename == "..")
+            continue;
+
+        $files[] = $filename;
+    }
+
+    for($i=0; $i<count($files); $i++) {
+        $src_file = $src_dir.'/'.$files[$i];
+        $dest_file = $dest_dir.'/'.$files[$i];
+        if(is_file($src_file)) {
+            copy($src_file, $dest_file);
+            @chmod($dest_file, 0606);
+        }
+    }
+}
+
+
+function recursive_copy($src,$dst) { 
+	$dir = opendir($src);  
+	@mkdir($dst);  
+	while(false !== ( $file = readdir($dir)) ) {  
+		if (( $file != '.' ) && ( $file != '..' )) {  
+			if ( is_dir($src . '/' . $file) ) {  
+			   recursive_copy($src . '/' . $file,$dst . '/' . $file); 
+			}  
+			else {  
+				copy($src . '/' . $file,$dst . '/' . $file);  
+			}  
+		}  
+	}  
+	closedir($dir);  
+}  
+
+
+function strReplace($content) {
+	$content = str_replace("http://www.fry.or.kr","",$content);
+	$content = str_replace("http://fry.or.kr","",$content);
+
+	return $content;
+}
+
+
+///////////////////////////////////////////////////////////재단소식
+##########테이블 세팅 START##########
+$newTn = "board_notice01";
+$oldTn = "zetyx_board_sss_news";
+##########테이블 세팅 END##########
+
+
+##########기존 데이타 삭제, 초기화 START##########
+mysql_query("DELETE FROM ".$newTn."",$dbconn);
+mysql_query("ALTER TABLE ".$newTn." AUTO_INCREMENT=0",$dbconn);
+##########기존 데이타 삭제, 초기화 START##########
+
+###########################
+###########################
+////////////////////출력 형식 게시판 마다 다른듯 체크 해야 함
+###########################
+###########################
+$mSqlOld = mysql_query("SELECT * FROM ".$oldTn." ORDER BY no ASC",$dbconn);
+while($mRowOld = mysql_fetch_array($mSqlOld)) {
+
+
+
+	$sql = mysql_query("SELECT MAX(sid), MAX(gid) FROM ".$newTn."",$dbconn);
+	if(!$sql) {
+		echo("query_error");
+	}
+
+	$row = mysql_fetch_row($sql);
+
+	if($row[0]) {
+	   $new_sid = $row[0] + 1;
+	} else {
+	   $new_sid = 1;
+	} 
+
+	if($row[1]) {
+	   $new_gid = $row[1] + 1;
+	} else {
+	   $new_gid = 1;
+	} 
+
+	$level = 0;
+
+	$gonggi_status = "N";
+	if($mRowOld["headnum"]<=-2000000000) {
+		$gonggi_status = "Y";
+	}
+	$secret_status = "N";
+	if($mRowOld["is_secret"]=="1") {
+		$secret_status = "Y";
+	}
+
+	
+	//비밀번호가 없는것들 세팅
+	if(!$mRowOld["wr_password"]) {
+		$mRowOld["wr_password"] = "blank_".date("ymdhis");
+	}
+
+
+	$wrContent = "";
+	$list_img1 = "";
+	$filePath = $_SERVER["DOCUMENT_ROOT"]."/board/";
+	$filePath2 = $_SERVER["DOCUMENT_ROOT"]."/";
+
+
+	$mRowOld["file_name1"] = iconv("utf-8","euc-kr",$mRowOld["file_name1"]);
+	$mRowOld["file_name2"] = iconv("utf-8","euc-kr",$mRowOld["file_name2"]);
+
+
+	$file1[0] = "";
+	$file1[1] = "";
+	$file2[0] = "";
+	$file2[1] = "";
+
+	if($mRowOld["file_name1"]) {
+		$origi_file = $filePath.$mRowOld["file_name1"];
+		if(file_exists($filePath.$mRowOld["file_name1"])) {
+
+			$type=substr( strrchr($mRowOld["file_name1"], "."), 1);
+			$date=date("YmdHis");
+			$retype1= randomFnc().$date.".".$type;			
+			$copy_file = $filePath2."program_file/board/".$newTn."/".$retype1;
+			copy($origi_file, $copy_file);
+			@chmod($copy_file, 0606);
+			$file1[0] = $retype1;
+			$file1[1] = $mRowOld["s_file_name1"];
+
+		}
+	}
+
+	if($mRowOld["file_name2"]) {
+		$origi_file = $filePath.$mRowOld["file_name2"];
+
+		if(file_exists($filePath.$mRowOld["file_name2"])) {
+			$type=substr( strrchr($mRowOld["file_name2"], "."), 1);
+			$date=date("YmdHis");
+			$retype1= randomFnc().$date.".".$type;			
+			$copy_file = $filePath2."program_file/board/".$newTn."/".$retype1;
+			copy($origi_file, $copy_file);
+			@chmod($copy_file, 0606);
+			$file2[0] = $retype1;
+			$file2[1] = $mRowOld["s_file_name1"];
+		}
+	}
+
+
+/*
+	$wrContent = emojiRemoveAddslashes(strReplace($mRowOld["memo"]));
+	if(!$mRowOld["wr_option"]) {
+	}
+*/
+	$wrContent.= "<div>".nl2br(addslashes($mRowOld["memo"]))."</div>";
+
+	$INS ="INSERT INTO ".$newTn." SET ";
+	$INS.="uid='".$mRowOld["no"]."',";
+	$INS.="sid='".$new_sid."',";
+	$INS.="gid='".$new_gid."',";
+	$INS.="level='".$level."',";
+	$INS.="name='".$mRowOld["name"]."',";
+	$INS.="email='".$mRowOld["email"]."',";
+	$INS.="homepage='".emojiRemoveAddslashes($mRowOld["homepage"])."',";
+	$INS.="subject='".emojiRemoveAddslashes($mRowOld["subject"])."',";
+	$INS.="subject_color='',";
+	$INS.="content='".$wrContent."',";
+	$INS.="pwd='6965',";
+	$INS.="member_id='admin',";
+
+
+	$INS.="upfile='".$file1[0]."',";
+	$INS.="upfile2='".$file2[0]."',";
+	$INS.="upfile3='".$file3[0]."',";
+	$INS.="upfile_name='".$file1[1]."',";
+	$INS.="upfile2_name='".$file2[1]."',";
+	$INS.="upfile3_name='".$file3[1]."',";
+
+
+	$INS.="ip='".$mRowOld["ip"]."',";
+	$INS.="writedate='".date("Y-m-d H:i:s",$mRowOld["reg_date"])."',";
+	$INS.="modifydate='".date("Y-m-d H:i:s",$mRowOld["reg_date"])."',";
+	$INS.="ref='".$mRowOld["hit"]."',";
+	$INS.="tag='H',";
+	$INS.="gonggi_status='".$gonggi_status."',";
+	$INS.="secret_status='".$secret_status."' ";
+
+	
+//echo $INS;
+//exit;
+	$result = mysql_query($INS,$dbconn);
+
+	if(!$result) {
+		echo $INS;
+		exit;
+	}
+}
+
+
+mysql_query("UPDATE `".$newTn."` SET content=replace(content,'target=\"_self\"','')",$dbconn);
+mysql_query("UPDATE `".$newTn."` SET content=replace(content,'target=\"_blank\"','')",$dbconn);
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////Activities & Event
+##########테이블 세팅 START##########
+$newTn = "board_notice02";
+$oldTn = "zetyx_board_gallery";
+##########테이블 세팅 END##########
+
+
+##########기존 데이타 삭제, 초기화 START##########
+mysql_query("DELETE FROM ".$newTn."",$dbconn);
+mysql_query("ALTER TABLE ".$newTn." AUTO_INCREMENT=0",$dbconn);
+##########기존 데이타 삭제, 초기화 START##########
+
+###########################
+###########################
+////////////////////출력 형식 게시판 마다 다른듯 체크 해야 함
+###########################
+###########################
+$mSqlOld = mysql_query("SELECT * FROM ".$oldTn." ORDER BY no ASC",$dbconn);
+while($mRowOld = mysql_fetch_array($mSqlOld)) {
+
+
+
+	$sql = mysql_query("SELECT MAX(sid), MAX(gid) FROM ".$newTn."",$dbconn);
+	if(!$sql) {
+		echo("query_error");
+	}
+
+	$row = mysql_fetch_row($sql);
+
+	if($row[0]) {
+	   $new_sid = $row[0] + 1;
+	} else {
+	   $new_sid = 1;
+	} 
+
+	if($row[1]) {
+	   $new_gid = $row[1] + 1;
+	} else {
+	   $new_gid = 1;
+	} 
+
+	$level = 0;
+
+	$gonggi_status = "N";
+	if($mRowOld["headnum"]<=-2000000000) {
+		$gonggi_status = "Y";
+	}
+	$secret_status = "N";
+	if($mRowOld["is_secret"]=="1") {
+		$secret_status = "Y";
+	}
+
+	
+	//비밀번호가 없는것들 세팅
+	if(!$mRowOld["wr_password"]) {
+		$mRowOld["wr_password"] = "blank_".date("ymdhis");
+	}
+
+
+	$wrContent = "";
+	$list_img1 = "";
+	$filePath = $_SERVER["DOCUMENT_ROOT"]."/board/";
+	$filePath2 = $_SERVER["DOCUMENT_ROOT"]."/";
+
+	if($mRowOld["file_name1"]) {
+		$origi_file = $filePath.$mRowOld["file_name1"];
+		if(file_exists($filePath.$mRowOld["file_name1"])) {
+
+			$type=substr( strrchr($mRowOld["file_name1"], "."), 1);
+			$date=date("YmdHis");
+			$retype1= randomFnc().$date.".".$type;
+			
+			$copy_file = $filePath2."program_file/board/contents_img01/".$retype1;
+
+			copy($origi_file, $copy_file);
+			@chmod($copy_file, 0606);
+
+			$wrContent.="<div><img src=\"/program_file/board/contents_img01/".$retype1."\"></div>";
+
+
+
+			$date=date("YmdHis");
+			$retype1= randomFnc().$date.".".$type;			
+			$copy_file = $filePath2."program_file/board/".$newTn."/".$retype1;
+			copy($origi_file, $copy_file);
+			@chmod($copy_file, 0606);
+			$list_img1 = $retype1;
+		}
+	}
+
+	if($mRowOld["file_name2"]) {
+		$origi_file = $filePath.$mRowOld["file_name2"];
+		if(file_exists($filePath.$mRowOld["file_name2"])) {
+			$type=substr( strrchr($mRowOld["file_name2"], "."), 1);
+			$date=date("YmdHis");
+			$retype1= randomFnc().$date.".".$type;
+			
+			$copy_file = $filePath2."program_file/board/contents_img01/".$retype1;
+
+			copy($origi_file, $copy_file);
+			@chmod($copy_file, 0606);
+
+			$wrContent.="<div><img src=\"/program_file/board/contents_img01/".$retype1."\"></div>";
+		}
+	}
+
+
+/*
+	$wrContent = emojiRemoveAddslashes(strReplace($mRowOld["memo"]));
+	if(!$mRowOld["wr_option"]) {
+	}
+*/
+	$wrContent.= "<div>".nl2br(addslashes($mRowOld["memo"]))."</div>";
+
+	$INS ="INSERT INTO ".$newTn." SET ";
+	$INS.="uid='".$mRowOld["no"]."',";
+	$INS.="sid='".$new_sid."',";
+	$INS.="gid='".$new_gid."',";
+	$INS.="level='".$level."',";
+	$INS.="name='".$mRowOld["name"]."',";
+	$INS.="email='".$mRowOld["email"]."',";
+	$INS.="homepage='".emojiRemoveAddslashes($mRowOld["homepage"])."',";
+	$INS.="subject='".emojiRemoveAddslashes($mRowOld["subject"])."',";
+	$INS.="subject_color='',";
+	$INS.="content='".$wrContent."',";
+	$INS.="pwd='6965',";
+	$INS.="member_id='admin',";
+	$INS.="list_img1='".$list_img1."',";
+	$INS.="ip='".$mRowOld["ip"]."',";
+	$INS.="writedate='".date("Y-m-d H:i:s",$mRowOld["reg_date"])."',";
+	$INS.="modifydate='".date("Y-m-d H:i:s",$mRowOld["reg_date"])."',";
+	$INS.="ref='".$mRowOld["hit"]."',";
+	$INS.="tag='H',";
+	$INS.="gonggi_status='".$gonggi_status."',";
+	$INS.="secret_status='".$secret_status."' ";
+
+	
+//echo $INS;
+//exit;
+	$result = mysql_query($INS,$dbconn);
+
+	if(!$result) {
+		echo $INS;
+		exit;
+	}
+}
+
+
+mysql_query("UPDATE `".$newTn."` SET content=replace(content,'target=\"_self\"','')",$dbconn);
+mysql_query("UPDATE `".$newTn."` SET content=replace(content,'target=\"_blank\"','')",$dbconn);
+
+
+/*
+exit;
+
+
+copy_directory("/home/new9ebiweb/public_html/data/file/s31","/home/new7ebiweb/public_html/program_file/board/board_news01");//재단소식
+copy_directory("/home/new9ebiweb/public_html/data/file/s34","/home/new7ebiweb/public_html/program_file/board/board_press01");//보도자료
+copy_directory("/home/fry/public_html/data/file/s53","/home/new7ebiweb/public_html/program_file/board/board_form01");//서식 - 자료실
+copy_directory("/home/fry/public_html/data/file/s35","/home/new7ebiweb/public_html/program_file/board/board_newsletter01");//서식 - 뉴스레터
+copy_directory("/home/fry/public_html/data/file/s36","/home/new7ebiweb/public_html/program_file/board/board_magazine01");//서식 - 소식지
+copy_directory("/home/fry/public_html/data/file/s37","/home/new7ebiweb/public_html/program_file/board/board_publication01");//서식 - 간행물
+copy_directory("/home/fry/public_html/data/file/s44","/home/new7ebiweb/public_html/program_file/board/board_gallery01");//갤러리
+copy_directory("/home/fry/public_html/data/file/s42","/home/new7ebiweb/public_html/program_file/board/board_note01");//참여수기
+copy_directory("/home/fry/public_html/data/file/s43","/home/new7ebiweb/public_html/program_file/board/board_whithus01");//Withus 생생정보나눔
+copy_directory("/home/fry/public_html/data/file/s63","/home/new7ebiweb/public_html/program_file/board/board_neulpu01");//늘푸름회
+copy_directory("/home/fry/public_html/data/file/s52","/home/new7ebiweb/public_html/program_file/board/board_customer01");//고객의 소리
+copy_directory("/home/fry/public_html/data/editor","/home/new7ebiweb/public_html/data/editor");//고객의 소리
+
+
+
+recursive_copy("/home/fry/public_html/data/editor","/home/new7ebiweb/public_html/data/editor");//상세페이지 이미지
+recursive_copy("/home/fry/public_html/data/file","/home/new7ebiweb/public_html/data/file");//상세페이지 이미지
+
+recursive_copy("/home/fry/public_html/ckeditor/userfiles","/home/new7ebiweb/public_html/ckeditor/userfiles");
+recursive_copy("/home/fry/public_html/bbs/download_blue","/home/new7ebiweb/public_html/bbs/download_blue");
+recursive_copy("/home/fry/public_html/bbs/Pds","/home/new7ebiweb/public_html/bbs/Pds");
+*/
+?>

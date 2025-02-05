@@ -1,0 +1,78 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+//접속 권한, 네비게이션 위치 END
+
+if($cateMode=="Bcode_Del"){		//1단계분류 삭제
+	
+	
+	$Bcatecode = substr($Bcode,0,2);
+
+	$msql = mysql_query("SELECT count(*) FROM menuCategory WHERE catedeg='2' AND catecode LIKE BINARY('$Bcatecode%')",$dbconn);
+	$mrow = mysql_fetch_row($msql);
+	if($mrow[0]) {
+		ERROR_BACK("1단계분류 하위에 2단계분류가 있습니다. \\n2단계분류를 먼저 삭제하신 후 카테고리를 삭제하세요");
+		exit;
+	}
+
+	$sql = mysql_query("DELETE FROM menuCategory WHERE catecode='$Bcode'" ,$dbconn);
+					
+	echo "<script>
+			alert('1단계분류가 삭제되었습니다.');
+			location.href='./reg.html';
+		  </script>";
+
+}
+else if($cateMode=="Mcode_Del"){	//2단계분류 삭제
+
+	$Mcatecode = substr($Mcode,0,4);
+
+	$msql = mysql_query("SELECT count(*) FROM menuCategory WHERE catedeg='3' AND catecode LIKE BINARY('$Mcatecode%')",$dbconn);
+	$mrow = mysql_fetch_row($msql);
+	if($mrow[0]) {
+		ERROR_BACK("2단계분류 하위에 3단계분류가 있습니다. \\n3단계분류를 먼저 삭제하신 후 카테고리를 삭제하세요");
+	}
+
+	$sql = mysql_query("DELETE FROM menuCategory WHERE catecode='$Mcode'" ,$dbconn);
+	echo "<script>
+			alert('2단계분류가 삭제되었습니다.');
+			location.href='./reg.html?CheckBcode=$Bcode';
+		  </script>";
+
+}else if($cateMode=="Scode_Del"){		//3단계분류 삭제
+
+	$Scatecode = substr($Scode,0,6);
+
+	$psql = mysql_query("SELECT count(*) FROM country_language WHERE menuCategory LIKE BINARY('$Scatecode%')",$dbconn);
+	$prow = mysql_fetch_row($psql);
+	if($prow[0]) {
+		ERROR_BACK("3단계분류를 사용중인 상품이 있습니다. \\n상품을 먼저 삭제하신 후 카테고리를 삭제하세요");
+	}
+
+	$sql = mysql_query("DELETE FROM menuCategory WHERE catecode='$Scode'" ,$dbconn);
+
+	echo "<script>
+			alert('3단계분류가 삭제되었습니다.');
+			location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode';
+		  </script>";
+
+}else if($cateMode=="SScode_Del"){		//4단계분류 삭제
+
+	$psql = mysql_query("select count(*) from country_language where B_code='$Bcode' and M_code='$Mcode' and S_code='$Scode' and SS_code='$SScode'",$dbconn);
+	$prow = mysql_fetch_row($psql);
+	if($prow[0]) {
+		ERROR_BACK("4단계분류를 사용중인 상품이 있습니다. \\n상품을 먼저 삭제하신 후 카테고리를 삭제하세요");
+	}
+
+	$sql = mysql_query("delete from cateSSID where Bcode='$Bcode' and Mcode='$Mcode' and Scode='$Scode' and code='$SScode'" ,$dbconn);
+
+	echo "<script>
+			alert('소카테고리가 삭제되었습니다.');
+			location.href='./reg.html?CheckBcode=$Bcode'+'&CheckMcode=$Mcode'+'&CheckScode=$Scode';
+		  </script>";
+}
+?>

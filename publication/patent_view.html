@@ -1,0 +1,201 @@
+<?session_start();
+
+exit;
+
+
+
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "4";			//대메뉴
+$mMenuNum = "3";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+$subquery="status_current_s=".$status_current_s."&year_s=".$year_s."";
+
+$Search.=" AND view_state='Y'";
+
+$sql = mysql_query("SELECT * FROM patentList WHERE uid='".$uid."' ".$Search."",$dbconn);
+$row = mysql_fetch_array($sql);
+
+if(!$row["uid"]) {
+	ERROR_BACK("잘못된 접속입니다.");
+	exit;
+}
+
+
+$publicationDate = "";
+$applicationDate = "";
+if($row["publication_date"]) {
+	$registrationDate = explode("-",$row["publication_date"]);
+	$registrationDate = $registrationDate[0].". ".$registrationDate[1].". ".$registrationDate[2]."";
+}
+if($row["application_date"]) {
+	$applicationDate = explode("-",$row["application_date"]);	
+	$applicationDate = $applicationDate[0].". ".$applicationDate[1].". ".$applicationDate[2]."";
+}
+
+//등록
+$statusCurrentClass="regist";
+$titleNumberView = "Publication Number";
+$dateView = $row["publication_date"];
+
+if($row["status_current"]=="Application") {	//출원
+	$statusCurrentClass="applic";
+	$titleNumberView = "Application Number";
+	$dateView = $row["application_date"];
+}
+
+$numberView = "";
+if(onlyBlankSpaceChk(stripSlashNotUsed($row["application_number"]))) {
+	$numberView = stripSlashNotUsed($row["application_number"]);
+}
+if(onlyBlankSpaceChk(stripSlashNotUsed($row["publication_number"]))) {
+
+	if($numberView) {
+		$numberView = " ㆍ ";
+	}
+	$numberView = stripSlashNotUsed($row["publication_number"]);
+}
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<style>
+.journal .view .view-title dd {padding-left: 190px !important;}
+</style>
+
+<section class="contents journal patents board_ebi">	
+	<div class="contents-wrap view">
+		
+		<div class="view-title">
+			<h3><?=stripSlashNotUsed($row["subject"])?></h3>
+			<dl>
+				<dt>Inventors</dt>
+				<dd><?=authorChg($row["name"])?></dd>
+				<dt>Country</dt>
+				<dd><?=$row["registration_country"]?></dd>
+				<dt>Date</dt>
+				<dd><?=$dateView?></dd>
+				<dt><?=$titleNumberView?></dt>
+				<dd><?=$numberView?></dd>
+<?
+if($row["file1"]) {
+?>
+				<dt>Attached File</dt>
+				<dd><?file_download_name($row["file1"],"/program_file/patent_list/file1",$row["file1_real"],"","","Y")?></dd>
+<?
+}
+?>
+			</dl>
+		</div>
+		
+		<div class="view-inner">
+			<!--상세 START-->
+				<script language="JavaScript">
+				$(document).ready(function () {
+					var windowWidth = $(window).width();
+					$(window).resize(function(){
+						var win = $(window).width();
+						if(windowWidth != win) {
+							windowWidth = win;
+							document.getElementById('v_content_id').contentWindow.parentOnload();
+						}
+					});
+				});
+				$(window).load(function(){
+					tid = setInterval(vContentSizeTime(), 1000);
+					clearInterval(tid);
+				});
+				function vContentSizeTime() {
+					document.getElementById('v_content_id').contentWindow.parentOnload();
+				}
+				</script>
+
+
+				<script language="JavaScript">
+				function vContentSize(bodyHeight){
+					document.getElementById("v_content_id").height=bodyHeight;
+				}
+				</script>
+				<iframe id="v_content_id" name="v_content_name" width="100%" scrolling="no" frameborder="0" marginwidth="0" src="./publication_view_content_iframe.html?uid=<?=$uid?>"></iframe>
+<!--상세 END-->
+		</div>
+		<div class="btnWrap">
+			<a href="./patent_list.html?cpage=<?=$cpage?>&spage=<?=$spage?>&<?=$subquery?>">LIST</a>
+		</div>
+		
+		<!-- 이전/다음 게시물 -->
+		<div class="more_list">
+
+<?
+$npSearch =" AND view_state='Y'";
+if($status_current_s){
+	$npSearch.=" AND status_current = '".$status_current_s."' ";	
+}
+
+if($year_s) {	
+	if(strpos($year_s,"bef_") !== false) {
+		$year_s = str_replace("bef_","",$year_s);
+		// 포함 경우 이전년도 검색 조회
+		$npSearch.=" AND year_of_publication <= '".$year_s."' ";
+	}else{
+		$npSearch.=" AND year_of_publication = '".$year_s."' ";
+	}
+}
+?>
+	
+				
+				<div>
+					<i class="prev"></i>
+					<span class="bold">이전글</span>
+<?
+
+$prevSql = mysql_query("SELECT uid,subject FROM patentList WHERE 1 ".$npSearch." AND listorder='".$row["listorder"]."' AND '".$row["uid"]."'<uid ORDER BY listorder DESC, uid ASC LIMIT 1",$dbconn);
+$prevRow = mysql_fetch_array($prevSql);
+
+if(!$prevRow[0]) {
+	$prevSql = mysql_query("SELECT uid,subject FROM patentList WHERE 1 ".$npSearch." AND listorder<'".$row["listorder"]."' AND '".$row["uid"]."'<>uid ORDER BY listorder DESC, uid ASC LIMIT 1",$dbconn);
+	$prevRow = mysql_fetch_row($prevSql);
+}
+
+if($prevRow[0]) {
+	echo "
+				<span><a class=\"split\" href=\"".$PHP_SELF."?uid=".$prevRow[0]."&cpage=".$cpage."&spage=".$spage."&".$subquery."\">".cutting(stripSlashNotUsed($prevRow[1]),120)."</a></span>";
+}else{
+	echo "
+				<span><a class=\"split\" href=\"#void\" onclick=\"window.alert('처음입니다.'); return false;\">처음입니다</a></span>";
+}
+?>
+			</div>
+			<div class="h20"></div>
+			<div>
+				<i class="next"></i>
+				<span class="bold">다음글</span>
+<?
+$nextSql = mysql_query("SELECT uid,subject FROM patentList WHERE 1 ".$npSearch." AND '".$row["listorder"]."'=listorder AND uid<'".$row["uid"]."' ORDER BY listorder ASC, uid DESC LIMIT 1",$dbconn);
+$nextRow = mysql_fetch_row($nextSql);
+
+if(!$nextRow[0]) {
+	$nextSql = mysql_query("SELECT uid,subject FROM patentList WHERE 1 ".$npSearch." AND '".$row["listorder"]."'<listorder AND uid<>'".$row["uid"]."' ORDER BY listorder ASC, uid DESC LIMIT 1",$dbconn);
+	$nextRow = mysql_fetch_row($nextSql);
+}
+
+if($nextRow[0]) {
+	echo "
+				<span><a class=\"split\" href=\"".$PHP_SELF."?uid=".$nextRow[0]."&cpage=".$cpage."&spage=".$spage."&".$subquery."\">".cutting(stripSlashNotUsed($nextRow[1]),120)."</a></span>";
+}else{
+	echo "
+					<span><a class=\"split\" href=\"#void\" onclick=\"window.alert('마지막입니다.'); return false;\">마지막입니다</a></span>";
+}
+?>
+			</div>
+		</div>
+<!-- //이전/다음 게시물 -->	
+		
+	</div>
+</section>

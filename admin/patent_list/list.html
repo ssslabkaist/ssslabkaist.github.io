@@ -1,0 +1,430 @@
+<?session_start();
+include "../common/loginchk.html";
+include "../../config/dbconn.inc.php";
+include "../../config/functions.inc";
+
+
+//접속 권한, 네비게이션 위치 START
+adminConAuth("A");
+$menuMcategory = "03020000";
+//접속 권한, 네비게이션 위치 END
+
+
+//--------------환경설정 시작-------------------------------//
+if(!$list_count) {
+	$list_count = 20;
+}
+$page_count = 10;
+
+
+if ($cpage == "" ){	$cpage = 1; }
+if ($spage == "" ){ $spage = 1; }
+//---------------환경설정 끝-------------------------------//
+
+$subquery= "subject_s=".urlencode($subject_s)."&name_s=".urlencode($name_s)."&publication_number_s=".urlencode($publication_number_s)."&view_state_s=".$view_state_s."";
+
+if($subject_s) {
+	$Search.=" AND INSTR(subject,'".$subject_s."')";
+}
+if($name_s) {
+	$Search.=" AND INSTR(name,'".$name_s."')";
+}
+/*
+if($publication_number_s) {
+	$Search.=" AND publication_number='".$publication_number_s."'";
+}
+*/
+if($application_number_s) {
+	$Search.=" AND application_number='".$application_number_s."'";
+}
+if($view_state_s){
+	$Search.=" AND view_state='".$view_state_s."'";
+}
+
+
+$que ="SELECT COUNT(*) FROM patentList ";
+$que.="WHERE 1 $Search";
+
+
+$sql = mysql_query($que,$dbconn);
+
+if(!$sql) {
+	echo("query_error");
+}
+
+$row = mysql_fetch_row($sql);
+
+if (($row[0] % $list_count) == 0) {
+	$max_page = intval($row[0] / $list_count);
+}else{
+	$max_page = intval($row[0] / $list_count + 1);
+}
+
+$sid = $row[0]-($cpage-1)*$list_count;
+$set_num = intval(($cpage - 1) * $list_count);
+
+include "../include/header.html";
+?>
+
+<script>
+function Search(frm){
+	frm.submit();
+}
+function delGo(url2){
+	if(!confirm("목록에서 삭제 됩니다.\n삭제 하시겠습니까?")){
+		return;
+	}
+	location.href=url2;
+}
+</script>
+
+<script language="javascript">
+function ListOrderPop(url) {
+	var lopWin = window.open(url,'ListOrderPop','top=0,left=0,width=700,height=700,scrollbars=no');
+	lopWin.focus();
+}
+</script>
+
+
+
+<script language="javascript">
+function frmUpd() {
+	form1 = document.frmNameUpd;
+	var len = form1.elements.length;
+	var NUM=0;
+
+	for(z=0;z<len;z++) {
+		if (form1.elements[z].name=="UID[]" && form1.elements[z].checked==true) {
+			NUM++;
+/*
+			for(i=0; i<z+3; i++) {
+				if(!form1.elements[i].value) {
+					window.alert("빈 칸이 있습니다. 빈칸은 없어야 합니다.");
+					form1.elements[i].focus();
+					return;
+				}
+			}
+*/
+		}
+	}
+
+	if(NUM==0) {
+		window.alert("체크된 목록이 없습니다. 수정할 목록을 체크하세요.");
+		return;
+	}
+
+	
+	form1.submit();
+}
+
+function frmUpdChk() {
+	var form1 = document.frmNameUpd;
+
+	
+	var len = form1.elements.length;
+
+	var NUM = 0;
+	
+	for(i=0;i<len;i++) {
+		if(form1.elements[i].name=="frmUpdChkBox") {
+			if(form1.elements[i].checked==true) {
+				for(z=0;z<len;z++) {
+					if (form1.elements[z].name=="UID[]") {
+						form1.elements[z].checked=true;
+					}
+				}
+			}else{
+				for(z=0;z<len;z++) {
+					if (form1.elements[z].name=="UID[]") {
+						form1.elements[z].checked=false;
+					}
+				}
+			}
+		}
+	}
+}
+</script>
+
+
+
+<div style="border-bottom:1px solid #d9dde2;">
+	<span class="con_title">Patent 관리</span>
+	<span class="con_navi">관리자 &gt; Publication &gt; Patent 관리</span>
+	<div style="clear:both; height:1px;"></div>
+</div>
+
+
+
+<div style="padding:10px;">
+	<table width="100%">
+<form action="<?=$PHP_SELF?>" name='myform' method='get'>
+		<tr>
+			<td style="border:3px solid #a09c9a; padding:10px;">
+
+				<table class="search_table_01">
+					<tr>
+						<td>
+							<span>
+								<strong>제목 : </strong>
+								<input type="text" name="subject_s" maxlength="30" size="30" class="input_M" value="<?=inputTextPrint($subject_s)?>">
+							</span>
+							<span>
+								<strong>발명자명 : </strong>
+								<input type="text" name="name_s" maxlength="30" size="30" class="input_M" value="<?=inputTextPrint($name_s)?>">
+							</span>
+							<!-- <span>
+								<strong>등록 번호 : </strong>
+								<input type="text" name="publication_number_s" maxlength="30" size="30" class="input_M" value="<?=inputTextPrint($publication_number_s)?>">
+							</span> -->
+							<span>
+								<strong>출원 번호 : </strong>
+								<input type="text" name="application_number_s" maxlength="30" size="30" class="input_M" value="<?=inputTextPrint($application_number_s)?>">
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span>
+								<strong>출력여부 : </strong>
+								<select name="view_state_s" class="select_M">
+									<option value="" <?if(!$view_state_s) {echo "selected";}?>>전체</option>
+									<option value="Y" <?if($view_state_s=="Y") {echo "selected";}?>>출력</option>
+									<option value="N" <?if($view_state_s=="N") {echo "selected";}?>>미출력</option>
+								</select>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td style=" text-align:left; border:none; color:#919191;">
+							<span class="input_btn_01 input_color_01"><input type="submit" value="검색하기" style="min-width:60px; vertical-align:middle;"></span> * 필요한 부분만 입력하시거나 동시 검색 하실 수 있습니다.
+							<span class="input_btn_01"><input type="button" value="검색초기화" style="min-width:60px; vertical-align:middle;" onclick="location.href='<?=$PHP_SELF?>';"></span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+</form>
+	</table>
+
+
+
+	<!--왼쪽, 오른쪽 정렬일때-->
+	<div style="clear:both;padding:5px 0;">
+		<div style="float:left;">
+			<span class="s_btn_03"><a href="#link" onclick="frmUpd(); return false;"><strong style="min-width:60px;">선택수정</strong></a></span>
+
+			<span class="s_btn_04"><a href="#link" onclick="location.href='./reg.html'; return false;"><strong style="min-width:60px;">등록하기</strong></a></span>
+
+			<span class="s_btn_05"><a href="#link" onclick="ListOrderPop('./listorder_list.html'); return false;"><strong style="min-width:60px;">출력순서</strong></a></span>
+
+		</div>
+
+		<div style="float:right; padding:0;position:relative;left:0px; top:8px;">
+			<div style="font-size:11px;">총 <strong style="color:#ff3300;"><?=$row[0]?></strong> 개 (<?=$cpage?>/<?=$max_page?>)</div>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+
+
+
+<form method="post" name="frmNameUpd" action="./process_patent.php">
+<input type="hidden" name="mode" value="listMod">
+	<table class="list_table_01">
+		<colgroup>
+			<col width="5%" />
+			<col width="5%" />
+			<col width="8%" />
+			<col width="" />
+			<col width="13%" />
+			<col width="13%" />
+			<col width="7%" />
+			<col width="" />
+		</colgroup>
+		<tr>
+			<th><input type="checkbox" name="frmUpdChkBox" onClick="frmUpdChk();"></th>
+			<th>번호</th>
+			<th>년도</th>
+			<th>제목</th>
+			<th>등록 번호</th>
+			<th>출원 번호</th>
+			<th>출력여부</th>
+			<th style="width:120px; background:#f1f1f1;">비고</th>
+		</tr>
+
+<?
+$query ="SELECT * ";
+$query.="FROM patentList ";
+$query.="WHERE 1 $Search ORDER BY  listorder ASC, uid DESC LIMIT $set_num, $list_count";
+
+
+$result= mysql_query($query,$dbconn);
+
+if (!$result) {
+	echo $query;
+	exit;
+	//ERROR_BACK("Qeury Error");
+}
+
+$i=0;
+while($row = mysql_fetch_array($result)){
+
+	$BGcolor="#FFDDDE";
+	if($row["view_state"]=="Y") {
+		$BGcolor="#FFFFFF";
+	}
+
+
+	echo "
+		<tr align=\"center\" height=\"25\" bgcolor='".$BGcolor."'>
+			<td><input type=\"checkbox\" name=\"UID[]\" value=\"".$row["uid"]."\"></td>
+			<td>".$sid."</td>
+			<td>".stripSlashNotUsed($row["year_of_publication"])."</td>
+			<td style=\"text-align:left;\">
+				<div>".stripSlashNotUsed($row["registration_country"])."</div>
+				<strong>".stripSlashNotUsed($row["subject"])."</strong>
+				<div>Inventor : ".authorChg(stripSlashNotUsed($row["name"]))."</div>
+				<div>Status : ".$row["status_current"]."</div>";
+/*
+	if($row["file1"]) {
+		echo "
+				<div>첨부파일 : ".file_download($row["file1"],"/program_file/patent_list/file1",$row["file1_real"],"","","Y")." ".file_download_name($row["file1"],"/program_file/patent_list/file1",$row["file1_real"],"","","Y")."</div>";
+	}
+*/
+
+	echo "
+			</td>
+			<td>".stripSlashNotUsed($row["publication_number"])."</td>
+			<td>".stripSlashNotUsed($row["application_number"])."</td>
+			<td>
+				<select name=\"VIEW_STATE[".$row["uid"]."]\" class=\"select_M\">
+					<option value=\"Y\""; if($row["view_state"]=="Y") {echo "selected";} echo ">출력</option>
+					<option value=\"N\""; if($row["view_state"]=="N") {echo "selected";} echo ">미출력</option>
+				</select>
+			</td>
+			<td class=\"end_none\">
+				".$row["writedate"]."
+				<div style=\"color:#FF0000;\">".$row["modifydate"]."</div>
+				<a href=\"./modi.html?uid=".$row["uid"]."&cpage=".$cpage."&spage=".$spage."&".$subquery."\"><img src=\"/admin/img/bt_modify.gif\" border=\"0\" style=\"vertical-align:middle;\"></a>
+				<a href=\"#void\" onclick=\"delGo('./process_patent.php?mode=delEnd&uid=".$row["uid"]."&".$subquery."&cpage=".$cpage."&spage=".$spage."'); return false;\"><img src=\"/admin/img/bt_del.gif\" border=\"0\" style=\"vertical-align:middle;\"></a>
+			</td>
+		</tr>";
+	$i++;
+	$sid--;
+}
+mysql_close($dbconn);
+?>
+
+	</table>
+
+<input type="hidden" name="cpage" value="<?=$cpage?>">
+<input type="hidden" name="spage" value="<?=$spage?>">
+
+<input type="hidden" name="subject_s" value="<?=inputTextPrint($subject_s)?>">
+<input type="hidden" name="name_s" value="<?=inputTextPrint($name_s)?>">
+<input type="hidden" name="publication_number_s" value="<?=inputTextPrint($publication_number_s)?>">
+<input type="hidden" name="application_number_s" value="<?=inputTextPrint($application_number_s)?>">
+<input type="hidden" name="view_state_s" value="<?=$view_state_s?>">
+
+
+</form>
+
+
+	<!-- 페이징 -->
+	<div class="pagenum">
+<?
+echo "
+		<a href=\"$PHP_SELF?$subquery&cpage=1&spage=1\" class=\"prev_end\"><span>처음</span></a>";
+
+if ($spage>1) {
+	echo "
+		<a href=\"$PHP_SELF?$subquery&cpage=".($spage-$page_count)."&spage=".($spage-$page_count)."\" class=\"prev\"><span>이전</span></a>";
+}
+
+$a=0;
+for ($i=$spage; $i<$spage+$page_count; $i++) {
+	if ($i<=$max_page){ 
+		if ($a!=0) {
+			echo " | ";
+		}
+		if ($cpage==intval($i)) {
+			echo "
+				<strong>".$i."</strong>";
+		}else{
+			echo "
+				<a href=\"$PHP_SELF?$subquery&cpage=$i&spage=$spage\">".$i."</a>";
+		}
+		$a++;
+	}
+}
+
+if(intval($max_page/$page_count)==0) {
+	$last_spage="1";
+}else{
+	$last_spage=(intval($max_page/$page_count)*10) + 1;
+}
+
+
+if ($i<=$max_page) {
+	echo	"
+		<a href=\"$PHP_SELF?$subquery&cpage=".($spage+$page_count)."&spage=".($spage+$page_count)."\" class=\"next\"><span>다음</span></a>";
+}
+
+
+if($max_page<1) {
+	$max_page=1;
+}
+
+echo "
+		<a href=\"$PHP_SELF?$subquery&cpage=$max_page&spage=$last_spage\" class=\"next_end\"><span>끝</span></a>";
+?>
+	</div>
+	<!--//페이징 -->
+
+
+</div>
+
+<?include "../include/footer.html";?>
+
+
+<div id="calenderPop" style="position:absolute; visibility:hidden; ">
+  <table id="Select_Rayer" style="position:absloute;  display:none;">
+    <tbody>
+    <tr>
+	  <td align="center">
+	    <select name="date_year" class="select_S" onChange="javascript:getCursorData();">
+<?
+$date_year=date("Y")+20;
+for($i=2005;$i<=$date_year;$i++) {
+	echo "
+		  <option value=\"$i\""; if($i==date("Y")) {echo "selected";} echo ">$i</option>";
+}
+?>
+		</select> 년&nbsp;
+	    <select name="date_mon" class="select_S" onChange="javascript:getCursorData();">
+<?
+for($i=1;$i<=12;$i++) {
+
+	if(strlen($i)==1) {
+		$ii="0".$i;
+	}else{
+		$ii=$i;
+	}
+	echo "
+		  <option value=\"$ii\""; if($ii==date("m")) {echo "selected";} echo ">$ii</option>";
+}
+?>
+		</select> 월&nbsp;&nbsp;&nbsp;
+
+		<a href="javascript:clearData();">×</a>
+	  </td>
+	</tr>
+	</tbody>
+    <tr>
+	  <td align="center">
+		  <table id="cursorData">
+			<tbody id="cursorDataBody"></tbody>
+		  </table>
+	  </td>
+	</tr>
+  </table>
+</div>

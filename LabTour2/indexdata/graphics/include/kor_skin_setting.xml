@@ -1,0 +1,6 @@
+
+<action name="openSpotDescription_description1" devices="mobile">
+	set(ptplugin[description1].descID, %1);
+	openKolorArea_description1();
+</action>
+	

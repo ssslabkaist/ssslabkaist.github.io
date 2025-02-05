@@ -1,0 +1,44 @@
+
+/**************************** 상세설정 ****************************/
+/*폼 설정*/
+
+/*보통사이즈*/
+.input_01  {/*border:1px solid #dadada; background:#ffffff; font-size:12px; height:15px; *height:15px; vertical-align:middle; margin:0px 0 1px 0; *margin:-2px 0 4px 0;*/}
+.select_01 {/*border:1px solid #dadada; background:#ffffff; font-size:12px; height:20px; vertical-align:middle; margin:0px 0 1px 0; *margin:-2px 0 4px 0;*/}
+
+.input_01  {border:1px solid #dadada; background:#ffffff;font-size:12px;height:16px; *height:15px; vertical-align:middle;font-family:"돋움";}
+.select_01 {border:1px solid #dadada; background:#ffffff;font-size:12px;height:21px; vertical-align:middle; font-family:"돋움";}
+
+.input_01  {color:#555555;padding:3px 3px 0 3px;}
+.select_01 {color:#555555;}
+
+
+/*
+.input_01  {border:1px solid #7f9db9; background:#f7f9fb;font-size:12px;height:16px; *height:15px; vertical-align:middle;}
+.select_01 {border:1px solid #7f9db9; background:#f7f9fb;font-size:12px;height:21px; vertical-align:middle; }
+
+.input_01  {color:#555555;padding:3px 3px 0 3px;}
+.select_01 {color:#555555;}
+*/
+
+
+/*작은사이즈*/
+.input_02 {border:1px solid #dadada; background:#ffffff; font-size:12px; height:16px; *height:15px; vertical-align:middle; margin:0px 0 1px 0;}
+.select_02 {border:1px solid #dddddd; background:#ffffff; color:#666666; font-size:11px; height:18px;  vertical-align:middle;}
+
+
+.input_03 {border:1px solid #dadada; background:#ffffff; font-size:12px; height:16px; *height:15px; vertical-align:middle;}
+.input_03  {color:#555555;padding:3px 3px 0 3px;}
+
+.file_01 {border:1px solid #dadada; background:#f7f9fb; font-size:12px; height:21px; *height:20px; vertical-align:middle;}
+.file_01 {color:#555555; padding:3px 3px 0 3px; }
+
+
+.checkbox_01{vertical-align: middle; margin:0 0 0.3em 0; } /*체크박스와 라벨높이 일치*/
+.radio_01{vertical-align: middle; margin:0 0 0.3em 0;} /*라디오버튼와 라벨높이 일치*/
+
+
+/**************************** 로그인 부분 ****************************/
+.input_M {border:1px solid #cccccc; background:#f5f5f5;  font-size:12px; height:23px; padding:7px 0 0 5px; margin:2px 0 2px 0; vertical-align:middle; color:#4a4a4a;}
+
+

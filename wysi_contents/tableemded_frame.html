@@ -1,0 +1,111 @@
+<?session_start();
+include "../admin/common/loginchk.html";
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>표넣기</title>
+<script type="text/javascript">
+//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 START
+if(document.getSelection && parent.selObj){
+	//window.alert("asafs");
+	parent.myEditor2 = parent.selObj.getRangeAt(0).cloneRange(0);
+}
+//2016-05-18 parkJD 영역문제로 추가, 수정된 부분 END
+
+function insertTable(){
+	
+	var f = document.tform;
+
+	tbl_cols = eval(f.cols.value);
+	tbl_rows = eval(f.rows.value);
+
+	if(document.getSelection && parent.myEditor2){
+		parent.document.getElementById("myEditor").focus();
+		parent.selObj.addRange(parent.myEditor2);
+		parent.myEditor2 = "";
+	}
+
+
+	parent.insertTable(tbl_cols,tbl_rows);
+	parent.hideSideView();
+}
+</script>
+
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+function IsDigit()
+{
+  return ((event.keyCode >= 48) && (event.keyCode <= 57))
+}
+// -->
+</SCRIPT>
+</head>
+<style>
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p,
+a, address, em, img, strong,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td{margin: 0; padding:0; border:0;}
+
+hr, legend { display: none; }
+em, address, cite {font-style:normal;}
+ol, ul { list-style:none; }
+table { border-collapse:collapse; border-spacing:0; }
+fieldset, img { border:0; }
+
+
+table { border-collapse:collapse; border-spacing:0; }
+
+/*기본 링크*/
+a:link, a:visited { color:#666666; text-decoration:none; }
+a:hover, a:active { color:#000000; text-decoration:none;}
+
+
+body{color:#666666; font-size:12px; line-height:20px; font-family:"돋움", sans-serif; word-break:break-all;}
+
+
+.table_emded{padding:10px;background:#FBFBFB; height:70px;}
+.table_emded .layer_txt{ margin:5px; font-size:11px;}
+
+
+.input_wysi{border:1px solid #cccccc; background:#f5f5f5; font-size:12px; height:16px; vertical-align:middle; padding:3px 3px 0 3px;}
+.select_wysi{border:1px solid #cccccc; background:#f5f5f5; font-size:12px; height:21px; vertical-align:middle;}
+.textarea_wysi{border:1px solid #dadada; background:#ffffff; color:#666666; font-size:12px;}
+.radio_wysi{vertical-align: middle; margin:0 0 0.1em 0;}
+.checkbox_wysi{vertical-align: middle; margin:0 0 0.19em 0;} 
+.file_wysi{border:1px solid #cccccc; background:#f5f5f5; font-size:12px; height:21px; vertical-align:middle; padding:3px 3px 0 3px;}
+
+
+
+.wysi_btn{ padding:13px 0 0 0;}
+.wysi_btn_01{border:1px solid #656565; background:#797979;display:inline-block; }
+.wysi_btn_01 a{color:#ffffff; text-decoration:none;display:inline-block;padding:3px 8px 2px 8px; line-height:14px; font-size:11px; font-weight:normal;}
+
+
+
+</style>
+<body>
+
+<form name="tform" onsubmit="return false">
+	<div class="table_emded">
+	
+		<div style="height:10px;"></div>
+		<span style="display:inline-block; width:4px;"></span>
+		
+		행 <input name="rows" type="text" class="input_wysi" style="width:30%;" value="2" maxlength="3" ONKEYPRESS="event.returnValue=IsDigit();" > 
+		열 <input name="cols" type="text" class="input_wysi" style="width:30%;" value="2" maxlength="3" ONKEYPRESS="event.returnValue=IsDigit();" >
+		
+		<div style="height:15px;"></div>
+		<span style="display:inline-block; width:44px;"></span>
+		
+		<span class="wysi_btn_01"><a href="#void" title="확인" onclick="insertTable();">확인</a></span>
+		<span class="wysi_btn_01"><a href="#void" title="취소" onclick="parent.cancelButton();">취소</a></span>
+	
+	</div>
+</form>
+</body>
+</html>

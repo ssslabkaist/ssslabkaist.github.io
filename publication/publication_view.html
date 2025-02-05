@@ -1,0 +1,102 @@
+<?session_start();
+
+exit;
+
+
+
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+
+$subquery="publication_part_s=".$publication_part_s."&year_s=".$year_s."";
+
+$Search.=" AND view_state='Y'";
+
+$sql = mysql_query("SELECT * FROM publication WHERE uid='".$uid."' ".$Search."",$dbconn);
+$row = mysql_fetch_array($sql);
+
+if(!$row["uid"]) {
+	ERROR_BACK("잘못된 접속입니다.");
+	exit;
+}
+
+$ppSql = mysql_query("SELECT * FROM publicationPart WHERE catecode='".$row["publication_part"]."'",$dbconn);
+$ppRow = mysql_fetch_array($ppSql);
+
+
+//=======메뉴인식 START=========//
+$bMenuNum = "4";			//대메뉴
+//$mMenuNum = "1";			//중메뉴
+$mMenuNum = $ppRow["listorder"];	//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+
+<section class="contents journal board_ebi">	
+	<div class="contents-wrap view">
+		
+		<div class="view-title">
+			<h3><?=stripSlashNotUsed($row["pub_name"])?></h3>
+			<dl>
+				<dt>Author</dt>
+				<dd><?=authorChg(stripSlashNotUsed($row["join_name"]))?></dd>
+				<dt>Journal</dt>
+				<dd><?=stripSlashNotUsed($row["con_name"])?></dd>
+				<dt>Date</dt>
+				<dd><?=$row["publication_date"]?></dd>
+<!-- <?
+//if(onlyBlankSpaceChk(stripSlashNotUsed($row["link_url"]))) {
+?>
+				<dt>Link</dt>
+				<dd><a href="<?=stripSlashNotUsed($row["link_url"])?>" target="_blank"><?=stripSlashNotUsed($row["link_url"])?></a></dd>
+<?
+//}
+?>
+ -->
+			</dl>
+		</div>
+		
+		<div class="view-inner">
+			<!--상세 START-->
+				<script language="JavaScript">
+				$(document).ready(function () {
+					var windowWidth = $(window).width();
+					$(window).resize(function(){
+						var win = $(window).width();
+						if(windowWidth != win) {
+							windowWidth = win;
+							document.getElementById('v_content_id').contentWindow.parentOnload();
+						}
+					});
+				});
+				$(window).load(function(){
+					tid = setInterval(vContentSizeTime(), 1000);
+					clearInterval(tid);
+				});
+				function vContentSizeTime() {
+					document.getElementById('v_content_id').contentWindow.parentOnload();
+				}
+				</script>
+
+
+				<script language="JavaScript">
+				function vContentSize(bodyHeight){
+					document.getElementById("v_content_id").height=bodyHeight;
+				}
+				</script>
+				<iframe id="v_content_id" name="v_content_name" width="100%" scrolling="no" frameborder="0" marginwidth="0" src="./publication_view_content_iframe.html?tn=publication&uid=<?=$uid?>"></iframe>
+<!--상세 END-->
+		</div>
+		<div class="btnWrap">
+			<a href="./publication_list.html?cpage=<?=$cpage?>&spage=<?=$spage?>&<?=$subquery?>">LIST</a>
+		</div>
+		
+		
+	</div>
+</section>

@@ -1,0 +1,64 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "3";			//대메뉴
+$mMenuNum = "1";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<section class="contents research sensor">
+	<div class="contents-wrap sensor">
+		
+		<div class="research-tab tabWrap">
+			<ul>
+				<li><a href="./testing.html">Nodestructive Testing</a></li>
+				<li><a href="./monitoring.html">Structural Health Monitoring</a></li>
+				<li><a href="./printing.html">3D Printing</a></li>
+				<li><a href="./analytice.html">Data Analytice</a></li>
+				<li class="on"><a href="#void">Sensor &amp; Sensing</a></li>
+			</ul>
+		</div>
+	
+		<div class="research-tit">
+			<h2>Sensor & Sensing</h2>
+			<p>Smart sensors are increasingly involved in every aspect of human life. They are employed to monitor the health of structure, control processes in manufacture plant, traffic control, and provide information that can be used for improving the operational efficiency of structure. We develop state-of-the-art smart sensors and sensing technology with the aim to apply these techniques to a wide range of real-world applications.</p>
+		</div>
+		
+		<div class="testing-list research-list insertBg">
+			<div class="research-wrapper">
+<?
+$code = array('_mJSGg25rDM','QI1OIVAWda4','X0qylWZJD8I','muOfPxQBNNQ','js8RK-ObgBE');
+$codeLength = count($code);
+$name = array(
+'Development of 6DOF structural response measurement system for civil infrastructure monitoring',
+'Structural displacement estimation by fusing vision camera and accelerometer',
+'Development of a stick and detect wireless sensor node for fatigue crack detection',
+'Detection of tension reduction in post tensioning tendon using pulsed eddy current',
+'Development of a fire induced building collapse alarm system using smart ball measurement',);
+
+for($i=0; $i<$codeLength; $i++){
+?>
+				<div class="research-item"><a href="https://www.youtube.com/watch?v=<?=$code[$i]?>" target="_blank" title="새창 열림">
+					<div class="img">
+						<img src="https://img.youtube.com/vi/<?=$code[$i]?>/sddefault.jpg" alt="" />
+						<span class="i-play"></span>
+					</div>
+					<p><?=$name[$i]?></p>
+				</a></div>
+<?}?>
+			
+			</div>
+			<!-- <div class="swiper-scrollbar"></div> -->
+		</div>
+		
+		
+		
+	</div>
+</section>

@@ -1,0 +1,30 @@
+<?session_start();
+@ob_start();
+include "../config/dbconn.inc.php";
+include "../config/functions.inc";
+
+//=======메뉴인식 START=========//
+$bMenuNum = "1";			//대메뉴
+$mMenuNum = "1";			//중메뉴
+$sMenuNum = "";				//소메뉴
+//=======메뉴인식 END=========//
+
+include "../include/header.html";
+?>
+<!-- // header -->
+
+<section class="contents intro h100vh">
+	<div class="contents-wrap">
+	
+		<div class="intro-tit">
+			<h2>Smart Structures &amp; Systems</h2>
+		</div>
+		
+		<div class="intro-txt">
+			<p>Welcome to Smart structures &amp; Systems Laboratory.</p>
+			<p>The lab is directed by Prof. Hoon Sohn, and around twenty members are studying together.</p>
+			<p>The mission of our group focuses on developing and researching for difference classes of semiconductor, civil and mechanical systems, a new science and engineering of smart materials, sensing, data interpretation and fusion, and intelligent decision support that would allow the discovery and prevention of abnormal behavior in these critical systems that might lead to catastrophic failure.</p>
+		</div>
+		
+	</div>
+</section>
